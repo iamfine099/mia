@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="col-sm-12">
+			<div class="ibox">
+				<div class="ibox-body">
+					<div class="fixed-table-toolbar">
+						<div class="columns little-padding searchArea">
+							<div class="row">
+							<form id='searchForm'>
+								<div class=" pull-left col-md-3 nopadding little-marign">
+									<span  class=" pull-left col-md-4 forSearch">标题:</span>
+									<div class=" pull-left col-md-8 nopadding ">
+										<input id="title" name='title' type="text" class="form-control"
+											placeholder="">
+									</div>
+								</div>
+								<div class="pull-left col-md-3 nopadding little-marign">
+									<span  class=" pull-left col-md-4 forSearch">发布时间:</span>
+									<div class=" pull-left col-md-8 nopadding ">
+										<div class=" pull-left col-md-5 nopadding ">
+											<input id="beginpublishTime" name="beginpublishTime" class="laydate-icon layer-date form-control" type="text" class="form-control"
+												onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss',max:$('#endpublishTime').val()})" style="background-color: #fff;width:90%;float:left;" readonly="readonly" placeholder="">
+										-
+										</div>
+										<div class=" pull-left col-md-5 nopadding ">
+										-
+											<input id="endpublishTime" name="endpublishTime" class="laydate-icon layer-date form-control" type="text" class="form-control"
+												onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss',min:$('#beginpublishTime').val()})" style="background-color: #fff;width:90%;float:right;" readonly="readonly" placeholder="">
+										</div>
+									</div>
+								</div>
+							</form>
+								<div class=" pull-left col-md-3 nopadding little-marign">
+									<button class="pull-left btn btn-success little-marign" type='button' onclick="reLoad()" style="margin-left:10px;">查询</button>
+									<button class="pull-left btn btn-success little-marign" type='button' onclick="resetBtn(this)" style="margin-left:10px;">重置</button>
+								</div>
+							</div>	
+							
+							<div style='clear:both;'></div>	
+						</div>
+						<div class="columns ">
+							<button shiro:hasPermission="common:articleReview:edit" type="button" class="btn  btn-danger" onclick="checkInfo()">
+								<i class="fa fa-file-excel-o" aria-hidden="true"></i>审核
+							</button>
+						</div>
+					<table id="exampleTable" data-mobile-responsive="true">
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--shiro控制bootstraptable行内按钮看见性 来自bootdo的创新方案 -->
+		<div>
+			<script type="text/javascript">
+				var s_edit_h = 'hidden';
+				var s_remove_h = 'hidden';
+				var s_resetPwd_h = 'hidden';
+			</script>
+		</div>
+		<div shiro:hasPermission="common:articleReview:edit">
+			<script type="text/javascript">
+				s_edit_h = '';
+			</script>
+		</div>
+		<div shiro:hasPermission="common:article:remove">
+			<script type="text/javascript">
+				var s_remove_h = '';
+			</script>
+		</div>
+		<div shiro:hasPermission="common:articleReview:resetPwd">
+			<script type="text/javascript">
+				var s_resetPwd_h = '';
+			</script>
+		</div>
+	</div>
+	<div th:include="include :: footer"></div>
+	<script type="text/javascript" th:inline="javascript">
+			var ifCheckedJson = JSON.parse([[${T(com.bootdo.common.utils.DictUtils).getDictListJson('if_checked')}]]);
+	</script>
+	<script type="text/javascript" src="/js/appjs/common/article/articleReview.js"></script>
+</body>
+</html>

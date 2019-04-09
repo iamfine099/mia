@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+	<meta charset="utf-8">
+	<head th:include="front/include::header"></head>
+	<body>
+		<!--这是头-->
+		<div th:include="front/include::topbar"></div>
+		<!--这是身子-->
+		<section class="total">
+			<div class="grayStrip clear">
+				<div class="textLink">
+					<a href="#">首页</a>
+				</div>
+				<div class="textLink">
+					<a href="#">>&nbsp;&nbsp;新闻动态</a>
+				</div>
+			</div>
+			<!--这是选择盒子-->
+			<div class="bodyContent">
+				<ul class="selectionBar">
+					<li class="selectionBarText" style="border-top:1px solid #dcdcdc ;"><a href="">个人信息</a></li>
+					<li class="selectionBarText"><a href="#">修改密码</a></li>
+					<li class="selectionBarText"><a href="release.html">我要发布</a></li>
+					<li class="selectionBarText"><a href="#">草稿箱</a></li>
+					<li class="selectionBarText choosed"><a href="#">推荐文章</a></li>
+					<li class="selectionBarText"><a href="#">我的文章</a></li>
+				</ul>
+				
+				<div class="recommendA_article">
+					<div class="recommendBox">
+						<div class="recommendBox_1">
+							<p>发布内容：<input type="text" value="最近一周"/></p>
+						</div>
+						<div class="recommendBox_2">
+							<p>发布时间：
+							<select>
+								<option>最近一周</option>
+								<option>最近一年</option>
+								<option>最近一月</option>
+								<option>最近一天</option>
+							</select>
+							</p>
+						</div>
+						<div class="recommendBox_3">
+							<p>发布时间：
+							<select>
+								<option>最近一周</option>
+								<option>最近一年</option>
+								<option>最近一月</option>
+								<option>最近一天</option>
+							</select>
+							</p>
+						</div>
+						<div class="recommendBox_4">
+							<p>发布内容：
+							<input type="checkbox"  value=""/>是
+							<input type="checkbox"  value=""/>否
+							<input type="checkbox"  value=""/>是
+							<input type="checkbox"  value=""/>否
+							</p>
+						</div>
+						<div class="recommendBox_5">
+							<p>发布时间：
+							<select>
+								<option>最近一周</option>
+								<option>最近一年</option>
+								<option>最近一月</option>
+								<option>最近一天</option>
+							</select>
+							</p>
+						</div>
+						<div class="recommendBox_6">
+							<button class="drafts_btn">搜索</button>
+						</div>
+					</div>
+					<ul>
+						<li><img src="../img/BluelistStyle.jpg"><a href="">信息所开展“共建生态文明，共享绿色未来”环保公益活动<span class="recommend_writer">作者：五金城</span><span class="recommend_time">2018-10-11</span></a></li>
+						<li><img src="../img/BluelistStyle.jpg"><a href="">低碳环保&nbsp;绿色共享&nbsp;健康生活————泉城公园健步走活动<span class="recommend_writer">作者：五金城</span><span class="recommend_time">2018-10-11</span></a></li>
+						<li><img src="../img/BluelistStyle.jpg"><a href="">信息所老干部参加省医科院第七届老年人趣味运动会展风采<span class="recommend_writer">作者：五金城</span><span class="recommend_time">2018-10-11</span></a></li>
+						<li><img src="../img/BluelistStyle.jpg"><a href="">信息所志愿者参与“金秋菊韵·乐享重阳”之趵突泉赏菊重阳节敬老公益活动<span class="recommend_writer">作者：五金城</span><span class="recommend_time">2018-10-11</span></a></li>
+						<li><img src="../img/BluelistStyle.jpg"><a href="">信息所宋奎勐博士赴英国利物浦参加世界第五届世界卫生体系研究大会<span class="recommend_writer">作者：五金城</span><span class="recommend_time">2018-10-11</span></a></li>
+						<li><img src="../img/BluelistStyle.jpg"><a href="">信息所开展“共建生态文明，共享绿色未来”环保公益活动<span class="recommend_writer">作者：五金城</span><span class="recommend_time">2018-10-11</span></a></li>
+						<li><img src="../img/BluelistStyle.jpg"><a href="">信息所宋燕博士赴日本东京参加ISPOR2018年亚太年会<span class="recommend_writer">作者：五金城</span><span class="recommend_time">2018-10-11</span></a></li>
+						<li><img src="../img/BluelistStyle.jpg"><a href="">信息所参加省直文明单位第十四届协作区乒乓球比赛<span class="recommend_writer">作者：五金城</span><span class="recommend_time">2018-10-11</span></a></li>
+						<li><img src="../img/BluelistStyle.jpg"><a href="">信息所开展“共建生态文明，共享绿色未来”环保公益活动<span class="recommend_writer">作者：五金城</span><span class="recommend_time">2018-10-11</span></a></li>
+						<li><img src="../img/BluelistStyle.jpg"><a href="">信息所组织在职党员干部职工进行党纪法规和德廉知识学习测试<span class="recommend_writer">作者：五金城</span><span class="recommend_time">2018-10-11</span></a></li>
+						<div class="pageNum">
+							<p><a href="#" style="margin-left: 500px; color:#037edb ;">首页</a></p>
+							<p><a href="#">上一页</a></p>
+							<p><a href="#">下一页</a></p>
+							<p><a href="#">尾页</a></p>
+							<p>共192条</p>
+							<select class="choosePage">
+								<option>第1页</option>
+								<option>第2页</option>
+								<option>第3页</option>
+								<option>第4页</option>
+								<option>第5页</option>
+							</select>
+						</div>
+					</ul>
+				</div>
+				
+			</div>
+		</section>
+		
+		<!--这是尾部-->
+		<!--这是尾部-->
+		<div th:include="front/include::footer"></div>
+	</body>
+</html>

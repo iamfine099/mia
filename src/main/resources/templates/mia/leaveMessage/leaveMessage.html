@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="col-sm-12">
+			<div class="ibox">
+				<div class="ibox-body">
+					<div class="fixed-table-toolbar">
+						<div class="columns little-padding searchArea">
+							<div class="row">
+							<form id='searchForm'>
+									<div class=" pull-left col-md-3 nopadding little-marign">
+									<span  class=" pull-left col-md-4 forSearch">类型:</span>
+									<div class=" pull-left col-md-8 nopadding ">
+										<select  id="type" name="type"  class="form-control" >
+											<option value="">---请选择---</option>
+											<option th:each="leaveMessageType : ${leaveMessageTypeList}" th:value="${leaveMessageType.mtName}" th:text="${leaveMessageType.mtName}"></option>
+										</select>
+									</div>
+								</div>
+								</form>
+									<div class=" pull-left col-md-3 nopadding little-marign">
+									<button class="pull-left btn btn-success little-marign" type='button' onclick="reLoad()" style="margin-left:10px;">查询</button>
+									<button class="pull-left btn btn-success little-marign" type='button' onclick="resetBtn(this)" style="margin-left:10px;">重置</button>
+								</div>																
+								</div>
+							</div>	
+							
+							<div style='clear:both;'></div>	
+						</div>
+						<div class="columns ">
+							<button shiro:hasPermission="mia:leaveMessage:batchRemove" type="button" class="btn  btn-danger"
+								onclick="batchRemove()">
+								<i class="fa fa-trash" aria-hidden="true"></i>删除
+							</button>
+						</div>
+					</div>
+					<table id="exampleTable" data-mobile-responsive="true">
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--shiro控制bootstraptable行内按钮看见性 来自bootdo的创新方案 -->
+		<div>
+			<script type="text/javascript">
+				var s_edit_h = 'hidden';
+				var s_remove_h = 'hidden';
+                var s_resetPwd_h = 'hidden';
+			</script>
+		</div>
+		<div shiro:hasPermission="mia:leaveMessage:edit">
+			<script type="text/javascript">
+				s_edit_h = '';
+			</script>
+		</div>
+		<div shiro:hasPermission="mia:leaveMessage:remove">
+			<script type="text/javascript">
+				var s_remove_h = '';
+			</script>
+		</div>
+		<div shiro:hasPermission="mia:leaveMessage:resetPwd">
+			<script type="text/javascript">
+				var s_resetPwd_h = '';
+			</script>
+		</div>
+	</div>
+	<div th:include="include :: footer"></div>
+	<script type="text/javascript" th:inline="javascript">
+			var statusTypeJson = JSON.parse([[${T(com.bootdo.common.utils.DictUtils).getDictListJson('if_checked')}]]);
+	</script>
+	
+	<script type="text/javascript" src="/js/appjs/mia/leaveMessage/leaveMessage.js"></script>
+</body>
+</html>

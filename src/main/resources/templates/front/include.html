@@ -1,0 +1,184 @@
+<head th:fragment="header">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=0.5, maximum-scale=0.3, minimum-scale=0.3"/>
+	<title>山东省网站</title>
+	<meta name="keywords" content="">
+	<meta name="description" content="">
+	<link rel="shortcut icon" href="favicon.ico">
+	<link href="/css/font-awesome.css?v=4.4.0" th:href="@{/css/font-awesome.css?v=4.4.0}" rel="stylesheet">
+	<link rel="shortcut icon" href="favicon.ico">
+	<link href="css/bootstrap.min.css?v=3.3.6"
+		  th:href="@{/css/bootstrap.min.css?v=3.3.6}" rel="stylesheet">
+	<link href="/css/font-awesome.css?v=4.4.0"
+		  th:href="@{/css/font-awesome.css?v=4.4.0}" rel="stylesheet">
+	<!--summernote css -->
+	<link href="/css/plugins/summernote/summernote-0.8.8.css"
+		  rel="stylesheet">
+	<!--富文本编译器 css -->
+	<link href="/css/plugins/summernote/summernote-0.8.8.css" rel="stylesheet">
+	<link href="/css/animate.css" th:href="@{/css/animate.css}" rel="stylesheet">
+	<link href="/css/style.css?v=4.1.0" th:href="@{/css/style.css?v=4.1.0}" rel="stylesheet">
+	<link href="/css/front/all.css" th:href="@{/css/front/all.css}" rel="stylesheet">
+	<link href="/css/front/public.css" th:href="@{/css/front/public.css}" rel="stylesheet">
+	<link href="/css/front/swiper.min.css" th:href="@{/css/front/swiper.min.css}" rel="stylesheet">
+	
+	<!-- <link rel="stylesheet" type="text/css"
+	href="/css/front/static/amazeui.flat.css" />
+<link rel="stylesheet" type="text/css"
+	href="/css/front/static/amazeui.upload.css" />
+<link rel="stylesheet" type="text/css"
+	href="/css/front/static/FlexoCalendar.css" />
+<link rel="stylesheet" type="text/css" href="/css/front/public.css" />
+<link rel="stylesheet" type="text/css"
+	href="/css/front/student_list.css" />
+<link rel="stylesheet" type="text/css"
+	href="/css/front/static/amazeui.page.css" />	
+<link rel="stylesheet" href="/js/plugins/layer/laydate/skins/default/laydate.css" />	
+<link rel="stylesheet" href="/js/plugins/layer/css/layui.css" /> -->
+	<script src="/js/plugins/layer/layui.all.js"></script>
+	<script src="/js/jquery.min.js?v=2.1.4"></script>
+	<script src="/js/bootstrap.min.js?v=3.3.6"></script>
+	<script src="/js/plugins/validate/jquery.validate.min.js"></script>
+	<script src="/js/plugins/validate/messages_zh.min.js"></script>
+	<!--summernote-->
+	<script src="/js/plugins/summernote/summernote.js"></script>
+	<script src="/js/plugins/summernote/summernote-zh-CN.min.js"></script>
+	<script src="/js/ajax-util.js"></script>
+	<script src="/js/front/index.js"></script>
+	<script src="/js/front/swiper.min.js" type="text/javascript"></script>
+	<script src="/js/content.js?v=1.0.0"></script>
+</head>
+<div th:fragment="topbar">
+	<header>
+			<div class="wrap">
+				<!--头部：欢迎光临山东省网站-->
+				<div class="top">
+					<div class="top_l left">欢迎访问山东省网站！</div>
+					<div class="top_r right">
+						<div id="clock"></div>
+					    <input type="text" id="keyword" th:value="${title}">
+						 <input type="button" onclick="searchItem()" value="搜索">
+						 <script type="text/javascript">
+					    	function searchItem() {
+								var keyword=$("#keyword").val();
+								if(keyword != ""){
+									window.location.href='/front/cms/search/'+keyword
+								}
+							}
+						</script>
+					</div>
+				</div>
+				<!--导航部分-->
+				<div class="logo">
+					<div class="text">
+						<h1><img src='/img/newlogo.png'/></h1>
+						<!-- <h2>SHANDONG&nbsp;&nbsp;MEDICAL&nbsp;&nbsp;INFORMATION&nbsp;&nbsp;ASSICIATION</h2> -->
+					</div>
+					<nav>
+					    <ul class="navList">
+					    	<li class="firstNavItem color_bt"><a class='firstNav' th:href="@{/front/cms}">首页</a></li>
+					    	<li class='firstNavItem' th:each="vo:${T(com.bootdo.cms.util.CmsUtils).getMainNavList()}">
+					    		<a class='firstNav' th:target="${vo.target}" th:href="${vo.module eq 'link'}? @{${vo.href}} : @{'/front/cms/open/page/'+${vo.id}}" th:text="${vo.name}"></a>
+					    		<div class='secondList'>
+					    			<div class='secondListOne' th:each="svo:${T(com.bootdo.cms.util.CmsUtils).getCategoryList(vo.id,0,'')}">
+										<a th:target="${svo.target}" th:href="${svo.module eq 'link'}? @{${svo.href}} : @{'/front/cms/open/page/'+${svo.id}}" th:text="${svo.name}"></a>
+									</div>
+					    			<div style="clear:both;"></div>	
+					    		</div>
+					    		<div class='secondNav' th:if="${T(com.bootdo.cms.util.CmsUtils).getCategoryList(vo.id,0,'').size()>0}">
+					    	
+					    		</div>	
+					    	</li>
+					    	<!-- <li><a th:href="@{/front/cms/open/notifyarticlelist}">通知公告</a></li>
+					    	<li><a th:href="@{/front/cms/open/newsdylist}">信息动态</a></li>
+					    	<li><a th:href="@{/front/cms/open/recommendarticlelist}">推荐文章</a></li>
+					    	<li><a th:href="@{/front/cms/open/expertlist}">协会会员</a></li> -->
+					    	
+					    	
+					    	<!-- <li class="line"></li>
+					    	<li><a th:href="@{/front/cms/open/goodCommentlist}">精彩评论</a></li>
+					    	<li class="line"></li>
+					    	<li><a th:href="@{/front/cms/leaveMessage}">我要留言</a></li> -->
+					    </ul>
+					    
+				    </nav>
+				</div>
+			</div>
+		</header>
+</div>
+<div th:fragment="footer">
+	<footer>
+			<div class="footers">
+				<div class="select_box" id="select_boxs">
+					<select class='select_item' name="select" >
+						<option value="" selected = "selected">=政府部门导航=</option>
+					    <option th:each="cmsLink1 : ${cmsLinkList1}"  th:value="${cmsLink1.fUrl}" th:text="${cmsLink1 .fName}"></option>
+				    </select>
+				    <select class='select_item' name="select" >
+					    <option value="" selected = "selected">=院属兄弟单位=</option>
+					    <option th:each="cmsLink2 : ${cmsLinkList2}"  th:value="${cmsLink2.fUrl}" th:text="${cmsLink2 .fName}"></option>
+				    </select>
+				    <select class='select_item' name="select" >
+					    <option value="" selected = "selected"> =医学研究机构=</option>
+					    <option th:each="cmsLink3 : ${cmsLinkList3}"  th:value="${cmsLink3.fUrl}" th:text="${cmsLink3 .fName}"></option>
+				    </select>
+				    <select class='select_item' name="select" >
+					    <option value="" selected = "selected">=其他研究机构=</option>
+					    <option th:each="cmsLink4 : ${cmsLinkList4}"  th:value="${cmsLink4.fUrl}" th:text="${cmsLink4 .fName}"></option>
+				    </select >
+			    </div>
+				<div class="address">
+				    <p>联系电话 ： 地址：山东省济南市所有</p>
+			   </div>
+			</div>
+		</footer>
+		<script type="text/javascript">
+		$(function(){
+			$(".select_item").on("change",function(){
+				var href=$(this).val();
+				if(href!=""){
+					window.open(href,target='_blank')
+				}
+			})
+		})
+		</script>
+			</div>
+			
+			
+<div th:fragment="split_page">
+	<div class="pageNum_content">
+		<input type="hidden" name="page" id="page" th:value="${pageUtils.page}" />
+			<!-- 当前页数>1 总页数>0 -->
+			<p th:if="${pageUtils.page gt 1} and ${ pageUtils.totalPage gt 0 } "><a th:href="@{'javascript:submitForm(\'1\')'} " style="color:#037edb ;">首页</a></p>
+			<!-- 当前页数>1 总页数>0 -->
+			<p th:if="${pageUtils.page gt 1} and ${ pageUtils.totalPage gt 0 } "><a th:href="@{'javascript:submitForm(\''+${pageUtils.page-1}+'\')'} ">上一页</a></p>
+			<!-- 当前页数<总页数 -->
+			<p th:if="${pageUtils.page lt pageUtils.totalPage} "><a th:href="@{'javascript:submitForm(\''+${pageUtils.page+1}+'\')'} ">下一页</a></p>
+			<!-- 当前页数<总页数 -->
+			<p th:if="${pageUtils.page lt pageUtils.totalPage} "><a th:href="@{'javascript:submitForm(\''+${pageUtils.totalPage}+'\')'} ">尾页</a></p>
+			<p th:text="'共'+${pageUtils.total}+'条'"></p>
+			<select class="choosePage">
+				<option th:selected="${pageUtils.page eq k}" th:if="${ pageUtils.totalPage gt 0 } " th:each="k:${#numbers.sequence(1,pageUtils.totalPage)}" th:text="'第'+${k}+'页'" th:value="${k}"></option>
+			</select>
+	</div>
+	<script type="text/javascript">
+		/**
+		*提交表单
+		*/
+		function submitForm(pageNum){
+				$("#page").val(pageNum);
+				$("#signupForm").submit();
+		}
+	
+		$(".choosePage").change(function(){
+			$("#page").val($(".choosePage").val());
+			$("#signupForm").submit();
+		});
+		function search() {
+				var keyword=$("#keyword").val();
+				window.location.herf='/front/cms/search?title='+keyword
+			}
+		
+	</script>
+</div>
+			

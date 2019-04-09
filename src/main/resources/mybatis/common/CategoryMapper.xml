@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.common.dao.CategoryDao">
+
+	<select id="get" resultType="com.bootdo.common.domain.CategoryDO">
+		select `id`,`parent_id`,`parent_ids`,`show_position`,`module`,`name`,`image`,`href`,`target`,`description`,`sort`,`in_menu`,`create_by`,`create_date`,`update_by`,`update_date`,`remarks`,`del_flag` from t_category where id = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.common.domain.CategoryDO">
+		select `id`,`parent_id`,`parent_ids`,`show_position`,`module`,`name`,`image`,`href`,`target`,`description`,`sort`,`in_menu`,`create_by`,`create_date`,`update_by`,`update_date`,`remarks`,`del_flag` from t_category
+        <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="parentIds != null and parentIds != ''"> and parent_ids = #{parentIds} </if>
+		  		  <if test="module != null and module != ''"> and module = #{module} </if>
+		  		  <if test="name != null and name != ''"> and name = #{name} </if>
+		  		  <if test="image != null and image != ''"> and image = #{image} </if>
+		  		  <if test="href != null and href != ''"> and href = #{href} </if>
+		  		  <if test="target != null and target != ''"> and target = #{target} </if>
+		  		  <if test="description != null and description != ''"> and description = #{description} </if>
+		  		  <if test="sort != null and sort != ''"> and sort = #{sort} </if>
+		  		  <if test="inMenu != null and inMenu != ''"> and in_menu = #{inMenu} </if>
+		  		  <if test="createBy != null and createBy != ''"> and create_by = #{createBy} </if>
+		  		  <if test="createDate != null and createDate != ''"> and create_date = #{createDate} </if>
+		  		  <if test="updateBy != null and updateBy != ''"> and update_by = #{updateBy} </if>
+		  		  <if test="updateDate != null and updateDate != ''"> and update_date = #{updateDate} </if>
+		  		  <if test="remarks != null and remarks != ''"> and remarks = #{remarks} </if>
+		  		  <if test="delFlag != null and delFlag != ''"> and del_flag = #{delFlag} </if>
+		  		  <if test="parentId != null and parentId != ''"> and parent_id = #{parentId} </if>
+		  		  <if test="showPosition != null and showPosition != ''"> and show_position = #{showPosition} </if>
+		  		  <if test="notInId != null"> 
+		  		 		 and id not in 
+						<foreach item="id" collection="notInId" open="(" separator="," close=")">
+							#{id}
+						</foreach>
+		  		  </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by sort asc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from t_category
+		 <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="parentId != null and parentId != ''"> and parent_id = #{parentId} </if>
+		  		  <if test="parentIds != null and parentIds != ''"> and parent_ids = #{parentIds} </if>
+		  		  <if test="module != null and module != ''"> and module = #{module} </if>
+		  		  <if test="name != null and name != ''"> and name = #{name} </if>
+		  		  <if test="image != null and image != ''"> and image = #{image} </if>
+		  		  <if test="href != null and href != ''"> and href = #{href} </if>
+		  		  <if test="target != null and target != ''"> and target = #{target} </if>
+		  		  <if test="description != null and description != ''"> and description = #{description} </if>
+		  		  <if test="sort != null and sort != ''"> and sort = #{sort} </if>
+		  		  <if test="inMenu != null and inMenu != ''"> and in_menu = #{inMenu} </if>
+		  		  <if test="createBy != null and createBy != ''"> and create_by = #{createBy} </if>
+		  		  <if test="createDate != null and createDate != ''"> and create_date = #{createDate} </if>
+		  		  <if test="updateBy != null and updateBy != ''"> and update_by = #{updateBy} </if>
+		  		  <if test="updateDate != null and updateDate != ''"> and update_date = #{updateDate} </if>
+		  		  <if test="remarks != null and remarks != ''"> and remarks = #{remarks} </if>
+		  		  <if test="delFlag != null and delFlag != ''"> and del_flag = #{delFlag} </if>
+		  		  <if test="showPosition != null and showPosition != ''"> and show_position = #{showPosition} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.common.domain.CategoryDO" useGeneratedKeys="true" keyProperty="id">
+		insert into t_category
+		(
+			`parent_id`, 
+			`parent_ids`, 
+			`module`, 
+			`name`, 
+			`image`, 
+			`href`, 
+			`target`, 
+			`description`, 
+			`sort`, 
+			`in_menu`, 
+			`create_by`, 
+			`create_date`, 
+			`update_by`, 
+			`update_date`, 
+			`remarks`, 
+			`del_flag`,
+			`show_position`
+			
+		)
+		values
+		(
+			#{parentId}, 
+			#{parentIds}, 
+			#{module}, 
+			#{name}, 
+			#{image}, 
+			#{href}, 
+			#{target}, 
+			#{description}, 
+			#{sort}, 
+			#{inMenu}, 
+			#{createBy}, 
+			#{createDate}, 
+			#{updateBy}, 
+			#{updateDate}, 
+			#{remarks}, 
+			#{delFlag},
+			#{showPosition}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.bootdo.common.domain.CategoryDO">
+		update t_category 
+		<set>
+			<if test="parentId != null">`parent_id` = #{parentId}, </if>
+			<if test="parentIds != null">`parent_ids` = #{parentIds}, </if>
+			<if test="module != null">`module` = #{module}, </if>
+			<if test="name != null">`name` = #{name}, </if>
+			<if test="image != null">`image` = #{image}, </if>
+			<if test="href != null">`href` = #{href}, </if>
+			<if test="target != null">`target` = #{target}, </if>
+			<if test="description != null">`description` = #{description}, </if>
+			<if test="sort != null">`sort` = #{sort}, </if>
+			<if test="inMenu != null">`in_menu` = #{inMenu}, </if>
+			<if test="createBy != null">`create_by` = #{createBy}, </if>
+			<if test="createDate != null">`create_date` = #{createDate}, </if>
+			<if test="updateBy != null">`update_by` = #{updateBy}, </if>
+			<if test="updateDate != null">`update_date` = #{updateDate}, </if>
+			<if test="remarks != null">`remarks` = #{remarks}, </if>
+			<if test="delFlag != null">`del_flag` = #{delFlag},</if>
+			<if test="showPosition != null">`show_position` = #{showPosition}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="remove">
+		delete from t_category where id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from t_category where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+	<select id="getCategoryArticleNumber" resultType="int">
+		select count(*) from t_article where category_id = #{value}
+	</select>
+	
+	<select id="cmsList" resultType="com.bootdo.common.domain.CategoryDO">
+		select `id`,`parent_id`,`parent_ids`,`show_position`,`module`,`name`,`image`,`href`,`target`,`description`,`sort`,`in_menu`,`create_by`,`create_date`,`update_by`,`update_date`,`remarks`,`del_flag` from t_category
+		where show_position = 1 and del_flag = 1
+		order by sort asc
+		LIMIT 3
+	</select>
+</mapper>

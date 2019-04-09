@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.mia.dao.CommentDao">
+
+	<sql id="columns">
+		c.`c_id`,c.`expert_id`,c.`article_id`,c.`status`,c.`c_content`,c.`create_date`,c.`audit_by`,c.`audit_date`,c.`audit_content`,c.`is_recommend`,
+		e.expert_name as "expert.expertName", a.title as "article.title",u.username as "user.username"
+	</sql>
+	
+	<sql id="commons_where">
+		  <if test="cId != null and cId != ''"> and c.c_id = #{cId} </if>
+		  <if test="expertId != null and expertId != ''"> and c.expert_id = #{expertId} </if>
+		  <if test="articleId != null and articleId != ''"> and c.article_id = #{articleId} </if>
+		  <if test="status != null and status != ''"> and c.status = #{status} </if>
+		  <if test="cContent != null and cContent != ''"> and c.c_content = #{cContent} </if>
+		  <if test="createDate != null and createDate != ''"> and c.create_date = #{createDate} </if>
+		  <if test="auditBy != null and auditBy != ''"> and c.audit_by = #{auditBy} </if>
+		  <if test="auditDate != null and auditDate != ''"> and c.audit_date = #{auditDate} </if>
+		  <if test="auditContent != null and auditContent != ''"> and c.audit_content = #{auditContent} </if>
+		  <if test="isRecommend != null and isRecommend != ''"> and c.is_recommend = #{isRecommend} </if>
+		  <if test="articleTitle != null and articleTitle != ''"> and a.title like CONCAT('%',#{articleTitle},'%') </if>
+		</sql>
+
+	<select id="get" resultType="com.bootdo.mia.domain.CommentDO">
+		select
+			<include refid="columns" />
+ 		from t_comment c
+ 		left join t_expert e on e.expert_id = c.expert_id
+ 		left join t_article a on a.id = c.article_id
+ 		left join sys_user u on u.user_id = c.audit_by
+ 		where c.c_id = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.mia.domain.CommentDO">
+		select
+			<include refid="columns" />
+		from t_comment c
+		left join t_expert e on e.expert_id = c.expert_id
+ 		left join t_article a on a.id = c.article_id
+ 		left join sys_user u on u.user_id = c.audit_by
+        <where>  
+		  <include refid="commons_where"/>
+		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by c_id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+	<select id="recommendlist" resultType="com.bootdo.mia.domain.CommentDO">
+		select
+			c.`c_id`,c.`expert_id`,c.`article_id`,c.`status`,c.`c_content`,c.`create_date`,c.`audit_by`,c.`audit_date`,c.`audit_content`,c.`is_recommend`,
+		e.expert_name as "expert.expertName",a.id as "article.id", a.title as "article.title",a.hits as "article.hits",a.recommend_num as "article.recommendNum"
+		from t_comment c
+		left join t_expert e on e.expert_id = c.expert_id
+ 		left join t_article a on a.id = c.article_id
+ 		left join sys_user u on u.user_id = c.audit_by
+        <where>  
+		   c.is_recommend="1" and c.status="1"
+		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by c.create_date desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from t_comment c
+		left join t_expert e on e.expert_id = c.expert_id
+ 		left join t_article a on a.id = c.article_id
+ 		left join sys_user u on u.user_id = c.audit_by
+		 <where>  
+		  <include refid="commons_where"/>
+		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.mia.domain.CommentDO" useGeneratedKeys="true" keyProperty="cId">
+		insert into t_comment
+		(
+			`expert_id`, 
+			`article_id`, 
+			`status`, 
+			`c_content`, 
+			`create_date`, 
+			`audit_by`, 
+			`audit_date`, 
+			`audit_content`, 
+			`is_recommend`
+		)
+		values
+		(
+			#{expertId}, 
+			#{articleId}, 
+			#{status}, 
+			#{cContent}, 
+			#{createDate}, 
+			#{auditBy}, 
+			#{auditDate}, 
+			#{auditContent}, 
+			#{isRecommend}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.bootdo.mia.domain.CommentDO">
+		update t_comment 
+		<set>
+			<if test="expertId != null">`expert_id` = #{expertId}, </if>
+			<if test="articleId != null">`article_id` = #{articleId}, </if>
+			<if test="status != null">`status` = #{status}, </if>
+			<if test="cContent != null">`c_content` = #{cContent}, </if>
+			<if test="createDate != null">`create_date` = #{createDate}, </if>
+			<if test="auditBy != null">`audit_by` = #{auditBy}, </if>
+			<if test="auditDate != null">`audit_date` = #{auditDate}, </if>
+			<if test="auditContent != null">`audit_content` = #{auditContent}, </if>
+			<if test="isRecommend != null">`is_recommend` = #{isRecommend}</if>
+		</set>
+		where c_id = #{cId}
+	</update>
+	
+	<delete id="remove">
+		delete from t_comment where c_id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from t_comment where c_id in 
+		<foreach item="cId" collection="array" open="(" separator="," close=")">
+			#{cId}
+		</foreach>
+	</delete>
+
+	<update id="commentAuditUpdateCheck">
+		update t_comment 
+		<set>
+			`audit_date` = now(),`status` = #{status},
+				`audit_by` = #{auditBy},`audit_content` = #{auditContent}
+		</set>
+		where c_id in 
+		<foreach item="id" collection="ids.split(',')" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</update>
+</mapper>

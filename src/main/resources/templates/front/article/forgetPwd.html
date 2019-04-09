@@ -1,0 +1,41 @@
+<!DOCTYPE HTML>
+<html>
+	<head th:include="front/include :: header"></head>
+	<body>
+		<head th:include="front/include::topbar"></head>
+		<!--中间部分-->
+		<section id="register">
+			<div id="register_form">
+				<p><span>找回密码</span></p>
+				<form method="post" id="signupForm">
+					<div class="item">
+						<label class="phone">手&nbsp;&nbsp;机&nbsp;&nbsp;号&nbsp;&nbsp;</label>
+						<input type="text" name="phone" id="phone" placeholder="请填写手机号" required="required">
+					</div>
+					<div class="item">
+						<label class="email">邮&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;箱&nbsp;&nbsp;</label>
+						<input type="text" name="email" id="email" required="required" placeholder="请填写您注册时的邮箱">
+					</div>
+					<div class="item">
+						<label class="pwd">设置密码&nbsp;&nbsp;</label>
+						<input type="password" name="pwd" id="pwd" placeholder="请设置您的登录密码密码" required="required">
+					</div>
+					<div class="items">
+						<label class="code">验&nbsp;&nbsp;证&nbsp;&nbsp;码&nbsp;&nbsp;</label>
+						<input type="text" id="code" placeholder="请输入邮箱里的验证码" name="code">
+						<div class="sendcode_box">
+							<button id="send_code" class="send_code" type="button">发送验证码</button>
+						</div>
+					</div>
+					<div class="btn">
+						<a href="javaScript:void(0);" id="submit_btn">确定</a>
+					</div>
+				</form>	
+			</div>
+		</section>
+		<!--脚部-->
+		<!--这是尾部-->
+		<div th:include="front/include::footer"></div>
+	</body>
+	<script type="text/javascript" src="/js/front/article/forgetPwd.js"></script >
+</html>

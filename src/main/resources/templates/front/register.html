@@ -1,0 +1,85 @@
+<!DOCTYPE HTML>
+<html>
+	<head th:include="front/article/include::header"></head>
+	<body>
+		<header>
+			<div class="wrap">
+				<!--头部：欢迎光临山东省网站-->
+				<div class="top">
+					<div class="top_l left">欢迎光临山东省网站！</div>
+					<div class="top_r right">
+						<div id="clock"></div>
+					    <input type="text">
+					    <input type="button" value="搜索">
+					</div>
+				</div>
+				<!--导航部分-->
+				<div class="logo">
+					<div class="text">
+						<h1>山东省</h1>
+						<h2>SHANDONG&nbsp;&nbsp;MEDICAL&nbsp;&nbsp;INFORMATION&nbsp;&nbsp;ASSICIATION</h2>
+					</div>
+					<nav>
+					    <ul class="navList">
+					    	<li class="color_bt"><a href="index.html">网站首页</a></li>
+					    	<li class="line"></li>
+					    	<li><a href="#">通知公告</a></li>
+					    	<li class="line"></li>
+					    	<li><a href="#">新闻动态</a></li>
+					    	<li class="line"></li>
+					    	<li><a href="#">推荐文章</a></li>
+					    	<li class="line"></li>
+					    	<li><a href="#">专家展示</a></li>
+					    	<li class="line"></li>
+					    	<li><a href="goodComment.html">精彩评论</a></li>
+					    	<li class="line"></li>
+					    	<li><a href="#">我要留言</a></li>
+					    </ul>
+				    </nav>
+				</div>
+			</div>
+		</header>
+		<!--中间部分-->
+		<section>
+			<div id="register_form">
+				<p><span>注册用户</span></p>
+				<form action="" method="post">
+				    <div class="item">
+						<label class="phone">手机号</label>
+						<input type="text" name="phone" placeholder="请填写手机号" required="required">
+					</div>
+					<div class="item">
+						<label class="uName">真实姓名</label>
+						<input type="text" name="uName" placeholder="请填写您的真实姓名" required="required">
+					</div>
+					<div class="item">
+						<label class="email">邮箱</label>
+						<input type="text" name="email" placeholder="请填写您的邮箱" required="required">
+					</div>
+					<div class="item">
+						<label class="job">工作单位</label>
+						<input type="text" name="job" placeholder="请填写您的工作单位">
+					</div>
+					<div class="item">
+						<label class="pwd">设置密码</label>
+						<input type="password" name="pwd" placeholder="请设置您的登录密码密码" required="required">
+					</div>
+					<div class="items">
+						<label class="code"><img src="/code/image" onClick="getcode()" id="codeImg"/></label>
+						<input type="text" name="code" placeholder="请输入验证码" required="required" id="code">
+						<input type="button" name="gain" value="获取短信验证码">
+					</div>
+					<div class="read">
+						阅读并接受<a href="javaScript:void(0);" id="read_per">《用户协议》</a>
+					</div>
+					<div class="btn">
+						<a href="javaScript:void(0);" id="register_btn">注册</a>
+					</div>
+				</form>	
+			</div>
+		</section>
+		<!--这是尾部-->
+		<div th:include="front/include::footer"></div>
+	</body>
+	<script type="text/javascript" src="/js/front/article/register.js"></script >
+</html>

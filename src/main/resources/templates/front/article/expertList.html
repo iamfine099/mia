@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+	<head th:include="front/include::header"></head>
+	<body>
+		<div th:include="front/include::topbar"></div>
+		
+		<!--这是身体-->
+		<section class="bodyFrame">
+			<div class="grayStrip clear">
+				<div class="textLink">
+					<a href="#">首页</a>
+				</div>
+				<div class="textLink">
+					<a href="#">>&nbsp;&nbsp;协会会员</a>
+				</div>
+			</div>
+			<div class="bodyContent">
+			<form  method="post" id="signupForm" action="/front/cms/expertList">
+				<ul class="selectionBar">
+					<li class="selectionBarText" style="border-top:1px solid #dcdcdc ;"><a href="https://www.baidu.com/">专家展示</a></li>
+				</ul>
+				<div class="expertList_photoWall">
+					<div class="expertList_photo clear">
+						<ul>
+							<li th:each="m ,stat: ${pageUtils.rows}" class="expertPhoto left"><a href="#"><img src="../images/zhuanjiaphoto.png"><span class="expertName">专家</span><span class="expertIntro">山东省</span></a></li>
+							<li class="expertPhoto left"><a href="#"><img src="../images/zhuanjiaphoto.png"><span class="expertName">专家</span><span class="expertIntro">山东省</span></a></li>
+							<li class="expertPhoto left"><a href="#"><img src="../images/zhuanjiaphoto.png"><span class="expertName">专家</span><span class="expertIntro">山东省</span></a></li>
+							<li class="expertPhoto left"><a href="#"><img src="../images/zhuanjiaphoto.png"><span class="expertName">专家</span><span class="expertIntro">山东省</span></a></li>
+							<li class="expertPhoto left"><a href="#"><img src="../images/zhuanjiaphoto.png"><span class="expertName">专家</span><span class="expertIntro">山东省</span></a></li>
+							<li class="expertPhoto left"><a href="#"><img src="../images/zhuanjiaphoto.png"><span class="expertName">专家</span><span class="expertIntro">山东省</span></a></li>
+							<li class="expertPhoto left"><a href="#"><img src="../images/zhuanjiaphoto.png"><span class="expertName">专家</span><span class="expertIntro">山东省</span></a></li>
+							<li class="expertPhoto left"><a href="#"><img src="../images/zhuanjiaphoto.png"><span class="expertName">专家</span><span class="expertIntro">山东省</span></a></li>
+							<li class="expertPhoto left"><a href="#"><img src="../images/zhuanjiaphoto.png"><span class="expertName">专家</span><span class="expertIntro">山东省</span></a></li>
+							<li class="expertPhoto left"><a href="#"><img src="../images/zhuanjiaphoto.png"><span class="expertName">专家</span><span class="expertIntro">山东省</span></a></li>
+							<li class="expertPhoto left"><a href="#"><img src="../images/zhuanjiaphoto.png"><span class="expertName">专家</span><span class="expertIntro">山东省</span></a></li>
+						</ul>
+					</div>
+					<!-- <div class="pageNum">
+						<p><a href="#" style="margin-left: 500px; color:#037edb ;">首页</a></p>
+						<p><a href="#">上一页</a></p>
+						<p><a href="#">下一页</a></p>
+						<p><a href="#">尾页</a></p>
+						<p>共192条</p>
+						<select class="choosePage">
+							<option>第1页</option>
+							<option>第2页</option>
+							<option>第3页</option>
+							<option>第4页</option>
+							<option>第5页</option>
+						</select>
+					</div> -->
+				</div>
+			<div th:include="front/article/include::split_page" ></div>
+			</form>
+			</div>
+		</section>
+		<!--这是尾部-->
+		
+		<div th:include="front/include::footer"></div>
+		<!-- <footer>
+			<div class="footers">
+				<ul>
+					<li><a href="#">政府部门导航</a></li>
+					<li><a href="#">院属兄弟单位</a></li>
+					<li><a href="#">医学研究机构</a></li>
+					<li><a href="#">其他研究机构</a></li>
+				</ul>
+				<div class="address">
+				    <p>Copyright&copy;2018鲁ICP备11032646号 版权属山东所有</p>
+			    </div>
+			</div>
+		</footer> -->
+	</body>
+</html>

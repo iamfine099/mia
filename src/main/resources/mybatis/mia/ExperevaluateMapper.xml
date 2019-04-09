@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.mia.dao.ExperevaluateDao">
+
+	<sql id="columns">
+		`eet_id`,`article_id`,`expert_id`,`score`,`score_date`,`is_recommend`,`recommend_date`,`is_like`,`like_date`</sql>
+	
+	<sql id="commons_where">
+		  <if test="eetId != null and eetId != ''"> and eet_id = #{eetId} </if>
+		  <if test="articleId != null and articleId != ''"> and article_id = #{articleId} </if>
+		  <if test="expertId != null and expertId != ''"> and expert_id = #{expertId} </if>
+		  <if test="score != null and score != ''"> and score = #{score} </if>
+		  <if test="scoreDate != null and scoreDate != ''"> and score_date = #{scoreDate} </if>
+		  <if test="isRecommend != null and isRecommend != ''"> and is_recommend = #{isRecommend} </if>
+		  <if test="recommendDate != null and recommendDate != ''"> and recommend_date = #{recommendDate} </if>
+		  <if test="isLike != null and isLike != ''"> and is_like = #{isLike} </if>
+		  <if test="likeDate != null and likeDate != ''"> and like_date = #{likeDate} </if>
+		</sql>
+
+	<select id="get" resultType="com.bootdo.mia.domain.ExperevaluateDO">
+		select
+			<include refid="columns" />
+ 		from t_expert_evaluate
+ 		where eet_id = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.mia.domain.ExperevaluateDO">
+		select
+			<include refid="columns" />
+		from t_expert_evaluate
+        <where>  
+		  <include refid="commons_where"/>
+		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by eet_id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from t_expert_evaluate
+		 <where>  
+		  <include refid="commons_where"/>
+		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.mia.domain.ExperevaluateDO" useGeneratedKeys="true" keyProperty="eetId">
+		insert into t_expert_evaluate
+		(
+			`article_id`, 
+			`expert_id`, 
+			`score`, 
+			`score_date`, 
+			`is_recommend`, 
+			`recommend_date`,
+			`is_like`,
+			`like_date`
+		)
+		values
+		(
+			#{articleId}, 
+			#{expertId}, 
+			#{score}, 
+			#{scoreDate}, 
+			#{isRecommend}, 
+			#{recommendDate},
+			#{isLike},
+			#{likeDate}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.bootdo.mia.domain.ExperevaluateDO">
+		update t_expert_evaluate 
+		<set>
+			<if test="articleId != null">`article_id` = #{articleId}, </if>
+			<if test="expertId != null">`expert_id` = #{expertId}, </if>
+			<if test="score != null">`score` = #{score}, </if>
+			<if test="scoreDate != null">`score_date` = #{scoreDate}, </if>
+			<if test="isRecommend != null">`is_recommend` = #{isRecommend}, </if>
+			<if test="recommendDate != null">`recommend_date` = #{recommendDate}, </if>
+			<if test="isLike != null">`is_like` = #{isLike},</if>
+			<if test="likeDate != null">`like_date` = #{likeDate}</if>
+		</set>
+		where eet_id = #{eetId}
+	</update>
+	
+	<delete id="remove">
+		delete from t_expert_evaluate where eet_id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from t_expert_evaluate where eet_id in 
+		<foreach item="eetId" collection="array" open="(" separator="," close=")">
+			#{eetId}
+		</foreach>
+	</delete>
+
+	<select id="notCompleteCount" resultType="int">
+		select count(*) from t_expert_evaluate
+		 <where>  
+		  <include refid="commons_where"/>
+		</where>
+		and score is null
+	</select>
+	
+	<select id="avgScore" resultType="String">
+		select avg(score) from t_expert_evaluate
+		 <where>  
+		  and article_id = #{value}
+		</where>
+	</select>
+	
+	<select id="recommendNum" resultType="int">
+		select count(*) from t_expert_evaluate
+		 <where>  
+		  and article_id = #{value} and is_recommend = 1
+		</where>
+	</select>
+	
+	<select id="likeNum" resultType="int">
+		select count(*) from t_expert_evaluate
+		 <where>  
+		  and article_id = #{value} and is_like = 1
+		</where>
+	</select>
+	<select id="detailList" resultType="com.bootdo.mia.domain.ExperevaluateDO">
+		select
+			ee.`eet_id`,ee.`article_id`,ee.`expert_id`,ee.`score`,ee.`score_date`,ee.`is_recommend`,ee.`recommend_date`,ee.`is_like`,ee.`like_date`,
+			c.`name` as "memName",e.`expert_name` as "expertName",a.`title` as "title",a.`publish_time` as "publishTime"
+		from t_expert_evaluate ee
+		left join t_article a ON a.id = ee.article_id 
+        left join t_expert e ON e.expert_id = ee.expert_id
+        left join sys_user c on c.user_id = a.create_by
+        <where>  
+		  <include refid="commons_where"/>
+		</where>
+       		order by eet_id desc,a.publish_time desc
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	<select id="detailCount" resultType="int">
+		select count(*)
+		from t_expert_evaluate ee
+		left join t_article a ON a.id = ee.article_id 
+        left join t_expert e ON e.expert_id = ee.expert_id
+        left join sys_user c on c.user_id = a.create_by
+		 <where>  
+		  <include refid="commons_where"/>
+		</where>
+	</select>
+</mapper>

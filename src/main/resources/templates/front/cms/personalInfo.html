@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+	<head th:include="front/include::header"></head>
+	<body>
+		<head th:include="front/include :: topbar"></head>
+		<!--这是身子-->
+		<section class="total">
+			<div class="grayStrip">				
+				<div class="publicTitle">
+					<p><span th:text="${user.username}"></span>登录成功！
+					<a th:href="@{/front/cms/out}" class="person_exit">退出</a>
+					</p>
+				</div>
+			</div>
+			<!--这是选择盒子-->
+			<div class="bodyContent">
+				<ul class="selectionBar">
+				 <li class="selectionBarText choosed"><a th:href="@{/front/cms/personalInfo}">个人信息</a></li>
+					<li class="selectionBarText"><a th:href="@{/front/cms/modifyPwd}">修改密码</a></li>
+					<li class="selectionBarText"><a th:href="@{/front/cms/release}">我要发布</a></li>
+					<li class="selectionBarText"><a th:href="@{/front/cms/drafts}">草稿箱</a></li>
+					<li class="selectionBarText"><a th:href="@{/front/cms/myArticle}">我的文章</a></li> 
+					<li class="selectionBarText"><a th:href="@{/front/cms/open/recommendarticlelist}">推荐文章</a></li>
+					<li class="selectionBarText"><a th:href="@{/front/cms/mynews}">消息通知</a></li>
+				</ul>
+				<div class="expertExhibition_content">
+					<div class="expertEx_photo left">
+						<div class="cardphoto">
+							<div class="cardphotolimit">
+								<img th:src="@{${fileObj.url!=null}?@{${fileObj.url}}:@{/img/morentouxiang.png}}">
+							</div>
+						</div>
+						<div class="cardInfo clear_box">
+							<p>姓名：<span class="cardText" th:text="${member.memName}">张广江</span></p>
+							<p>专长：<span th:text="${member.specialty}">贫血基因表达</span></p>
+							<p>单位：<span th:text="${member.company}">山东大学第二医院</span></p>
+							<p>编号：<span th:text="${member.numberCard}">20181254369</span></p>
+						</div>
+					</div>
+					<div class="expertEx_intro min_height">
+						<p class="expertEx_introH">
+							<span class="expertEx_introTitle">姓名</span>
+							<span class="expertEx_introContent" th:text="${member.memName}">张广江</span>
+						</p>
+						<p class="expertEx_introH">
+							<span class="expertEx_introTitle">手机号码</span>
+							<span class="expertEx_introContent" id="shoujihao" th:text="${member.phone}">15878954876</span>
+						</p>
+						<p class="expertEx_introH">
+							<span class="expertEx_introTitle">电子邮箱</span>
+							<span class="expertEx_introContent" th:text="${member.email}">15878954876@qq.com</span>
+						</p>
+						<p class="expertEx_introH">
+							<span class="expertEx_introTitle">单位地址</span>
+							<span class="expertEx_introContent" th:text="${member.company}">济南市历下区</span>
+						</p>
+						<p class="expertEx_introH">
+							<span class="expertEx_introTitle">专长</span>
+							<span class="expertEx_introContentDet" th:text="${member.specialty}">
+								
+							</span>
+						</p>
+						<div class="personalInfo_box">
+						<a th:href="@{/front/cms/modifyPersonalInfo}"><button class="modify_btn" type="submit">修改</button></a>
+					</div>
+					</div>
+				</div>
+				
+				<!-- <div class="personalInfo">
+					<div class="personalInfo_box">
+						<p>&nbsp;手&nbsp;机&nbsp;号&nbsp;：<span class="phone" id="phone" th:text=${member.phone}></span></p>
+					</div>
+					<div class="personalInfo_box">
+						<p>真实姓名：<span class="memName" id="memName" th:text=${member.memName}>金城武</span></p>
+					</div>
+					<div class="personalInfo_box">
+						<p>工作单位：<span class="company" id="company" th:text=${member.company}>山东济南市历下区新华书店</span></p>
+					</div>
+					<div class="personalInfo_box">
+						<p>邮&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;箱：
+						<span class="email" id="email" th:text=${member.email}>山东济南市历下区新华书店</span>
+						</p>
+					</div>
+					<div class="personalInfo_box">
+						<a th:href="@{/front/cms/modifyPersonalInfo}"><button class="modify_btn" type="submit">修改</button></a>
+					</div>
+				</div>	-->						
+			</div> 
+		</section>
+		
+		<!--这是尾部-->
+		<div th:include="front/include::footer"></div>
+	</body>
+</html>

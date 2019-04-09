@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+	<meta charset="utf-8">
+	<head th:include="front/include::header"></head>
+	<body>
+		<!--这是头-->	
+		<!--这是身子-->
+		<section class="total">
+			<div class="grayStrip clear">
+				<div class="textLink">
+					<a href="">首页</a>
+				</div>
+				<div class="textLink">
+					<a href="">>&nbsp;&nbsp;我要留言</a>
+				</div>
+			</div>
+			<!--这是选择盒子-->
+			<div class="bodyContent">
+				<ul class="selectionBar">
+				 <li class="selectionBarText choosed"><a href="">我要留言</a></li>
+				</ul>
+				
+				<div class="recommendA_article min_height">
+					<div>
+						<p class="messageBoardTip"> 感谢您的留言，我们会及时处理并通知您相关处理结果。 </p>
+						<form method="post" id="signupForm">
+							<div class="messageBoardInfo">
+								<div class="messageBoardName left">姓名：</div>
+								<div><input id="name" name='name' type="text" class="messageBoardInput"/></div>
+							</div>
+							<div class="messageBoardInfo">
+								<div class="messageBoardName left">手机号码：</div>
+								<div><input id="phone" name='phone' type="text" class="messageBoardInput"/><span class="requiredBox"><span class="redstar">*&nbsp;&nbsp;</span>(必填项)</span></div>
+							</div>
+							<div class="messageBoardInfo">
+								<div class="messageBoardName left">邮箱：</div>
+								<div><input id="email" name='email' type="text" class="messageBoardInput"/></div>
+							</div>
+							<div class="messageBoardInfo">
+								<div class="messageBoardName left">单位名称：</div>
+								<div><input id="company" name='company' type="text" class="messageBoardInput"/></div>
+							</div>
+							<div class="messageBoardInfo">
+								<div class="messageBoardName left">地址：</div>
+								<div><input id="address" name='address' type="text" class="messageBoardInput"/></div>
+							</div>
+							<div class="messageBoardInfo">
+								<div class="messageBoardName left">微信：</div>
+								<div><input id="weChat" name='weChat' type="text" class="messageBoardInput"/></div>
+							</div>
+							<div class="messageBoardInfo">
+								<div class="messageBoardName left">留言类型：</div>
+								<select class="messageBoardInput" name="type" id="type">
+									<option value="">---请选择---</option>
+									<option th:each="leaveMessageType : ${leaveMessageTypeList}" th:value="${leaveMessageType.mtName}" th:text="${leaveMessageType.mtName}"></option>
+								</select>
+							</div>
+							<div class="messageBoardInfo">
+								<div class="messageBoardName left">留言内容：</div>
+								<div><textarea id="messagecontent" name='lmContent' type="text" class="messageBoardContent"></textarea><span class="requiredBox2"><span class="redstar">*&nbsp;&nbsp;</span>(必填项)</span></div>
+							</div>
+							<div class="messageBoardInfo">
+								<div class="messageBoardName left"></div>
+								<div><button type="button" class="messageBoard_btn" id="tijiao">提交</button></div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!--这是尾部-->
+		<div th:include="front/include::footer"></div>
+		<script type="text/javascript" src="/js/front/article/leaveMessage.js"></script>
+	</body>
+</html>

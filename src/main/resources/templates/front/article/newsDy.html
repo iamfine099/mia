@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+	<head th:include="front/include::header"></head>
+	<body>
+		<div th:include="front/include::topbar"></div>
+
+		<!--这是身体-->
+		<section class="total">
+			<div class="grayStrip clear">
+				<div class="textLink">
+					<a href="#">首页</a>
+				</div>
+				<div class="textLink">
+					<a href="#">>&nbsp;&nbsp;新闻动态</a>
+				</div>
+			</div>
+			<!--这是选择盒子-->
+			<div class="bodyContent">
+				<ul class="selectionBar">
+					<li class="selectionBarText" style="border-top:1px solid #dcdcdc ;"><a href="">新闻动态</a></li>
+					<li class="selectionBarText"><a href="#">行业资讯</a></li>
+				</ul>
+			
+				<div class="newsDy_article">
+					<ul>
+						<li><img src="../images/BluelistStyle.jpg"><a href="">信息所开展“共建生态文明，共享绿色未来”环保公益活动<span class="newsDy_readNum">阅读：38</span><span class="newsDy_time">2018-10-11</span></a></li>
+						<li><img src="../images/BluelistStyle.jpg"><a href="">低碳环保&nbsp;绿色共享&nbsp;健康生活————泉城公园健步走活动<span class="newsDy_readNum">阅读：38</span><span class="newsDy_time">2018-10-11</span></a></li>
+						<li><img src="../images/BluelistStyle.jpg"><a href="">信息所老干部参加省医科院第七届老年人趣味运动会展风采<span class="newsDy_readNum">阅读：38</span><span class="newsDy_time">2018-10-11</span></a></li>
+						<li><img src="../images/BluelistStyle.jpg"><a href="">信息所志愿者参与“金秋菊韵·乐享重阳”之趵突泉赏菊重阳节敬老公益活动<span class="newsDy_readNum">阅读：38</span><span class="newsDy_time">2018-10-11</span></a></li>
+						<li><img src="../images/BluelistStyle.jpg"><a href="">信息所宋奎勐博士赴英国利物浦参加世界第五届世界卫生体系研究大会<span class="newsDy_readNum">阅读：38</span><span class="newsDy_time">2018-10-11</span></a></li>
+						<li><img src="../images/BluelistStyle.jpg"><a href="">信息所开展“共建生态文明，共享绿色未来”环保公益活动<span class="newsDy_readNum">阅读：38</span><span class="newsDy_time">2018-10-11</span></a></li>
+						<li><img src="../images/BluelistStyle.jpg"><a href="">信息所宋燕博士赴日本东京参加ISPOR2018年亚太年会<span class="newsDy_readNum">阅读：38</span><span class="newsDy_time">2018-10-11</span></a></li>
+						<li><img src="../images/BluelistStyle.jpg"><a href="">信息所参加省直文明单位第十四届协作区乒乓球比赛<span class="newsDy_readNum">阅读：38</span><span class="newsDy_time">2018-10-11</span></a></li>
+						<li><img src="../images/BluelistStyle.jpg"><a href="">信息所开展“共建生态文明，共享绿色未来”环保公益活动<span class="newsDy_readNum">阅读：38</span><span class="newsDy_time">2018-10-11</span></a></li>
+						<li><img src="../images/BluelistStyle.jpg"><a href="">信息所组织在职党员干部职工进行党纪法规和德廉知识学习测试<span class="newsDy_readNum">阅读：38</span><span class="newsDy_time">2018-10-11</span></a></li>
+						<div class="pageNum">
+							<p><a href="#" style="margin-left: 500px; color:#037edb ;">首页</a></p>
+							<p><a href="#">上一页</a></p>
+							<p><a href="#">下一页</a></p>
+							<p><a href="#">尾页</a></p>
+							<p>共192条</p>
+							<select class="choosePage">
+								<option>第1页</option>
+								<option>第2页</option>
+								<option>第3页</option>
+								<option>第4页</option>
+								<option>第5页</option>
+							</select>
+						</div>
+					</ul>
+				</div>
+				
+			</div>
+		</section>
+		<!--这是尾部-->
+		<div th:include="front/include::footer"></div>
+	</body>
+</html>

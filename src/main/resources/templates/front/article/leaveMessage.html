@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+	<meta charset="utf-8">
+
+	<head th:include="front/include :: header"></head>
+
+	<body>
+		<!--头部-->
+		<head th:include="front/include :: topbar"></head>
+		<!--中间部分-->
+		<section id="release" class="clear_box">
+			<div class="section_box">
+				<!--中间标题-->
+				<div class="grayStrip">				
+				<div class="publicTitle">
+					<p><span th:text="${user.username}"></span>登录成功！
+					<a th:href="@{/front/cms/out}" class="person_exit">退出</a>
+					</p>
+				</div>
+			</div>
+				<!--左侧信息-->
+				<aside>
+					<div class="public_box">
+						<ul>
+							
+							<li class="selectionBarText listStyle">
+								<a th:href="@{/front/cms/release}">我要留言</a>
+							</li>
+						</ul>
+					</div>
+				</aside>
+				<!--右侧部分-->
+				<article class="clear_box">
+					<form method="post" id="signupForm">
+						<div class="form-group">
+							<label class="control-label">留言类型：</label>
+							<select class="form-control" name="type" id="type">
+								<option value="">---请选择---</option>
+								<option th:each="leaveMessageType : ${leaveMessageTypeList}" th:value="${leaveMessageType.mtName}" th:text="${leaveMessageType.mtName}"></option>
+							</select>
+						</div>
+						<div class="form-group">
+							<!-- <input id="lmContent" name="lmContent" type="hidden"> -->
+							<label class="control-label">留言内容：</label>
+							<!-- <div id="content_summernote" class="summernote"></div> -->
+							<textarea id="lmContent" name='lmContent' class="review" placeholder='说点什么...'></textarea>
+						</div>
+						<div class="form-group " id='release'>
+						</div>
+						<div class="form-group release_buttons">
+							<button type="button" class="release_btn release_buttons_2" id="tijiao">提交</button>
+						</div>
+					</form>
+				</article>
+			</div>
+		</section>
+		<!--脚部-->
+		<!--这是尾部-->
+		<div th:include="front/include :: footer"></div>
+		<script type="text/javascript" src="/js/front/article/leaveMessage.js"></script>
+	</body>
+</html>

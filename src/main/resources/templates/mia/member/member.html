@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="col-sm-12">
+		<script src="/js/front/static/Print.js" type="text/javascript" charset="utf-8" ></script>
+		<div class='user_card' id='user_card'>
+			<div class='card_bg'><img src='/img/zhuanjiaxiangqingbeijing.png'/></div>
+			<div class="cardphoto">
+				<div class="cardphotolimit">
+					<img src="/img/morentouxiang.png" class='headImg'>
+				</div>
+			</div>
+			<div class="cardInfo clear_box">
+				<p>姓名：<span class="memName"></span></p>
+				<p>专长：<span class="specialty"></span></p>
+				<p>单位：<span class="company"></span></p>
+				<p>编号：<span class="numberCard"></span></p>
+			</div>
+		</div>
+			<div class="ibox">
+				<div class="ibox-body">
+					<div class="fixed-table-toolbar">
+						<div class="columns little-padding searchArea">
+							<div class="row">
+							<form id='searchForm'>
+							 																																	<div class=" pull-left col-md-3 nopadding little-marign">
+									<span  class=" pull-left col-md-4 forSearch">姓名:</span>
+									<div class=" pull-left col-md-8 nopadding ">
+										<input id="memName" name='memName' type="text" class="form-control"
+											placeholder="">
+									</div>
+								</div>
+								<div class=" pull-left col-md-3 nopadding little-marign">
+									<span  class=" pull-left col-md-4 forSearch">手机号:</span>
+									<div class=" pull-left col-md-8 nopadding ">
+										<input id="phone" name='phone' type="text" class="form-control"
+											placeholder="">
+									</div>
+								</div>
+																																
+									<div class=" pull-left col-md-3 nopadding little-marign">
+									<span  class=" pull-left col-md-4 forSearch">状态:</span>
+									<div class=" pull-left col-md-8 nopadding ">
+									<select id="status" name="status" class="form-control">
+									<option value="">---请选择---</option>
+									<option th:each="dict:${T(com.bootdo.common.utils.DictUtils).getDictList('status')}" th:value="${dict.value}" th:text="${dict.name}"></option>
+									</select>
+									</div>
+								</div>
+							</form>
+								<div class=" pull-left col-md-3 nopadding little-marign">
+									<button class="pull-left btn btn-success little-marign" type='button' onclick="reLoad()" style="margin-left:10px;">查询</button>
+									<button class="pull-left btn btn-success little-marign" type='button' onclick="resetBtn(this)" style="margin-left:10px;">重置</button>
+								</div>
+							</div>	
+							
+							<div style='clear:both;'></div>	
+						</div>
+						<div class="columns ">
+							<button shiro:hasPermission="mia:member:edit" type="button" class="btn  btn-primary" onclick="checkInfo()">
+								<i class="fa fa-file-excel-o" aria-hidden="true"></i>审核
+							</button>
+						</div>
+					</div>
+					<table id="exampleTable" data-mobile-responsive="true">
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--shiro控制bootstraptable行内按钮看见性 来自bootdo的创新方案 -->
+		<div>
+			<script type="text/javascript">
+				var s_edit_h = 'hidden';
+				var s_remove_h = 'hidden';
+				var s_resetPwd_h = 'hidden';
+			</script>
+		</div>
+		<div shiro:hasPermission="mia:member:edit">
+			<script type="text/javascript">
+				s_edit_h = '';
+			</script>
+		</div>
+		 <div shiro:hasPermission="mia:member:remove">
+			<script type="text/javascript">
+				var s_remove_h = '';
+			</script>
+		</div> 
+		<div shiro:hasPermission="mia:member:edit">
+			<script type="text/javascript">
+				var s_resetPwd_h = '';
+			</script>
+		</div>
+	</div>
+	<div th:include="include :: footer"></div>
+	<script type="text/javascript" th:inline="javascript">
+	var sexTypeJson = JSON.parse([[${T(com.bootdo.common.utils.DictUtils).getDictListJson('sex')}]]);
+	var statusTypeJson = JSON.parse([[${T(com.bootdo.common.utils.DictUtils).getDictListJson('status')}]]);
+	</script>
+	<script type="text/javascript" src="/js/appjs/mia/member/member.js"></script>
+</body>
+</html>

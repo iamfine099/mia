@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content">
+						<form class="form-horizontal m-t" id="signupForm">
+							<input id="pushType" name="pushType"  type="hidden" th:value="${pushType}">
+							<input id="ids" name="ids"  type="hidden" th:value="${ids}">
+							<div class="form-group">
+								<label class="col-sm-3 control-label">消息接收方：</label>
+								<div class="col-sm-7">
+									<input id='showSelect' class="form-control" readonly="readonly" type="text">
+									<input id="fto" name="fto" class="form-control" readonly="readonly" type="hidden">
+								</div>
+								<div class="col-sm-1">
+									<button class='btn btn-success ' type='button'
+										onclick='layeropen()'>选择</button>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">消息内容：</label>
+								<div class="col-sm-8">
+									<textarea rows="2" id="fMessage" name="fMessage" class="form-control"></textarea>	
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">引用网址：</label>
+								<div class="col-sm-8">
+									<input id="fUrl" name="fUrl" class="form-control" type="text">
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-8 col-sm-offset-3">
+									<button type="submit" class="btn btn-primary">提交</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div th:include="include::footer"></div>
+	<script type="text/javascript"
+		src="/js/appjs/common/userMessage/messagePush.js">
+		
+	</script>
+</body>
+</html>

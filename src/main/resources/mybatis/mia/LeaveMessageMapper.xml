@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.mia.dao.LeaveMessageDao">
+
+	<sql id="columns">
+		`lm_id`,`lm_content`,`create_by`,`create_date`,`audit_by`,`audit_date`,`audit_content`,`reply_by`,`reply_date`,`reply_content`,`status`,`type`,`name`,
+			`phone`,
+			`email`,
+			`company`,
+			`address`,
+			`weChat`,
+			`login_status`</sql>
+	
+	<sql id="commons_where">
+		  <if test="lmId != null and lmId != ''"> and lm_id = #{lmId} </if>
+		  <if test="lmContent != null and lmContent != ''"> and lm_content = #{lmContent} </if>
+		  <if test="createBy != null and createBy != ''"> and create_by = #{createBy} </if>
+		  <if test="createDate != null and createDate != ''"> and create_date = #{createDate} </if>
+		  <if test="auditBy != null and auditBy != ''"> and audit_by = #{auditBy} </if>
+		  <if test="auditDate != null and auditDate != ''"> and audit_date = #{auditDate} </if>
+		  <if test="auditContent != null and auditContent != ''"> and audit_content = #{auditContent} </if>
+		  <if test="replyBy != null and replyBy != ''"> and reply_by = #{replyBy} </if>
+		  <if test="replyDate != null and replyDate != ''"> and reply_date = #{replyDate} </if>
+		  <if test="replyContent != null and replyContent != ''"> and reply_content = #{replyContent} </if>
+		  <if test="status != null and status != ''"> and status = #{status} </if>
+		  <if test="type != null and type != ''"> and type = #{type} </if>
+		</sql>
+
+	<select id="get" resultType="com.bootdo.mia.domain.LeaveMessageDO">
+		select
+			<include refid="columns" />
+ 		from t_leave_message
+ 		where lm_id = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.mia.domain.LeaveMessageDO">
+		select
+			<include refid="columns" />
+		from t_leave_message
+        <where>  
+		  <include refid="commons_where"/>
+		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by lm_id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from t_leave_message
+		 <where>  
+		  <include refid="commons_where"/>
+		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.mia.domain.LeaveMessageDO" useGeneratedKeys="true" keyProperty="lmId">
+		insert into t_leave_message
+		(
+			`lm_content`, 
+			`create_by`, 
+			`create_date`, 
+			`audit_by`, 
+			`audit_date`, 
+			`audit_content`, 
+			`reply_by`, 
+			`reply_date`, 
+			`reply_content`, 
+			`status`, 
+			`type`,
+			`name`,
+			`phone`,
+			`email`,
+			`company`,
+			`address`,
+			`weChat`,
+			`login_status`
+		)
+		values
+		(
+			#{lmContent}, 
+			#{createBy}, 
+			#{createDate}, 
+			#{auditBy}, 
+			#{auditDate}, 
+			#{auditContent}, 
+			#{replyBy}, 
+			#{replyDate}, 
+			#{replyContent}, 
+			#{status}, 
+			#{type},
+			#{name},
+			#{phone},
+			#{email},
+			#{company},
+			#{address},
+			#{weChat},
+			#{loginStatus}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.bootdo.mia.domain.LeaveMessageDO">
+		update t_leave_message 
+		<set>
+			<if test="lmContent != null">`lm_content` = #{lmContent}, </if>
+			<if test="createBy != null">`create_by` = #{createBy}, </if>
+			<if test="createDate != null">`create_date` = #{createDate}, </if>
+			<if test="auditBy != null">`audit_by` = #{auditBy}, </if>
+			<if test="auditDate != null">`audit_date` = #{auditDate}, </if>
+			<if test="auditContent != null">`audit_content` = #{auditContent}, </if>
+			<if test="replyBy != null">`reply_by` = #{replyBy}, </if>
+			<if test="replyDate != null">`reply_date` = #{replyDate}, </if>
+			<if test="replyContent != null">`reply_content` = #{replyContent}, </if>
+			<if test="status != null">`status` = #{status}, </if>
+			<if test="type != null">`type` = #{type}</if>
+		</set>
+		where lm_id = #{lmId}
+	</update>
+	
+	<delete id="remove">
+		delete from t_leave_message where lm_id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from t_leave_message where lm_id in 
+		<foreach item="lmId" collection="array" open="(" separator="," close=")">
+			#{lmId}
+		</foreach>
+	</delete>
+
+</mapper>

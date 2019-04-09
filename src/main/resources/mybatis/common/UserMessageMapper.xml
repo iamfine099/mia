@@ -1,0 +1,473 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.common.dao.UserMessageDao">
+
+	<select id="get" resultType="com.bootdo.common.domain.UserMessageDO">
+		select m.`f_msg_id`,m.`f_from`,m.`f_message`,m.`f_send_time`,m.`f_url`,m.`f_memo`,m.`f_type` ,m.`f_to_type`,m.`f_college_id`,m.`f_title` 
+		from t_user_message m
+		where m.f_msg_id = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.common.domain.UserMessageDO">
+		select m.`f_msg_id`,m.`f_from`,m.`f_message`,m.`f_send_time`,m.`f_url`,m.`f_memo`,m.`f_title`,m.`f_to_type`
+		from t_user_message m
+		left join t_message_receiver ad on ad.f_msg_id = m.f_msg_id
+        <where>  
+		  		  <if test="fMsgId != null and fMsgId != ''"> and m.f_msg_id = #{fMsgId} </if>
+		  		  <if test="fType != null and fType != ''"> and m.f_type = #{fType} </if>
+		  		  <if test="fToType != null and fToType != ''"> and m.f_to_type = #{fToType} </if>
+		  		  <if test="fFrom != null and fFrom != ''"> and m.f_from = #{fFrom} </if>
+		  		  <if test="fMessage != null and fMessage != ''"> and m.f_message = #{fMessage} </if>
+		  		  <if test="fSendTime != null and fSendTime != ''"> and m.f_send_time = #{fSendTime} </if>
+		  		  <if test="fUrl != null and fUrl != ''"> and m.f_url = #{fUrl} </if>
+		  		  <if test="fMemo != null and fMemo != ''"> and m.f_memo = #{fMemo} </if>
+		  		  <if test="fTitle != null and fTitle != ''"> and m.f_title = #{fTitle} </if>	  		  
+		  		  <if test="fTo != null and fTo != ''"> and ad.f_to = #{fTo} </if>
+		  		</where>
+		  		
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by m.f_msg_id desc ,m.`f_send_time` desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+	<select id="notifylistByMember" resultType="com.bootdo.common.domain.UserMessageDO">
+		select m.`f_msg_id`,m.`f_from`,m.`f_message`,m.`f_send_time`,m.`f_url`,m.`f_memo`,m.`f_title`
+		from t_user_message m
+		left join t_message_receiver ad on ad.f_msg_id = m.f_msg_id
+        where m.f_to_type = "0" or m.f_to_type = "1"
+		  		
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by m.f_msg_id desc ,m.`f_send_time` desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+	<select id="notifylistByMemberCount" resultType="int">
+		select count(m.`f_msg_id`)
+		from t_user_message m
+		left join t_message_receiver ad on ad.f_msg_id = m.f_msg_id
+        where m.f_to_type = "0" or m.f_to_type = "1"
+	</select>
+	
+	<select id="notifylistByExpert" resultType="com.bootdo.common.domain.UserMessageDO">
+		select m.`f_msg_id`,m.`f_from`,m.`f_message`,m.`f_send_time`,m.`f_url`,m.`f_memo`,m.`f_title`
+		from t_user_message m
+		left join t_message_receiver ad on ad.f_msg_id = m.f_msg_id
+        where m.f_to_type = "0" or m.f_to_type = "2"
+		  		
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by m.f_msg_id desc ,m.`f_send_time` desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+	<select id="notifylistByExpertCount" resultType="int">
+		select count(m.`f_msg_id`)
+		from t_user_message m
+		left join t_message_receiver ad on ad.f_msg_id = m.f_msg_id
+        where m.f_to_type = "0" or m.f_to_type = "2"
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from t_user_message m
+		left join t_message_receiver ad on ad.f_msg_id = m.f_msg_id
+		
+		 <where>  
+		  		  <if test="fMsgId != null and fMsgId != ''"> and f_msg_id = #{fMsgId} </if>
+		  		  <if test="fFrom != null and fFrom != ''"> and f_from = #{fFrom} </if>
+		  		  <if test="fMessage != null and fMessage != ''"> and f_message = #{fMessage} </if>
+		  		  <if test="fSendTime != null and fSendTime != ''"> and f_send_time = #{fSendTime} </if>
+		  		  <if test="fUrl != null and fUrl != ''"> and f_url = #{fUrl} </if>
+		  		  <if test="fMemo != null and fMemo != ''"> and f_memo = #{fMemo} </if>
+		  		  <if test="fTitle != null and fTitle != ''"> and f_title = #{fTitle} </if>		  		  
+		  		  <if test="fTo != null and fTo != ''"> and ad.f_to = #{fTo} </if>
+		  		</where>
+	</select>
+	<!--未读消息和我的接收消息列表查询-->
+	 <select id="receiverList" resultType="com.bootdo.common.domain.UserMessageDO">
+		select  f_msg_id,f_message,f_url,f_from,f_to_readed,fId,
+                 f_send_time from (select m.f_msg_id,
+		       m.f_message,
+		       m.f_url,
+		         u.name as f_from,
+		       if((select count(*)
+		             from t_message_receiver r
+		            where r.f_msg_id = m.f_msg_id and r.f_to =  #{fTo}) > 0,
+		          1,
+		          0) as f_to_readed,
+		      if((select count(*)
+		             from t_message_receiver r
+		            where r.f_msg_id = m.f_msg_id and r.f_to =  #{fTo}) > 0,
+		          (select r.f_id
+		             from t_message_receiver r
+		            where r.f_msg_id = m.f_msg_id and r.f_to =  #{fTo}),
+		          '') as "fId",
+                  m.f_send_time
+		  from t_user_message m,sys_user u 
+		 where m.f_from =u.user_id and m.f_type = 'public'
+		   and f_to_type in('A', #{fToType}) 
+		    <if test="fToReaded != null and fToReaded != ''"> 
+		    	 and (select count(*)
+		             from t_message_receiver r
+		            where r.f_msg_id = m.f_msg_id and r.f_to =  #{fTo} ) = 0
+		    </if>
+		     <if test="searchName != null and searchName != ''"> 
+		    	  and m.f_message like CONCAT('%',#{searchName},'%')
+		    </if>
+		    
+		union all
+		select  m.f_msg_id, m.f_message,m.f_url,  u.name as f_from, r.f_to_readed,r.f_id as "fId",
+                  m.f_send_time
+		  from t_user_message m, t_message_receiver r,sys_user u 
+		 where m.f_from =u.user_id and r.f_msg_id = m.f_msg_id
+		   and m.f_type = 'private'
+		   and r.f_to = #{fTo}
+		  <if test="fToReaded != null and fToReaded != ''">  and r.f_to_readed = 0 </if>
+		  <if test="searchName != null and searchName != ''"> 
+		    	  and m.f_message like CONCAT('%',#{searchName},'%')
+		  </if>
+		  )temp 
+		  order by f_send_time desc
+		  <if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		 </if>
+	</select>
+	
+ 	<select id="receiverCount" resultType="int">
+		select count(*) from (select m.f_msg_id,
+		       m.f_message,
+		         u.name as f_from,
+		       if((select count(*)
+		             from t_message_receiver r
+		            where r.f_msg_id = m.f_msg_id and r.f_to =  #{fTo}) > 0,
+		          1,
+		          0) as f_to_readed,
+		      if((select count(*)
+		             from t_message_receiver r
+		            where r.f_msg_id = m.f_msg_id and r.f_to =  #{fTo}) > 0,
+		          (select r.f_id
+		             from t_message_receiver r
+		            where r.f_msg_id = m.f_msg_id and r.f_to =  #{fTo}),
+		          '') as "fId"
+		  from t_user_message m,sys_user u 
+		 where m.f_from =u.user_id and m.f_type = 'public'
+		   and f_to_type in('A', #{fToType}) 
+		    <if test="fToReaded != null and fToReaded != ''"> 
+		    	 and (select count(*)
+		             from t_message_receiver r
+		            where r.f_msg_id = m.f_msg_id and r.f_to =  #{fTo} ) = 0
+		    </if>
+		     <if test="searchName != null and searchName != ''"> 
+		    	  and m.f_message like CONCAT('%',#{searchName},'%')
+		  	</if>
+		union all
+		select  m.f_msg_id, m.f_message,  u.name as f_from, r.f_to_readed,r.f_id as "fId"
+		  from t_user_message m, t_message_receiver r,sys_user u 
+		 where m.f_from =u.user_id and r.f_msg_id = m.f_msg_id
+		   and m.f_type = 'private'
+		   and r.f_to = #{fTo}
+		  <if test="fToReaded != null and fToReaded != ''">  and r.f_to_readed = 0 </if>
+		   <if test="searchName != null and searchName != ''"> 
+		    	  and m.f_message like CONCAT('%',#{searchName},'%')
+		  	</if>
+		  )temp 
+	</select>
+	<!--未读消息和我的接收消息列表查询结束-->
+	
+	<!--我发送的消息列表查询-->
+	 <select id="userMessageList" resultType="com.bootdo.common.domain.UserMessageDO">
+			select  f_msg_id,f_message,f_url,f_to,fToReadDesc,f_send_time,f_reply from (select m.f_msg_id,
+		       m.f_message,
+		       m.f_url,
+		       (case
+		         when (select count(*)
+		                 from t_message_receiver r
+		                where r.f_msg_id = m.f_msg_id) > 1 then
+		          (select count(*)
+		             from t_message_receiver r
+		            where r.f_msg_id = m.f_msg_id)
+		         when (select count(*)
+		                 from t_message_receiver r
+		                where r.f_msg_id = m.f_msg_id) = 1 then
+		          (select u.name
+		             from t_message_receiver r, sys_user u
+		            where r.f_msg_id = m.f_msg_id
+		              and r.f_to = u.user_id)
+		         else
+		          ''
+		       end) f_to,
+		       (case
+		         when (select count(*)
+		                 from t_message_receiver r
+		                where r.f_msg_id = m.f_msg_id) > 1 then
+		          (select count(*)
+		             from t_message_receiver r
+		            where r.f_msg_id = m.f_msg_id
+		              and r.f_to_readed = '1')
+		         when (select count(*)
+		                 from t_message_receiver r
+		                where r.f_msg_id = m.f_msg_id) = 1 then
+		          (select if(r.f_to_readed = '1', 'y', 'w')
+		             from t_message_receiver r
+		            where r.f_msg_id = m.f_msg_id)
+		         else
+		          '0'
+		       end) "fToReadDesc",
+		       m.f_send_time,
+		       r.f_reply
+		  from t_user_message m
+		  left join t_message_receiver r on r.f_msg_id=m.f_msg_id
+		 where f_type = 'private'
+		   and m.f_from = #{fFrom}
+		    <if test="searchName != null and searchName != ''"> 
+		    	  and m.f_message like CONCAT('%',#{searchName},'%')
+		  	</if>
+		
+		union all
+		
+		select m.f_msg_id,
+		       m.f_message,
+		       m.f_url,
+		       (case
+		         when m.f_to_type = 'S' and m.f_college_id is not null then
+		          (select count(t.f_stu_id)
+		             from t_student t
+		            where t.f_college_id = m.f_college_id)
+		         when m.f_to_type = 'S' and m.f_college_id is null then
+		          (select count(t.f_stu_id) from t_student t)
+		         when m.f_to_type = 'E' then
+		          (select count(t.f_emp_id) from t_employer t)
+		         when m.f_to_type = 'C' then
+		          (select count(t.f_counsellor_id) from t_counsellor t)
+		         when m.f_to_type = 'A' then
+		          (select count(t.user_id) from sys_user t)
+		         else
+		          '0'
+		       end) f_to,
+		       (select count(*)
+		          from t_message_receiver r
+		         where r.f_msg_id = m.f_msg_id
+		           and r.f_to_readed = '1') "fToReadDesc",
+		       m.f_send_time,
+		       '' f_reply
+		  from t_user_message m
+		 where f_type = 'public'
+		  and m.f_from = #{fFrom}
+		 	 <if test="searchName != null and searchName != ''"> 
+		    	  and m.f_message like CONCAT('%',#{searchName},'%')
+		  	</if>
+		   )temp 
+		   order by f_send_time desc
+		   <if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		 </if>
+	</select>
+	
+ 	<select id="userMessageCount" resultType="int">
+		select count(*) from (select m.f_msg_id,
+		       m.f_message,
+		       (case
+		         when (select count(*)
+		                 from t_message_receiver r
+		                where r.f_msg_id = m.f_msg_id) > 1 then
+		          (select count(*)
+		             from t_message_receiver r
+		            where r.f_msg_id = m.f_msg_id)
+		         when (select count(*)
+		                 from t_message_receiver r
+		                where r.f_msg_id = m.f_msg_id) = 1 then
+		          (select u.name
+		             from t_message_receiver r, sys_user u
+		            where r.f_msg_id = m.f_msg_id
+		              and r.f_to = u.user_id)
+		         else
+		          ''
+		       end) f_to,
+		       (case
+		         when (select count(*)
+		                 from t_message_receiver r
+		                where r.f_msg_id = m.f_msg_id) > 1 then
+		          (select count(*)
+		             from t_message_receiver r
+		            where r.f_msg_id = m.f_msg_id
+		              and r.f_to_readed = '1')
+		         when (select count(*)
+		                 from t_message_receiver r
+		                where r.f_msg_id = m.f_msg_id) = 1 then
+		          (select if(r.f_to_readed = '1', 'y', 'w')
+		             from t_message_receiver r
+		            where r.f_msg_id = m.f_msg_id)
+		         else
+		          '0'
+		       end) "fToReadDesc",
+		       m.f_send_time
+		  from t_user_message m
+		 where f_type = 'private'
+		   and m.f_from = #{fFrom}
+			 <if test="searchName != null and searchName != ''"> 
+		    	  and m.f_message like CONCAT('%',#{searchName},'%')
+		  	</if>
+		union all
+		
+		select m.f_msg_id,
+		       m.f_message,
+		       (case
+		         when m.f_to_type = 'S' and m.f_college_id is not null then
+		          (select count(t.f_stu_id)
+		             from t_student t
+		            where t.f_college_id = m.f_college_id)
+		         when m.f_to_type = 'S' and m.f_college_id is null then
+		          (select count(t.f_stu_id) from t_student t)
+		         when m.f_to_type = 'E' then
+		          (select count(t.f_emp_id) from t_employer t)
+		         when m.f_to_type = 'C' then
+		          (select count(t.f_counsellor_id) from t_counsellor t)
+		         when m.f_to_type = 'A' then
+		          (select count(t.user_id) from sys_user t)
+		         else
+		          '0'
+		       end) f_to,
+		       (select count(*)
+		          from t_message_receiver r
+		         where r.f_msg_id = m.f_msg_id
+		           and r.f_to_readed = '1') "fToReadDesc",
+		       m.f_send_time
+		  from t_user_message m
+		 where f_type = 'public'
+		   and m.f_from = #{fFrom}
+		    <if test="searchName != null and searchName != ''"> 
+		    	  and m.f_message like CONCAT('%',#{searchName},'%')
+		  	</if>
+		   )temp 
+	</select>
+	<!--我发送的消息列表查询结束-->
+	
+	<insert id="save" parameterType="com.bootdo.common.domain.UserMessageDO" useGeneratedKeys="true" keyProperty="fMsgId">
+		insert into t_user_message
+		(
+			`f_from`, 
+			`f_message`, 
+			`f_send_time`, 
+			`f_type`, 
+			`f_to_type`, 
+			`f_college_id`, 
+			`f_url`, 
+			`f_memo`,
+			`f_title`
+		)
+		values
+		(
+			#{fFrom}, 
+			#{fMessage}, 
+			#{fSendTime}, 
+			#{fType}, 
+			#{fToType}, 
+			#{fCollegeId}, 
+			#{fUrl}, 
+			#{fMemo},
+			#{fTitle}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.bootdo.common.domain.UserMessageDO">
+		update t_user_message 
+		<set>
+			<if test="fFrom != null">`f_from` = #{fFrom}, </if>
+			<if test="fMessage != null">`f_message` = #{fMessage}, </if>
+			<if test="fSendTime != null">`f_send_time` = #{fSendTime}, </if>
+			<if test="fType != null">`f_type` = #{fType}, </if>
+			<if test="fToType != null">`f_to_type` = #{fToType}, </if>
+			<if test="fCollegeId != null">`f_college_id` = #{fCollegeId}, </if>
+			<if test="fUrl != null">`f_url` = #{fUrl}, </if>
+			<if test="fMemo != null">`f_memo` = #{fMemo}</if>
+			<if test="fTitle != null"> `f_title` = #{fTitle} </if>
+		</set>
+		where f_msg_id = #{fMsgId}
+	</update>
+	
+	<delete id="remove">
+		delete from t_user_message where f_msg_id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from t_user_message where f_msg_id in 
+		<foreach item="fMsgId" collection="array" open="(" separator="," close=")">
+			#{fMsgId}
+		</foreach>
+	</delete>
+	
+	<select id="prevUserMessage" resultType="com.bootdo.common.domain.UserMessageDO">
+		select m.`f_msg_id`,m.`f_from`,m.`f_message`,m.`f_send_time`,m.`f_url`,m.`f_memo`,m.`f_title`
+		from t_user_message m
+		left join t_message_receiver ad on ad.f_msg_id = m.f_msg_id
+		<where>
+				and m.f_msg_id &gt; #{fMsgId}
+			<if test="fToType eq 'M'.toString()">
+				and m.f_to_type = "0" or m.f_to_type = "1"
+			</if>
+			
+			<if test="fToType eq 'E'.toString()">
+				and m.f_to_type = "0" or m.f_to_type = "2"
+			</if>
+		</where>
+		  		
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by m.f_msg_id asc ,m.`f_send_time` asc
+			</otherwise>
+        </choose>
+        limit 1
+	</select>
+	
+	<select id="nextUserMessage" resultType="com.bootdo.common.domain.UserMessageDO">
+		select m.`f_msg_id`,m.`f_from`,m.`f_message`,m.`f_send_time`,m.`f_url`,m.`f_memo`,m.`f_title`
+		from t_user_message m
+		left join t_message_receiver ad on ad.f_msg_id = m.f_msg_id
+		<where>
+				and m.f_msg_id &lt; #{fMsgId}
+			<if test="fToType eq 'M'.toString()">
+				and m.f_to_type = "0" or m.f_to_type = "1"
+			</if>
+			
+			<if test="fToType eq 'E'.toString()">
+				and m.f_to_type = "0" or m.f_to_type = "2"
+			</if>
+		</where>
+		  		
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by m.f_msg_id desc ,m.`f_send_time` desc
+			</otherwise>
+        </choose>
+        limit 1
+	</select>
+</mapper>

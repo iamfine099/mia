@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.mia.dao.EmailCodeDao">
+
+	<sql id="columns">
+		`ec_id`,`ec_email`,`ec_code`,`ec_valid_date`,`create_date`</sql>
+	
+	<sql id="commons_where">
+		  <if test="ecId != null and ecId != ''"> and ec_id = #{ecId} </if>
+		  <if test="ecEmail != null and ecEmail != ''"> and ec_email = #{ecEmail} </if>
+		  <if test="ecCode != null and ecCode != ''"> and ec_code = #{ecCode} </if>
+		  <if test="ecValidDate != null and ecValidDate != ''"> and ec_valid_date = #{ecValidDate} </if>
+		  <if test="createDate != null and createDate != ''"> and create_date = #{createDate} </if>
+		</sql>
+
+	<select id="get" resultType="com.bootdo.mia.domain.EmailCodeDO">
+		select
+			<include refid="columns" />
+ 		from t_email_code
+ 		where ec_id = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.mia.domain.EmailCodeDO">
+		select
+			<include refid="columns" />
+		from t_email_code
+        <where>  
+		  <include refid="commons_where"/>
+		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by ec_id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from t_email_code
+		 <where>  
+		  <include refid="commons_where"/>
+		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.mia.domain.EmailCodeDO" useGeneratedKeys="true" keyProperty="ecId">
+		insert into t_email_code
+		(
+			`ec_email`, 
+			`ec_code`, 
+			`ec_valid_date`, 
+			`create_date`
+		)
+		values
+		(
+			#{ecEmail}, 
+			#{ecCode}, 
+			#{ecValidDate}, 
+			#{createDate}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.bootdo.mia.domain.EmailCodeDO">
+		update t_email_code 
+		<set>
+			<if test="ecEmail != null">`ec_email` = #{ecEmail}, </if>
+			<if test="ecCode != null">`ec_code` = #{ecCode}, </if>
+			<if test="ecValidDate != null">`ec_valid_date` = #{ecValidDate}, </if>
+			<if test="createDate != null">`create_date` = #{createDate}</if>
+		</set>
+		where ec_id = #{ecId}
+	</update>
+	
+	<delete id="remove">
+		delete from t_email_code where ec_id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from t_email_code where ec_id in 
+		<foreach item="ecId" collection="array" open="(" separator="," close=")">
+			#{ecId}
+		</foreach>
+	</delete>
+
+	<select id="checkVerify" resultType="int">
+		select count(*) from t_email_code
+		 <where>  
+		  <if test="ecEmail != null and ecEmail != ''"> and ec_email = #{ecEmail} </if>
+		  <if test="ecCode != null and ecCode != ''"> and ec_code = #{ecCode} </if>
+		  and ec_valid_date &gt;= now()
+		</where>
+	</select>
+</mapper>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="col-sm-12">
+			<div class="ibox">
+				<div class="ibox-body">
+					<div class="fixed-table-toolbar">
+						<div class="columns little-padding searchArea">
+							<div class="row">
+							<form id='searchForm'>
+								<div class=" pull-left col-md-3 nopadding little-marign">
+									<span  class=" pull-left col-md-4 forSearch">标题:</span>
+									<div class=" pull-left col-md-8 nopadding ">
+										<input id="title" name='title' type="text" class="form-control"
+											placeholder="">
+									</div>
+								</div>
+								<div class=" pull-left col-md-3 nopadding little-marign">
+									<span  class=" pull-left col-md-4 forSearch">类型:</span>
+									<div class=" pull-left col-md-8 nopadding ">
+										<select id="type" name="type" class="form-control">
+											<option value="">---请选择---</option>
+											<option th:each="dict:${T(com.bootdo.common.utils.DictUtils).getDictList('notice_type')}" th:value="${dict.value}" th:text="${dict.name}"></option>
+										</select>
+									</div>
+								</div>
+							</form>
+								<div class=" pull-left col-md-3 nopadding little-marign">
+									<button class="pull-left btn btn-success little-marign" type='button' onclick="reLoad()" style="margin-left:10px;">查询</button>
+									<button class="pull-left btn btn-success little-marign" type='button' onclick="resetBtn(this)" style="margin-left:10px;">重置</button>
+								</div>
+							</div>	
+							
+							<div style='clear:both;'></div>	
+						</div>
+						<div class="columns ">
+							<button shiro:hasPermission="common:news:add" type="button" class="btn  btn-primary" onclick="add()">
+								<i class="fa fa-plus" aria-hidden="true"></i>添加
+							</button>
+							<button shiro:hasPermission="common:news:batchRemove" type="button" class="btn  btn-danger"
+								onclick="batchRemove()">
+								<i class="fa fa-trash" aria-hidden="true"></i>删除
+							</button>
+							<!-- <button shiro:hasPermission="common:news:add" type="button" class="btn  btn-danger"
+								onclick="exportExcel()">
+								<i class="fa fa-file-excel-o" aria-hidden="true"></i>导出
+							</button>
+							
+							<button shiro:hasPermission="common:news:add" type="button" class="btn  btn-danger"
+								onclick="importExcel()">
+								<i class="fa fa-file-excel-o" aria-hidden="true"></i>导入
+							</button> -->
+						</div>
+					</div>
+					<table id="exampleTable" data-mobile-responsive="true">
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--shiro控制bootstraptable行内按钮看见性 来自bootdo的创新方案 -->
+		<div>
+			<script type="text/javascript">
+				var s_edit_h = 'hidden';
+				var s_remove_h = 'hidden';
+				var s_resetPwd_h = 'hidden';
+			</script>
+		</div>
+		<div shiro:hasPermission="common:news:edit">
+			<script type="text/javascript">
+				s_edit_h = '';
+			</script>
+		</div>
+		<div shiro:hasPermission="common:news:remove">
+			<script type="text/javascript">
+				var s_remove_h = '';
+			</script>
+		</div>
+		<div shiro:hasPermission="common:news:resetPwd">
+			<script type="text/javascript">
+				var s_resetPwd_h = '';
+			</script>
+		</div>
+	</div>
+	<div th:include="include :: footer"></div>
+	<script type="text/javascript" th:inline="javascript">
+			var yesNoJson = JSON.parse([[${T(com.bootdo.common.utils.DictUtils).getDictListJson('yes_no')}]]);
+			var showHideJson = JSON.parse([[${T(com.bootdo.common.utils.DictUtils).getDictListJson('show_hide')}]]);
+			var noticeTypeJson = JSON.parse([[${T(com.bootdo.common.utils.DictUtils).getDictListJson('notice_type')}]]);
+	</script>
+	<script type="text/javascript" src="/js/appjs/common/article/notice.js"></script>
+</body>
+</html>

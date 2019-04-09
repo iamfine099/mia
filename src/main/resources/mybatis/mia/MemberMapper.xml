@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.mia.dao.MemberDao">
+
+	<sql id="columns">
+		m.`mem_id`,m.`head_img`,m.`mem_name`,m.`sex`,m.`phone`,m.`status`,m.`create_date`,m.`last_time`,m.`company`,m.`specialty`,m.`number_card`,m.`audit_by`,m.`audit_date`,m.`audit_content`,m.`email`,
+		u.`username` as "auditUser.username"
+		</sql>
+	
+	<sql id="commons_where">
+		  <if test="memId != null and memId != ''"> and m.mem_id = #{memId} </if>
+		  <if test="headImg != null and headImg != ''"> and m.head_img = #{headImg} </if>
+		  <if test="memName != null and memName != ''"> and m.mem_name like CONCAT('%',#{memName},'%') </if>
+		  <if test="sex != null and sex != ''"> and m.sex = #{sex} </if>
+		  <if test="phone != null and phone != ''"> and m.phone like CONCAT('%',#{phone},'%') </if>
+		  <if test="status != null and status != ''"> and m.status = #{status} </if>
+		  <if test="createDate != null and createDate != ''"> and m.create_date = #{createDate} </if>
+		  <if test="lastTime != null and lastTime != ''"> and m.last_time = #{lastTime} </if>
+		  <if test="company != null and company != ''"> and m.company = #{company} </if>
+		  <if test="specialty != null and specialty != ''"> and m.specialty = #{specialty} </if>
+		  <if test="numberCard != null and numberCard != ''"> and m.number_card = #{numberCard} </if>
+		  <if test="auditBy != null and auditBy != ''"> and m.audit_by = #{auditBy} </if>
+		  <if test="auditDate != null and auditDate != ''"> and m.audit_date = #{auditDate} </if>
+		  <if test="auditContent != null and auditContent != ''"> and m.audit_content = #{auditContent} </if>
+		  <if test="email != null and email != ''"> and m.email  like CONCAT('%',#{email},'%') </if>
+		</sql>
+
+	<select id="get" resultType="com.bootdo.mia.domain.MemberDO">
+		select
+			<include refid="columns" />
+ 		from t_member m
+ 		left join sys_user u on u.user_id = m.audit_by
+ 		where mem_id = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.mia.domain.MemberDO">
+		select
+			<include refid="columns" />
+		from t_member m
+ 		left join sys_user u on u.user_id = m.audit_by
+        <where>  
+		  <include refid="commons_where"/>
+		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by mem_id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from t_member m
+ 		left join sys_user u on u.user_id = m.audit_by
+		 <where>  
+		  <include refid="commons_where"/>
+		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.mia.domain.MemberDO" useGeneratedKeys="true" keyProperty="memId">
+		insert into t_member
+		(
+			`head_img`, 
+			`mem_name`, 
+			`sex`, 
+			`phone`, 
+			`status`, 
+			`create_date`, 
+			`last_time`, 
+			`company`, 
+			`specialty`, 
+			`number_card`, 
+			`audit_by`, 
+			`audit_date`, 
+			`audit_content`,
+			`email`
+		)
+		values
+		(
+			#{headImg}, 
+			#{memName}, 
+			#{sex}, 
+			#{phone}, 
+			#{status}, 
+			#{createDate}, 
+			#{lastTime}, 
+			#{company}, 
+			#{specialty}, 
+			#{numberCard}, 
+			#{auditBy}, 
+			#{auditDate}, 
+			#{auditContent},
+			#{email}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.bootdo.mia.domain.MemberDO">
+		update t_member 
+		<set>
+			<if test="headImg != null">`head_img` = #{headImg}, </if>
+			<if test="memName != null">`mem_name` = #{memName}, </if>
+			<if test="sex != null">`sex` = #{sex}, </if>
+			<if test="phone != null">`phone` = #{phone}, </if>
+			<if test="status != null">`status` = #{status}, </if>
+			<if test="createDate != null">`create_date` = #{createDate}, </if>
+			<if test="lastTime != null">`last_time` = #{lastTime}, </if>
+			<if test="company != null">`company` = #{company}, </if>
+			<if test="specialty != null">`specialty` = #{specialty}, </if>
+			<if test="numberCard != null">`number_card` = #{numberCard}, </if>
+			<if test="auditBy != null">`audit_by` = #{auditBy}, </if>
+			<if test="auditDate != null">`audit_date` = #{auditDate}, </if>
+			<if test="auditContent != null">`audit_content` = #{auditContent}, </if>
+			<if test="email != null">`email` = #{email}</if>
+		</set>
+		where mem_id = #{memId}
+	</update>
+	
+	<delete id="remove">
+		delete from t_member where mem_id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from t_member where mem_id in 
+		<foreach item="memId" collection="array" open="(" separator="," close=")">
+			#{memId}
+		</foreach>
+	</delete>
+
+	<update id="memberUpdateCheck">
+		update t_member 
+		<set>
+			`audit_date` = now(),`status` = #{status},
+				`audit_by` = #{auditBy},`audit_content` = #{auditContent}
+		</set>
+		where mem_id in 
+		<foreach item="id" collection="ids.split(',')" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</update>
+</mapper>

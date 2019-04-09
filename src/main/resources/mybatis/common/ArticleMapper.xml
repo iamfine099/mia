@@ -1,0 +1,604 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.common.dao.ArticleDao">
+
+	<sql id="columns">
+		a.`id`,a.`category_id`,a.`title`,a.`image`,a.`keywords`,a.`description`,a.`hits`,a.`del_flag`,a.`remarks`,a.`create_by`,a.`create_time`,a.`status`,a.`score`,a.`recommend_num`,a.`is_recommend`,a.`is_top`,a.`type`,a.`audit_by`,a.`audit_date`,a.`audit_content`,a.`publish_time`,a.`is_publish`,a.`recommend_date`,a.`top_date`,a.`like_num`,a.`attachment`,a.`href`,
+		ad.`content`,ad.`copyfrom`, c.`name` as "create.name", audit.`username` as "audit.username",f.`url` as "url",t.`name` as category_name
+		</sql>
+	
+	<sql id="commons_where">
+		  <if test="id != null and id != ''"> and a.id = #{id} </if>
+		  <if test="categoryId != null and categoryId != ''"> and a.category_id = #{categoryId} </if>
+		  <if test="title != null and title != ''"> and a.title like CONCAT('%',#{title},'%') </if>
+		  <if test="image != null and image != ''"> and a.image = #{image} </if>
+		  <if test="keywords != null and keywords != ''"> and a.keywords = #{keywords} </if>
+		  <if test="description != null and description != ''"> and a.description = #{description} </if>
+		  <if test="hits != null and hits != ''"> and a.hits = #{hits} </if>
+		  <if test="delFlag != null and delFlag != ''"> and a.del_flag = #{delFlag} </if>
+		  <if test="remarks != null and remarks != ''"> and a.remarks = #{remarks} </if>
+		  <if test="createBy != null and createBy != ''"> and a.create_by = #{createBy} </if>
+		  <if test="createTime != null and createTime != ''"> and a.create_time = #{createTime} </if>
+		  <if test="status != null and status != ''"> and a.status = #{status} </if>
+		  <if test="score != null and score != ''"> and a.score = #{score} </if>
+		  <if test="recommendNum != null and recommendNum != ''"> and a.recommend_num = #{recommendNum} </if>
+		  <if test="isRecommend != null and isRecommend != ''"> and a.is_recommend = #{isRecommend} </if>
+		  <if test="isTop != null and isTop != ''"> and a.is_top = #{isTop} </if>
+		  <if test="type != null and type != ''"> and a.type = #{type} </if>
+		  <if test="auditBy != null and auditBy != ''"> and a.audit_by = #{auditBy} </if>
+		  <if test="auditDate != null and auditDate != ''"> and a.audit_date = #{auditDate} </if>
+		  <if test="auditContent != null and auditContent != ''"> and a.audit_content = #{auditContent} </if>
+		  <if test="publishTime != null and publishTime != ''"> and a.publish_time = #{publishTime} </if>
+		  <if test="isPublish != null and isPublish != ''"> and a.is_publish = #{isPublish} </if>
+		  <if test="recommendDate != null and recommendDate != ''"> and a.recommend_date = #{recommendDate} </if>
+		  <if test="topDate != null and topDate != ''"> and a.top_date = #{topDate} </if>
+		  <if test="likeNum != null and likeNum != ''"> and a.like_num = #{likeNum} </if>
+		  <if test="specialty != null and specialty != ''"> and e.`specialty` = #{specialty} </if>
+		  <if test="pCategoryId != null and pCategoryId != ''">
+		  	and (a.category_id = #{pCategoryId} or t.`parent_id` = #{pCategoryId})
+		  </if>
+		  <if test="beginpublishTime != null and beginpublishTime != '' "> 
+		          <![CDATA[and a.publish_time >= #{beginpublishTime} ]]>	
+		  </if>
+		  <if test="endpublishTime != null and endpublishTime != '' "> 
+		          <![CDATA[and a.publish_time <=#{endpublishTime}]]>	
+		  </if>
+		  <if test="articleType != null and articleType != '' and articleType == 'recommend'.toString() "> 
+		          and a.score is not null and a.recommend_num is not null
+		  </if>
+		  <if test="datesearch != null and datesearch != ''">
+		   and DATE_SUB(CURDATE(), INTERVAL #{datesearch} DAY) &lt;= DATE(a.`publish_time`) </if>
+		   <if test="createdatesearch != null and createdatesearch != ''">
+		   and DATE_SUB(CURDATE(), INTERVAL #{createdatesearch} DAY) &lt;= DATE(a.`create_time`) </if>
+		</sql>
+
+	<select id="get" resultType="com.bootdo.common.domain.ArticleDO">
+		select
+			<include refid="columns" />,(select GROUP_CONCAT( a.expert_name) from t_expert a where a.expert_id in(select b.expert_id from t_expert_evaluate b where b.article_id =#{value})) "expertNames"
+ 		from t_article a
+ 		left join t_article_data ad on ad.id = a.id
+ 		left join sys_user c on c.user_id = a.create_by
+ 		left join sys_user audit on audit.user_id = a.audit_by
+ 		left join sys_file f on f.id=a.image
+ 		left join t_category t on t.id = a.category_id
+ 		where a.id = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.common.domain.ArticleDO">
+		select
+			<include refid="columns" />
+		from t_article a
+ 		left join t_article_data ad on ad.id = a.id
+ 		left join sys_user c on c.user_id = a.create_by
+ 		left join sys_user audit on audit.user_id = a.audit_by
+ 		left join sys_file f on f.id=a.image
+ 		left join t_category t on t.id = a.category_id
+        <where>  
+		  <include refid="commons_where"/>
+		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+            
+             <when test="articleType != null and articleType != '' and articleType == 'review'.toString()">
+                order by a.status asc, a.publish_time desc
+            </when>
+            
+            <when test="articleType != null and articleType != '' and articleType == 'recommend'.toString()">
+                order by a.is_top desc , a.recommend_num desc, a.publish_time desc
+            </when>
+            
+            <when test="articleType != null and articleType != '' and articleType == 'edit'.toString()">
+                order by a.audit_date desc , a.publish_time desc , a.is_top desc , a.recommend_num desc
+            </when>
+            
+			<otherwise>
+                order by a.is_top desc , a.id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	<select id="articleReviewlist" resultType="com.bootdo.common.domain.ArticleDO">
+		select
+			<include refid="columns" />
+		from t_article a
+ 		left join t_article_data ad on ad.id = a.id
+ 		left join sys_user c on c.user_id = a.create_by
+ 		left join sys_user audit on audit.user_id = a.audit_by
+ 		left join sys_file f on f.id=a.image
+ 		left join t_expert_evaluate ee on ee.article_id = a.id
+ 		left join t_category t on t.id = a.category_id
+        <where>  
+          (a.status = "0" or a.status = "-1")
+		  <include refid="commons_where"/>
+		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+            
+             <when test="articleType != null and articleType != '' and articleType == 'review'.toString()">
+                order by a.status asc, a.publish_time desc
+            </when>
+            
+            <when test="articleType != null and articleType != '' and articleType == 'recommend'.toString()">
+                order by a.is_top desc , a.recommend_num desc, a.publish_time desc
+            </when>
+            
+            
+            
+			<otherwise>
+                order by a.is_top desc , a.id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	<select id="articleReviewCount" resultType="int">
+		select count(*) from t_article a
+ 		left join t_article_data ad on ad.id = a.id
+ 		left join sys_user c on c.user_id = a.create_by
+ 		left join sys_user audit on audit.user_id = a.audit_by
+ 		left join sys_file f on f.id=a.image
+ 		left join t_expert_evaluate ee on ee.article_id = a.id
+ 		left join t_category t on t.id = a.category_id
+		 <where> 
+		 (a.status = "0" or a.status = "-1") 
+		  <include refid="commons_where"/>
+		</where>
+	</select>
+	
+	<select id="photolist" resultType="com.bootdo.common.domain.ArticleDO">
+		select
+			<include refid="columns" />
+		from t_article a
+ 		left join t_article_data ad on ad.id = a.id
+ 		left join sys_user c on c.user_id = a.create_by
+ 		left join sys_user audit on audit.user_id = a.audit_by
+ 		left join sys_file f on f.id=a.image
+ 		left join t_category t on t.id = a.category_id
+        <where>  
+		  <include refid="commons_where"/>
+		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+            
+             <when test="articleType != null and articleType != '' and articleType == 'review'.toString()">
+                order by a.status asc, a.create_time desc
+            </when>
+            
+            
+            
+			<otherwise>
+                order by a.id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+	<select id="draftslist" resultType="com.bootdo.common.domain.ArticleDO">
+		select
+			<include refid="columns" />
+		from t_article a
+ 		left join t_article_data ad on ad.id = a.id
+ 		left join sys_user c on c.user_id = a.create_by
+ 		left join sys_user audit on audit.user_id = a.audit_by
+ 		left join sys_file f on f.id=a.image
+ 		left join t_category t on t.id = a.category_id
+        <where>  
+		   <include refid="commons_where"/>
+		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+            
+             <when test="articleType != null and articleType != '' and articleType == 'review'.toString()">
+                order by a.status asc, a.create_time desc
+            </when>          
+			<otherwise>
+                order by a.create_time desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+	<select id="myarticlelist" resultType="com.bootdo.common.domain.ArticleDO">
+		select
+			<include refid="columns" />
+		from t_article a
+ 		left join t_article_data ad on ad.id = a.id
+ 		left join sys_user c on c.user_id = a.create_by
+ 		left join sys_user audit on audit.user_id = a.audit_by
+ 		left join sys_file f on f.id=a.image
+ 		left join t_category t on t.id = a.category_id
+        <where>  
+		  <include refid="commons_where"/>
+		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+            
+             <when test="articleType != null and articleType != '' and articleType == 'review'.toString()">
+                order by a.status asc, a.create_time desc
+            </when>
+
+            
+			<otherwise>
+                order by a.is_top desc ,a.publish_time desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+ 	<select id="count" resultType="int">
+		select count(*) from t_article a
+ 		left join t_article_data ad on ad.id = a.id
+ 		left join sys_user c on c.user_id = a.create_by
+ 		left join sys_user audit on audit.user_id = a.audit_by
+ 		left join sys_file f on f.id=a.image
+ 		left join t_category t on t.id = a.category_id
+		 <where>  
+		  <include refid="commons_where"/>
+		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.common.domain.ArticleDO" useGeneratedKeys="true" keyProperty="id">
+		insert into t_article
+		(
+			`category_id`, 
+			`title`, 
+			`image`, 
+			`keywords`, 
+			`description`, 
+			`hits`, 
+			`del_flag`, 
+			`remarks`, 
+			`create_by`, 
+			`create_time`, 
+			`status`, 
+			`score`, 
+			`recommend_num`, 
+			`is_recommend`, 
+			`is_top`, 
+			`type`, 
+			`audit_by`, 
+			`audit_date`, 
+			`audit_content`, 
+			`publish_time`, 
+			`is_publish`, 
+			`recommend_date`, 
+			`top_date`,
+			`like_num`,
+			`attachment`,
+			`href`
+
+		)
+		values
+		(
+			#{categoryId}, 
+			#{title}, 
+			#{image}, 
+			#{keywords}, 
+			#{description}, 
+			#{hits}, 
+			#{delFlag}, 
+			#{remarks}, 
+			#{createBy}, 
+			#{createTime}, 
+			#{status}, 
+			#{score}, 
+			#{recommendNum}, 
+			#{isRecommend}, 
+			#{isTop}, 
+			#{type}, 
+			#{auditBy}, 
+			#{auditDate}, 
+			#{auditContent}, 
+			#{publishTime}, 
+			#{isPublish},
+			#{recommendDate},
+			#{topDate},
+			#{likeNum},
+			#{attachment},
+			#{href}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.bootdo.common.domain.ArticleDO">
+		update t_article 
+		<set>
+			<if test="categoryId != null">`category_id` = #{categoryId}, </if>
+			<if test="title != null">`title` = #{title}, </if>
+			<if test="image != null">`image` = #{image}, </if>
+			<if test="keywords != null">`keywords` = #{keywords}, </if>
+			<if test="description != null">`description` = #{description}, </if>
+			<if test="hits != null">`hits` = #{hits}, </if>
+			<if test="delFlag != null">`del_flag` = #{delFlag}, </if>
+			<if test="remarks != null">`remarks` = #{remarks}, </if>
+			<if test="createBy != null">`create_by` = #{createBy}, </if>
+			<if test="createTime != null">`create_time` = #{createTime}, </if>
+			<if test="status != null">`status` = #{status}, </if>
+			<if test="score != null">`score` = #{score}, </if>
+			<if test="recommendNum != null">`recommend_num` = #{recommendNum}, </if>
+			<if test="isRecommend != null">`is_recommend` = #{isRecommend}, </if>
+			<if test="isTop != null">`is_top` = #{isTop}, </if>
+			<if test="type != null">`type` = #{type}, </if>
+			<if test="auditBy != null">`audit_by` = #{auditBy}, </if>
+			<if test="auditDate != null">`audit_date` = #{auditDate}, </if>
+			<if test="auditContent != null">`audit_content` = #{auditContent}, </if>
+			<if test="publishTime != null">`publish_time` = #{publishTime}, </if>
+			<if test="isPublish != null">`is_publish` = #{isPublish}, </if>
+			<if test="recommendDate != null">`recommend_date` = #{recommendDate}, </if>
+			<if test="topDate != null">`top_date` = #{topDate}, </if>
+			<if test="likeNum != null">`like_num` = #{likeNum}, </if>
+			<if test="attachment != null">`attachment` = #{attachment}, </if>
+			<if test="href != null">`href` = #{href} </if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="remove">
+		delete from t_article where id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from t_article where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+	<select id="articleListForCategoryId" resultType="com.bootdo.common.domain.ArticleDO">
+		select a.`id`,a.`category_id`,a.`title`,a.`image`,a.`keywords`,a.`description`,a.`hits`,a.`posid`,a.`create_by`,a.`create_date`,a.`update_by`,a.`update_date`,a.`remarks`,a.`del_flag`,a.`is_top`, ad.`content`,ad.`copyfrom` from t_article a
+		left join t_article_data ad on ad.id = a.id
+		where a.category_id = #{value} and a.del_flag = 1
+		order by a.is_top desc,a.create_date desc
+		limit 20
+	</select>
+	
+	<select id="getRoundList" resultType="com.bootdo.common.domain.ArticleDO">
+		select a.`id`,a.`category_id`,a.`title`,a.`image`,a.`keywords`,a.`description`,a.`hits`,a.`posid`,a.`create_by`,a.`create_date`,a.`update_by`,a.`update_date`,a.`remarks`,a.`del_flag`,a.`is_top`,f.`url` from t_article a
+		left join sys_file f on f.id = a.image
+		where a.category_id = 63 and a.del_flag = 1
+		order by a.is_top desc,a.create_date desc
+	</select>
+	
+	<update id="articleReviewBatchCheck">
+		update t_article 
+		<set>
+			<if test="auditDate != null">`audit_date` = now(),</if>
+			<if test="status != null">`status` = #{status},</if>
+			<if test="auditBy != null">`audit_by` = #{auditBy},</if>
+			<if test="auditContent != null">`audit_content` = #{auditContent},</if>
+			<if test="isPublish != null">`is_publish` = #{isPublish}</if>
+			
+		</set>
+		where id in 
+		<foreach item="id" collection="ids.split(',')" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</update>
+	
+	<update id="articleReviewBatchScoreCheck">
+		update t_article 
+		<set>
+			`audit_date` = now(),`status` = #{status},
+				`audit_by` = #{auditBy},`audit_content` = #{auditContent},`is_publish` = #{isPublish}
+		</set>
+		where id in 
+		<foreach item="id" collection="ids.split(',')" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</update>
+	
+	<select id="prevArticle" resultType="com.bootdo.common.domain.ArticleDO">
+		select
+			<include refid="columns" />
+ 		from t_article a
+ 		left join t_article_data ad on ad.id = a.id
+ 		left join sys_user c on c.user_id = a.create_by
+ 		left join sys_user audit on audit.user_id = a.audit_by
+ 		left join sys_file f on f.id=a.image
+ 		left join t_category t on t.id = a.category_id
+ 		<where>
+ 			<if test="id != null and id != ''"> and a.id &gt; #{id} </if>
+ 			<if test="categoryId != null and categoryId != ''"> and a.category_id = #{categoryId} </if>
+ 			<if test="delFlag != null and delFlag != ''"> and a.del_flag = #{delFlag} </if>
+ 			<if test="status != null and status != ''"> and a.status = #{status} </if>
+ 			<if test="type != null and type != ''"> and a.type = #{type} </if>
+ 			<if test="isRecommend != null and isRecommend != ''"> and a.is_recommend = #{isRecommend} </if>
+ 			<if test="isPublish != null and isPublish != ''"> and a.is_publish = #{isPublish} </if>
+ 		</where>
+ 		order by a.id asc
+ 		limit 1
+	</select>
+	
+	<select id="nextArticle" resultType="com.bootdo.common.domain.ArticleDO">
+		select
+			<include refid="columns" />
+ 		from t_article a
+ 		left join t_article_data ad on ad.id = a.id
+ 		left join sys_user c on c.user_id = a.create_by
+ 		left join sys_user audit on audit.user_id = a.audit_by
+ 		left join sys_file f on f.id=a.image
+ 		left join t_category t on t.id = a.category_id
+ 		<where>
+ 			<if test="id != null and id != ''"> and a.id &lt; #{id} </if>
+ 			<if test="categoryId != null and categoryId != ''"> and a.category_id = #{categoryId} </if>
+ 			<if test="delFlag != null and delFlag != ''"> and a.del_flag = #{delFlag} </if>
+ 			<if test="status != null and status != ''"> and a.status = #{status} </if>
+ 			<if test="type != null and type != ''"> and a.type = #{type} </if>
+ 			<if test="isRecommend != null and isRecommend != ''"> and a.is_recommend = #{isRecommend} </if>
+ 		</where>
+ 		order by a.id desc
+ 		limit 1
+	</select>
+	
+	<select id="articleScoreList" resultType="com.bootdo.common.domain.ArticleDO">
+		select
+			<include refid="columns" />
+ 		from t_article a
+ 		left join t_article_data ad on ad.id = a.id
+ 		left join sys_user c on c.user_id = a.create_by
+ 		left join sys_user audit on audit.user_id = a.audit_by
+ 		left join t_expert_evaluate ee on ee.article_id = a.id
+ 		left join sys_file f on f.id=a.image
+ 		left join t_category t on t.id = a.category_id
+ 		<where>
+ 			 <include refid="commons_where"/>
+
+ 			and ee.score is null
+ 			<if test="expertId != null and expertId != ''"> and ee.expert_id = #{expertId} </if>
+ 		</where>
+ 		order by a.is_top desc ,a.publish_time desc
+ 		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+	<select id="articleScoreListCount" resultType="int">
+		select count(*) from t_article a
+ 		left join t_article_data ad on ad.id = a.id
+ 		left join sys_user c on c.user_id = a.create_by
+ 		left join sys_user audit on audit.user_id = a.audit_by
+ 		left join t_expert_evaluate ee on ee.article_id = a.id
+ 		left join sys_file f on f.id=a.image
+ 		left join t_category t on t.id = a.category_id
+		 <where>  
+		 	 <include refid="commons_where"/>
+		  	and ee.score is null
+ 			<if test="expertId != null and expertId != ''"> and ee.expert_id = #{expertId} </if>
+		</where>
+	</select>
+	
+	<select id="experevaluateList" resultType="com.bootdo.common.domain.ArticleDO">
+		select
+			<include refid="columns" />
+		from t_article a
+ 		left join t_article_data ad on ad.id = a.id
+ 		left join sys_user c on c.user_id = a.create_by
+ 		left join sys_user audit on audit.user_id = a.audit_by
+ 		left join sys_file f on f.id=a.image
+ 		left join t_expert_evaluate ee on ee.article_id = a.id
+ 		left join t_category t on t.id = a.category_id
+        <where>  
+		  <include refid="commons_where"/>
+		  <if test="expertId != null and expertId != ''"> and ee.expert_id = #{expertId} </if>
+		  and ee.score is not null
+		</where>
+        order by ee.score_date desc
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+	<select id="experevaluateListCount" resultType="int">
+		select count(*) from t_article a
+ 		left join t_article_data ad on ad.id = a.id
+ 		left join sys_user c on c.user_id = a.create_by
+ 		left join sys_user audit on audit.user_id = a.audit_by
+ 		left join sys_file f on f.id=a.image
+ 		left join t_expert_evaluate ee on ee.article_id = a.id
+        <where>  
+		  <include refid="commons_where"/>
+		  <if test="expertId != null and expertId != ''"> and ee.expert_id = #{expertId} </if>
+		  and ee.score is not null
+		</where>
+        order by ee.score_date desc
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	<select id="expertRecommendList" resultType="com.bootdo.common.domain.ArticleDO">
+		select
+			a.`id`,a.`category_id`,a.`title`,a.`image`,a.`keywords`,a.`description`,a.`hits`,a.`del_flag`,a.`remarks`,a.`create_by`,a.`create_time`,a.`status`,a.`score`,a.`recommend_num`,a.`is_recommend`,a.`is_top`,a.`type`,a.`audit_by`,a.`audit_date`,a.`audit_content`,a.`publish_time`,a.`is_publish`,a.`recommend_date`,a.`top_date`,a.`like_num`,
+		ad.`content`,ad.`copyfrom`, c.`name` as "create.name", audit.`username` as "audit.username",f.`url` as "url",(SELECT ee.is_recommend FROM t_expert_evaluate ee WHERE ee.article_id = a.id AND expert_id = #{expertId}) 'isexpertrecommend'
+		from t_article a
+ 		left join t_article_data ad on ad.id = a.id
+ 		left join sys_user c on c.user_id = a.create_by
+ 		left join sys_user audit on audit.user_id = a.audit_by
+ 		left join t_expert_evaluate ee on ee.article_id = a.id
+ 		left join sys_file f on f.id=a.image
+        <where>  
+		  <include refid="commons_where"/>
+		  <if test="expertId != null and expertId != ''"> and ee.expert_id = #{expertId} </if>
+		</where>
+       <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+            
+             <when test="articleType != null and articleType != '' and articleType == 'review'.toString()">
+                order by a.status asc, a.publish_time desc
+            </when>
+            
+            <when test="articleType != null and articleType != '' and articleType == 'recommend'.toString()">
+                order by a.is_top desc , a.recommend_num desc, a.publish_time desc
+            </when>
+            
+			<otherwise>
+                order by a.is_top desc ,a.publish_time desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	<select id="expertRecommendCount" resultType="int">
+		select count(*)
+			from t_article a
+	 		left join t_article_data ad on ad.id = a.id
+	 		left join sys_user c on c.user_id = a.create_by
+	 		left join sys_user audit on audit.user_id = a.audit_by
+	 		left join t_expert_evaluate ee on ee.article_id = a.id
+	 		left join sys_file f on f.id=a.image
+		 <where>  
+		 	 <include refid="commons_where"/>
+ 			<if test="expertId != null and expertId != ''"> and ee.expert_id = #{expertId} </if>
+		</where>
+	</select>
+	<select id="articleCommentsList" resultType="com.bootdo.common.domain.ArticleDO">
+		SELECT 
+       	a.`id`,a.`category_id`,a.`title`,a.`image`,a.`keywords`,a.`description`,a.`hits`,a.`del_flag`,a.`remarks`,a.`create_by`,a.`create_time`,a.`status`,a.`score`,a.`recommend_num`,a.`is_recommend`,a.`is_top`,a.`type`,a.`audit_by`,a.`audit_date`,a.`audit_content`,a.`publish_time`,a.`is_publish`,a.`recommend_date`,a.`top_date`,a.`like_num`,	
+       	c.`name` as "create.name",m.`company` as "company",m.`phone` as "phone",e.`specialty` as "specialty"
+		  from t_article a
+		  left join t_expert_evaluate ee ON ee.article_id = a.id
+		  left join t_expert e ON e.expert_id = ee.expert_id
+		  left join sys_user c on c.user_id = a.create_by
+		  left join t_member m ON m.mem_id = c.bus_id
+        <where>  
+		  <include refid="commons_where"/>
+		</where>
+		and a.score <![CDATA[ <> ]]> 0.00
+		 GROUP BY a.`id`
+        order by a.score desc 
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	<select id="articleCommentsCount" resultType="int">
+		select count(DISTINCT a.`id`) from t_article a
+		  left join t_expert_evaluate ee ON ee.article_id = a.id
+		  left join t_expert e ON e.expert_id = ee.expert_id
+		  left join sys_user c on c.user_id = a.create_by
+		  left join t_member m ON m.mem_id = c.bus_id
+		 <where>  
+		  <include refid="commons_where"/>
+		</where>
+		and a.score <![CDATA[ <> ]]> 0.00
+	</select>
+</mapper>

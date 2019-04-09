@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+	<meta charset="utf-8">
+	<head th:include="front/include :: header"></head>
+	<body>
+		<!--头部-->
+		<head th:include="front/include :: topbar"></head>
+		<!--中间内容-->
+		<section id="index">
+			<div class="section_box">
+				<div class="section_top">
+					<!--轮播图-->
+					<div id="lunbo">
+						<div class="swiper-container">
+							<div class="swiper-wrapper">	
+								<div class="swiper-slide" th:each="photoarticle : ${photoarticleList}"><a th:href="${#strings.isEmpty(photoarticle.href)} ? @{/front/cms/open/aArticle/detail(id=${photoarticle.id})} : ${photoarticle.href}">
+								<img th:src="@{${photoarticle.url!=null}?@{${photoarticle.url}}:@{/img/lunbo01.png}}">
+								<input type="hidden" class="bannerTitle" th:value="${photoarticle.title}" ></a></div>
+						    </div>
+						    <div class="opacity_Bg">
+						        <div class="text" id="showTitle" >图片新闻</div>
+								<div class="textBg"></div>
+							</div> 
+							<!-- Add Pagination -->
+							<div class="swiper-pagination"></div>
+						</div>
+				    </div>
+				    <!--新闻动态/行业资讯-->
+				    <div id="tab">
+				    	<div class="tab_title">
+							<p class="title-l">新闻动态<span class="trangle"></span></p>
+							<p class="title-c">医学动态<span class="trangle-c"></span></p>
+							<p class="title-r right"><a th:href="@{/front/cms/open/page/15}" id="news_a">更多</a>></span></p>
+						</div>
+				    	<div class="content">
+				    		<ul id="news" class='newsNew'>
+				    			<li th:each="newarticle : ${newarticleList}"  ><a th:href="${#strings.isEmpty(newarticle.href)} ? @{/front/cms/open/aArticle/detail(id=${newarticle.id})} : ${newarticle.href}" th:text="${newarticle.title}"></a><span th:text="${#dates.format(newarticle.createTime, 'yyyy-MM-dd')}" ></span></li>
+				    		</ul>
+				    		<ul id="news" class='newsNew' style='display:none;'>
+				    			<li th:each="m : ${intelligenceList}"  ><a th:href="${#strings.isEmpty(m.href)} ? @{/front/cms/open/aArticle/detail(id=${m.id})} : ${m.href}" th:text="${m.title}"></a><span th:text="${#dates.format(m.createTime, 'yyyy-MM-dd')}" ></span></li>
+				    		</ul>
+				    	</div>
+				    </div>
+				    <!--会员登录-->
+				    <div id="login_box">
+				    	<div class="login_form">
+							<p><span>会员登录</span></p>
+					    	<div class="formBox">
+					    	<div th:if="${user.fType eq 'U'}" id="login_show">
+							    <div class="item">
+								    <label class="phone"></label>
+									<input type="text" name="username" id="phone" placeholder="手机号" required="required">
+								</div>
+								<div class="item">
+									<label class="pwd"></label>
+									<input type="password" name="password" id="pwd" placeholder="密码" required="required">
+								</div>
+								<div class="item">
+									<label class="pwd"></label>
+									<input type="text" name="yz" class="yz" id='yz' placeholder="验证码" required="required">
+									<div class="yzbox"><img src="/code/image" onClick="getcode()" id="codeImg"></div>
+								</div>
+								<div class="items">
+									<input type="checkbox" name="auto" id="auto">
+									<label for="auto">记住密码</label>
+									<a href="/front/cms/forgetPwd">忘记密码?</a>
+							    </div>
+							    <div class="btns">
+									<span  class='onebtn' id="login_btn">登录</span>
+									<span  class='onebtn' id="register_btn">注册</span>
+								</div>
+								</div>
+							</div>
+							<div th:if="${user.fType ne'U'}" class="login_hidden">
+							    <div class="gain_label">
+								    <img src="/img/xiaotoux.png"  id="login_img">
+									<span class="gain_phone" th:text="${user.username}"></span><span class="gain_de">已登录</span>
+									<div id="login_p">
+									    <a th:href="@{/index}" class="login_persion">个人中心</a>
+									    <a th:href="@{/front/cms/out}" class="login_exit">退出</a>
+								    </div>
+								</div>
+							</div>	
+						</div>
+				    </div>
+				</div>
+				<!--中间图片-->
+				<div class="section_center">
+				    <a th:href="${#strings.isEmpty(advert.href)} ? @{/front/cms/open/aArticle/detail(id=${advert.id})} : ${advert.href}">
+				    	<img th:src="${advert.url} == null ? '/img/main.png' : @{${advert.url}}">
+				    </a>
+				</div>
+				<!--中间底部-->
+				<div class="secton_down">
+					<!--左侧内容-->
+					<article>
+						<div class="content_l">
+							<div class="title">
+								<span class="title-l">通知公告</span>
+								<span class="title-r right"><a th:href="@{/front/cms/open/notifyarticlelist}">更多</a>></span>
+						    </div>
+					    	<div class="content">
+					    		<ul id='notice'>
+					    			<li th:each="notifyarticle : ${notifyarticleList}"  ><a th:href="${#strings.isEmpty(notifyarticle.href)} ? @{/front/cms/open/aArticle/detail(id=${notifyarticle.id})} : ${notifyarticle.href}" th:text="${notifyarticle.title}"></a><span th:text="${#dates.format(notifyarticle.createTime, 'yyyy-MM-dd')}" ></span></li>
+					    		</ul>
+				    	    </div>
+						</div>
+						<div class="content_r">
+							<div class="title">
+								<span class="title-l">推荐文章</span>
+								<span class="title-r right"><a th:href="@{/front/cms/open/recommendarticlelist}">更多</a>></span>
+						    </div>
+					    	<div class="content">
+					    		<ul id="article">
+					    			<li th:each="recommendarticle : ${recommendarticleList}"  ><a th:href="@{/front/cms/open/aArticle/detail(id=${recommendarticle.id})}" th:text="${recommendarticle.title}"></a><span th:text="${recommendarticle.create.name}"></span><span>作者：</span></li>
+					    		</ul>
+					    	</div>
+						</div>
+						<div class="content_d">
+							<div class="titles">
+								<span class="title-l">协会会员</span>
+								<span class="title-r right"><a th:href="@{/front/cms/open/expertlist}">更多</a>></span>
+						    </div>
+						    <div class="photoList">
+						   	    <div class="swiper-container">
+							        <div class="swiper-wrapper">
+								        <div class="swiper-slide" th:each="expert : ${expertList}" >
+								            <a th:href="@{/front/cms/open/expert/detail(expertId=${expert.expertId})}">
+									        	<p><img th:src="@{${expert.url!=null}?@{${expert.url}}:@{/img/morentouxiang.png}}"></p>
+									        	<p th:text="${expert.expertName}">专家</p><p th:text="${expert.company}">山东省</p>
+								        	</a>
+								        </div>
+							        </div>
+							        <!-- Add Arrows -->
+							        <div class="swiper-button-next"></div>
+							        <div class="swiper-button-prev"></div>
+							    </div>
+						    </div>
+						</div>
+					</article>
+					<!--右侧内容-->
+					<aside>
+						<div class="memberBox">
+							<div class="title">
+								<span class="title-l">会员单位</span>
+								<span class="title-r right"><a th:href="@{/front/cms/open/page/13}">更多</a>></span>
+							</div>
+							<div class="comment">
+								<ul >
+					    			<li th:each="m : ${unitList}"  ><a th:href="${#strings.isEmpty(m.href)} ? @{/front/cms/open/aArticle/detail(id=${m.id})} : ${m.href}" th:text="${m.title}"></a></li>
+					    		</ul>
+							</div>
+						</div>
+						<div class="memberBox">
+							<div class="title">
+								<span class="title-l">下载专区</span>
+								<span class="title-r right"><a th:href="@{/front/cms/open/page/14}">更多</a>></span>
+							</div>
+							<div class="comment">
+								<ul >
+					    			<li th:each="m : ${downList}"  ><a th:href="${#strings.isEmpty(m.href)} ? @{/front/cms/open/aArticle/detail(id=${m.id})} : ${m.href}" th:text="${m.title}"></a></li>
+					    		</ul>
+							</div>
+						</div>
+					</aside>
+				</div>
+			</div>
+		</section>
+		<!--脚部-->
+		<div th:include="front/include :: footer"></div>
+		<script src="/js/front/cms/index.js" type="text/javascript"></script>
+	</body>
+</html>

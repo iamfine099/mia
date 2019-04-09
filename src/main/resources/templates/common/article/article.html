@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="row">
+			<div class="col-sm-3">
+				<div class="ibox ibox-body">
+					<div class="ibox-title">
+						<h5>选择栏目</h5>
+					</div>
+					<div class="ibox-content">
+						<div id="jstree"></div>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-8">
+			<div class="ibox">
+				<div class="ibox-body">
+					<div class="fixed-table-toolbar">
+						<form id='searchForm'>
+							<!-- <input type="hidden" value="" name="categoryId" id="categoryId"/> -->
+							<input type="hidden" value="1" name="pCategoryId" id="pCategoryId"/>
+						</form>
+						<!-- <div class="columns little-padding searchArea">
+							<div class="row">
+							<form id='searchForm'>
+																																								<div class=" pull-left col-md-3 nopadding little-marign">
+								<span  class=" pull-left col-md-4 forSearch">栏目编号:</span>
+									<div class=" pull-left col-md-8 nopadding ">
+										<input id="categoryId" name='categoryId' type="text" class="form-control"
+											placeholder="">
+									</div>
+								</div>
+																																<div class=" pull-left col-md-3 nopadding little-marign">
+									<span  class=" pull-left col-md-4 forSearch">标题:</span>
+									<div class=" pull-left col-md-8 nopadding ">
+										<input id="title" name='title' type="text" class="form-control"
+											placeholder="">
+									</div>
+								</div>
+																																<div class=" pull-left col-md-3 nopadding little-marign">
+									<span  class=" pull-left col-md-4 forSearch">文章图片:</span>
+									<div class=" pull-left col-md-8 nopadding ">
+										<input id="image" name='image' type="text" class="form-control"
+											placeholder="">
+									</div>
+								</div>
+																																<div class=" pull-left col-md-3 nopadding little-marign">
+									<span  class=" pull-left col-md-4 forSearch">关键字:</span>
+									<div class=" pull-left col-md-8 nopadding ">
+										<input id="keywords" name='keywords' type="text" class="form-control"
+											placeholder="">
+									</div>
+								</div>
+																																<div class=" pull-left col-md-3 nopadding little-marign">
+									<span  class=" pull-left col-md-4 forSearch">描述、摘要:</span>
+									<div class=" pull-left col-md-8 nopadding ">
+										<input id="description" name='description' type="text" class="form-control"
+											placeholder="">
+									</div>
+								</div>
+																																<div class=" pull-left col-md-3 nopadding little-marign">
+									<span  class=" pull-left col-md-4 forSearch">点击数:</span>
+									<div class=" pull-left col-md-8 nopadding ">
+										<input id="hits" name='hits' type="text" class="form-control"
+											placeholder="">
+									</div>
+								</div>
+																																<div class=" pull-left col-md-3 nopadding little-marign">
+									<span  class=" pull-left col-md-4 forSearch">删除标记:</span>
+									<div class=" pull-left col-md-8 nopadding ">
+										<input id="delFlag" name='delFlag' type="text" class="form-control"
+											placeholder="">
+									</div>
+								</div>
+																																<div class=" pull-left col-md-3 nopadding little-marign">
+									<span  class=" pull-left col-md-4 forSearch">备注信息:</span>
+									<div class=" pull-left col-md-8 nopadding ">
+										<input id="remarks" name='remarks' type="text" class="form-control"
+											placeholder="">
+									</div>
+								</div>
+																																<div class=" pull-left col-md-3 nopadding little-marign">
+									<span  class=" pull-left col-md-4 forSearch">创建人:</span>
+									<div class=" pull-left col-md-8 nopadding ">
+										<input id="createBy" name='createBy' type="text" class="form-control"
+											placeholder="">
+									</div>
+								</div>
+																																<div class=" pull-left col-md-3 nopadding little-marign">
+									<span  class=" pull-left col-md-4 forSearch">创建时间:</span>
+									<div class=" pull-left col-md-8 nopadding ">
+										<input id="createTime" name='createTime' type="text" class="form-control"
+											placeholder="">
+									</div>
+								</div>
+																																<div class=" pull-left col-md-3 nopadding little-marign">
+									<span  class=" pull-left col-md-4 forSearch">状态(0未审核 -1 未通过 1通过):</span>
+									<div class=" pull-left col-md-8 nopadding ">
+										<input id="status" name='status' type="text" class="form-control"
+											placeholder="">
+									</div>
+								</div>
+																																<div class=" pull-left col-md-3 nopadding little-marign">
+									<span  class=" pull-left col-md-4 forSearch">评分:</span>
+									<div class=" pull-left col-md-8 nopadding ">
+										<input id="score" name='score' type="text" class="form-control"
+											placeholder="">
+									</div>
+								</div>
+																																<div class=" pull-left col-md-3 nopadding little-marign">
+									<span  class=" pull-left col-md-4 forSearch">推荐次数:</span>
+									<div class=" pull-left col-md-8 nopadding ">
+										<input id="recommendNum" name='recommendNum' type="text" class="form-control"
+											placeholder="">
+									</div>
+								</div>
+																																<div class=" pull-left col-md-3 nopadding little-marign">
+									<span  class=" pull-left col-md-4 forSearch">是否推荐(1是 0否):</span>
+									<div class=" pull-left col-md-8 nopadding ">
+										<input id="isRecommend" name='isRecommend' type="text" class="form-control"
+											placeholder="">
+									</div>
+								</div>
+																																<div class=" pull-left col-md-3 nopadding little-marign">
+									<span  class=" pull-left col-md-4 forSearch">是否置顶(1是 0否):</span>
+									<div class=" pull-left col-md-8 nopadding ">
+										<input id="isTop" name='isTop' type="text" class="form-control"
+											placeholder="">
+									</div>
+								</div>
+																																<div class=" pull-left col-md-3 nopadding little-marign">
+									<span  class=" pull-left col-md-4 forSearch">文章类型:</span>
+									<div class=" pull-left col-md-8 nopadding ">
+										<input id="type" name='type' type="text" class="form-control"
+											placeholder="">
+									</div>
+								</div>
+																																<div class=" pull-left col-md-3 nopadding little-marign">
+									<span  class=" pull-left col-md-4 forSearch">审核人:</span>
+									<div class=" pull-left col-md-8 nopadding ">
+										<input id="auditBy" name='auditBy' type="text" class="form-control"
+											placeholder="">
+									</div>
+								</div>
+																																<div class=" pull-left col-md-3 nopadding little-marign">
+									<span  class=" pull-left col-md-4 forSearch">审核时间:</span>
+									<div class=" pull-left col-md-8 nopadding ">
+										<input id="auditDate" name='auditDate' type="text" class="form-control"
+											placeholder="">
+									</div>
+								</div>
+																																<div class=" pull-left col-md-3 nopadding little-marign">
+									<span  class=" pull-left col-md-4 forSearch">审核内容:</span>
+									<div class=" pull-left col-md-8 nopadding ">
+										<input id="auditContent" name='auditContent' type="text" class="form-control"
+											placeholder="">
+									</div>
+								</div>
+																																<div class=" pull-left col-md-3 nopadding little-marign">
+									<span  class=" pull-left col-md-4 forSearch">发布时间:</span>
+									<div class=" pull-left col-md-8 nopadding ">
+										<input id="publishTime" name='publishTime' type="text" class="form-control"
+											placeholder="">
+									</div>
+								</div>
+																								</form>
+								<div class=" pull-left col-md-3 nopadding little-marign">
+									<button class="pull-left btn btn-success little-marign" type='button' onclick="reLoad()" style="margin-left:10px;">查询</button>
+									<button class="pull-left btn btn-success little-marign" type='button' onclick="resetBtn(this)" style="margin-left:10px;">重置</button>
+								</div>
+							</div>	
+							
+							<div style='clear:both;'></div>	
+						</div> -->
+						<div class="columns ">
+							<button shiro:hasPermission="common:article:add" type="button" class="btn  btn-primary addbth" onclick="add()">
+								<i class="fa fa-plus" aria-hidden="true"></i>添加
+							</button>
+							<button shiro:hasPermission="common:article:batchRemove" type="button" class="btn  btn-danger"
+								onclick="batchRemove()">
+								<i class="fa fa-trash" aria-hidden="true"></i>删除
+							</button>
+							<!-- <button shiro:hasPermission="common:article:add" type="button" class="btn  btn-danger"
+								onclick="exportExcel()">
+								<i class="fa fa-file-excel-o" aria-hidden="true"></i>导出
+							</button>
+							
+							<button shiro:hasPermission="common:article:add" type="button" class="btn  btn-danger"
+								onclick="importExcel()">
+								<i class="fa fa-file-excel-o" aria-hidden="true"></i>导入
+							</button> -->
+						</div>
+					</div>
+					<table id="exampleTable" data-mobile-responsive="true">
+					</table>
+				</div>
+			</div>
+		</div>
+		</div>
+	</div>
+	<!--shiro控制bootstraptable行内按钮看见性 来自bootdo的创新方案 -->
+		<div>
+			<script type="text/javascript">
+				var s_edit_h = 'hidden';
+				var s_remove_h = 'hidden';
+				var s_resetPwd_h = 'hidden';
+			</script>
+		</div>
+		<div shiro:hasPermission="common:article:edit">
+			<script type="text/javascript">
+				s_edit_h = '';
+			</script>
+		</div>
+		<div shiro:hasPermission="common:article:remove">
+			<script type="text/javascript">
+				var s_remove_h = '';
+			</script>
+		</div>
+		<div shiro:hasPermission="common:article:resetPwd">
+			<script type="text/javascript">
+				var s_resetPwd_h = '';
+			</script>
+		</div>
+	</div>
+	<div th:include="include :: footer"></div>
+	<script type="text/javascript" src="/js/appjs/common/article/article.js"></script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+	<meta charset="utf-8">
+	<head th:include="front/include :: header"></head>
+	<body>
+		<!--这是头-->
+		<head th:include="front/include :: topbar"></head>
+		<!--这是身子-->
+		<section class="total">
+			<div class="grayStrip clear">
+				<div class="title">
+					<p><span th:text="${user.username}"></span>登录成功！</p>
+				</div>
+			</div>
+			<!--这是选择盒子-->
+			<div class="bodyContent">
+				<ul class="selectionBar">
+					<li class="selectionBarText choosed"><a href="">个人信息</a></li>
+					<li class="selectionBarText"><a th:href="@{/front/cms/modifyPersonalInfo}">修改密码</a></li>
+					<li class="selectionBarText"><a th:href="@{/front/cms/release}">我要发布</a></li>
+					<li class="selectionBarText"><a th:href="@{/front/cms/drafts}">草稿箱</a></li>
+					<li class="selectionBarText"><a th:href="@{/front/cms/open/recommendarticlelist}">推荐文章</a></li>
+					<li class="selectionBarText"><a th:href="@{/front/cms//myArticle}">我的文章</a></li>
+				</ul>
+				<p class="Bigtitle">个人信息</p>
+				<div class="personalInfo">
+					<div class="personalInfo_box">
+						<p>手&nbsp;机&nbsp;号：<span class="personal_phoneNum" th:text="${expert.phone}"></span></p>
+					</div>
+					<div class="personalInfo_box">
+						<p>真实姓名：<span class="personal_name" th:text="${expert.expertName}"></span></p>
+					</div>
+					<div class="personalInfo_box">
+						<p>工作单位：<span class="personal_workplace" th:text="${expert.company}"></span></p>
+					</div>
+					<div class="personalInfo_box">
+						<button class="modify_btn">修改</button>
+					</div>
+				</div>
+				
+				
+			</div>
+		</section>
+		
+		<!--这是尾部-->
+		<!--这是尾部-->
+		<div th:include="front/include :: footer"></div>
+	</body>
+</html>

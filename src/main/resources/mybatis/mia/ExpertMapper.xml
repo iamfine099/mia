@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.mia.dao.ExpertDao">
+
+	<sql id="columns">
+		`expert_id`,`head_img`,`expert_name`,`sex`,`phone`,`status`,`create_date`,`last_time`,`company`,`specialty`,`number_card`,`experience`,`achievement`,`email`,`office_phone`,`office`</sql>
+	
+	<sql id="commons_where">
+		  <if test="expertId != null and expertId != ''"> and expert_id = #{expertId} </if>
+		  <if test="headImg != null and headImg != ''"> and head_img = #{headImg} </if>
+		  <if test="expertName != null and expertName != ''"> and expert_name like CONCAT('%',#{expertName},'%') </if>
+		  <if test="sex != null and sex != ''"> and sex = #{sex} </if>
+		  <if test="phone != null and phone != ''"> and phone like CONCAT('%',#{phone},'%') </if>
+		  <if test="status != null and status != ''"> and status = #{status} </if>
+		  <if test="createDate != null and createDate != ''"> and create_date = #{createDate} </if>
+		  <if test="lastTime != null and lastTime != ''"> and last_time = #{lastTime} </if>
+		  <if test="company != null and company != ''"> and company = #{company} </if>
+		  <if test="specialty != null and specialty != ''"> and specialty = #{specialty} </if>
+		  <if test="numberCard != null and numberCard != ''"> and number_card = #{numberCard} </if>
+		  <if test="email != null and email != ''"> and email like CONCAT('%',#{email},'%') </if>
+		</sql>
+
+	<select id="get" resultType="com.bootdo.mia.domain.ExpertDO">
+		select
+			<include refid="columns" />
+ 		from t_expert 
+ 		where expert_id = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.mia.domain.ExpertDO">
+		select
+			e.`expert_id`,e.`head_img`,e.`expert_name`,e.`sex`,e.`phone`,e.`status`,e.`create_date`,e.`last_time`,e.`company`,e.`specialty`,e.`number_card`,e.`experience`,e.`achievement`,e.`email`,f.`url` as "url"
+		from t_expert e
+		left join sys_file f on f.id=e.head_img
+        <where>  
+		  <include refid="commons_where"/>
+		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by expert_id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from t_expert 
+		 <where>  
+		  <include refid="commons_where"/>
+		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.mia.domain.ExpertDO" useGeneratedKeys="true" keyProperty="expertId">
+		insert into t_expert 
+		(
+			`head_img`, 
+			`expert_name`, 
+			`sex`, 
+			`phone`, 
+			`status`, 
+			`create_date`, 
+			`last_time`, 
+			`company`, 
+			`specialty`, 
+			`number_card`,
+			`experience`,
+			`achievement`,
+			`email`,
+			`office_phone`,
+			`office`
+		)
+		values
+		(
+			#{headImg}, 
+			#{expertName}, 
+			#{sex}, 
+			#{phone}, 
+			#{status}, 
+			#{createDate}, 
+			#{lastTime}, 
+			#{company}, 
+			#{specialty}, 
+			#{numberCard},
+			#{experience},
+			#{achievement},
+			#{email},
+			#{officePhone},
+			#{office}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.bootdo.mia.domain.ExpertDO">
+		update t_expert  
+		<set>
+			<if test="headImg != null">`head_img` = #{headImg}, </if>
+			<if test="expertName != null">`expert_name` = #{expertName}, </if>
+			<if test="sex != null">`sex` = #{sex}, </if>
+			<if test="phone != null">`phone` = #{phone}, </if>
+			<if test="status != null">`status` = #{status}, </if>
+			<if test="createDate != null">`create_date` = #{createDate}, </if>
+			<if test="lastTime != null">`last_time` = #{lastTime}, </if>
+			<if test="company != null">`company` = #{company}, </if>
+			<if test="specialty != null">`specialty` = #{specialty}, </if>
+			<if test="numberCard != null">`number_card` = #{numberCard}, </if>
+			<if test="experience != null">`experience` = #{experience}, </if>
+			<if test="achievement != null">`achievement` = #{achievement}, </if>
+			<if test="email != null">`email` = #{email}, </if>
+			<if test="officePhone != null">`office_phone` = #{officePhone}, </if>
+			<if test="office != null">`office` = #{office}</if>
+		</set>
+		where expert_id = #{expertId}
+	</update>
+	
+	<delete id="remove">
+		delete from t_expert  where expert_id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from t_expert where expert_id in 
+		<foreach item="expertId" collection="array" open="(" separator="," close=")">
+			#{expertId}
+		</foreach>
+	</delete>
+
+</mapper>

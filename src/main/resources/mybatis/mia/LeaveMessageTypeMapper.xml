@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.mia.dao.LeaveMessageTypeDao">
+
+	<sql id="columns">
+		`mt_id`,`mt_name`,`remarks`</sql>
+	
+	<sql id="commons_where">
+		  <if test="mtId != null and mtId != ''"> and mt_id = #{mtId} </if>
+		  <if test="mtName != null and mtName != ''"> and mt_name = #{mtName} </if>
+		  <if test="remarks != null and remarks != ''"> and remarks = #{remarks} </if>
+		</sql>
+
+	<select id="get" resultType="com.bootdo.mia.domain.LeaveMessageTypeDO">
+		select
+			<include refid="columns" />
+ 		from t_message_type
+ 		where mt_id = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.mia.domain.LeaveMessageTypeDO">
+		select
+			<include refid="columns" />
+		from t_message_type
+         <where>  
+		  <include refid="commons_where"/>
+		</where> 
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by mt_id 
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from t_message_type
+		 <where>  
+		  <include refid="commons_where"/>
+		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.mia.domain.LeaveMessageTypeDO" useGeneratedKeys="true" keyProperty="mtId">
+		insert into t_message_type
+		(
+			 
+			`mt_name`, 
+			`remarks`
+		)
+		values
+		(
+			#{mtName}, 
+			#{remarks}
+			
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.bootdo.mia.domain.LeaveMessageTypeDO">
+		update t_message_type 
+		<set>
+			<if test="mtName != null">`mt_name` = #{mtName}, </if>
+			<if test="remarks != null">`remarks` = #{remarks}, </if>
+		</set>
+		where mt_id = #{mtId}
+	</update>
+	
+	<delete id="remove">
+		delete from t_message_type where mt_id = #{mtId}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from t_message_type where mt_id in 
+		<foreach item="mtId" collection="array" open="(" separator="," close=")">
+			#{mtId}
+		</foreach>
+	</delete>
+
+</mapper>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+	<meta charset="utf-8">
+	<head th:include="front/include :: header"></head>
+	<body>
+		<!--头部-->
+		<head th:include="front/include :: topbar"></head>
+		<!--中间内容-->
+		<section class="expertRecommend clear_box">
+			<div class="section_box">
+				<!--中间标题-->
+				<div class="grayStrip">				
+				<div class="publicTitle">
+					<p><span th:text="${user.username}"></span>登录成功！
+					<a th:href="@{/front/cms/out}" class="person_exit">退出</a>
+					</p>
+				</div>
+			</div>
+				<!--左侧信息-->
+				<aside>
+					<div class="public_box">
+						<ul>
+							<li><a th:href="@{/front/cms/expertInfo}">个人信息</a></li>
+							<li class="listStyle"><a th:href="@{/front/cms/open/articleScorelist}">文章评分</a></li>
+							<li><a th:href="@{/front/cms/open/expertCommentArticleList}">已评文章</a></li>
+							<li><a th:href="@{/front/cms/open/expertRecommendArticleList}">文章推荐</a></li>
+							<li><a th:href="@{/front/cms/open/expertCommentList(expertId=${user.busId})}">我的评论</a></li>
+							<li><a th:href="@{/front/cms/mynews}">消息通知</a></li>
+						</ul>
+					</div>
+				</aside>
+				<!--右侧信息-->
+				<article>
+					<form  method="post" id="signupForm" action="/front/cms/open/articleScorelist">	
+				    <div class="fabu_box">
+				    	<div class="fabu_top">
+					        <p>文章标题：<input class="fabu" type="text" name="title" id="title" th:value="${pageUtils.params.title}"/></p>
+					        <p>发布时间：
+					           <select id="date" name="datesearch">
+					           	<option value="">---请选择---</option>
+								<option th:selected="${pageUtils.params.datesearch eq '1'}" th:value="1">最近一天</option>
+								<option th:selected="${pageUtils.params.datesearch eq '7'}" th:value="7">最近一周</option>
+								<option th:selected="${pageUtils.params.datesearch eq '30'}" th:value="30">最近一月</option>
+								<option th:selected="${pageUtils.params.datesearch eq '365'}" th:value="365">最近一年</option>
+							</select>
+					        </p>
+					        <p>文章类型：
+							<select id="type" name="type">
+								<option value="">---请选择---</option>
+								<option th:selected="${pageUtils.params.type eq dict.value}" th:each="dict:${T(com.bootdo.common.utils.DictUtils).getDictList('business_type')}" th:value="${dict.value}" th:text="${dict.name}"></option>
+							</select>
+							</p>
+					        <button type="submit" class="fabu_search">搜索</button>
+				       </div>
+					    <!-- <div class="fabu_down">
+					        <p>发布内容：
+						        <input type="checkbox" class="checkbox" value="是">是
+					            <input type="checkbox" class="checkbox" value="否">否
+					            <input type="checkbox" class="checkbox" value="是">是
+					            <input type="checkbox" class="checkbox" value="否">否
+					        </p>
+						    <button class="fabu_search">搜索</button>
+					    </div> -->
+				    </div>
+				    <div class="article_down">
+				       	<ul class="article_list">
+				      		<li th:each="m ,stat: ${pageUtils.rows}">
+				    			<a th:href="@{/front/cms/open/articleScore/detail(id=${m.id})}" th:text="${m.title}">心脏干细胞研究论文造假&nbsp;但干细胞治疗心脏病并非没有希望</a>
+				       			<span class="writer">作者：</span>
+				       			<span class="writer_name" th:text="${m.create} == null?'':${m.create.name}">张熙桐</span>
+				       			<span class="writer_time" th:text="${m.publishTime} == null ? null : ${#dates.format(m.publishTime, 'yyyy-MM-dd')}">2018-10-11</span>
+				       		</li>
+				       	</ul>
+				    </div>
+				    
+					    <div class="fenye">
+					     		<div class="EPpageNum" th:include="front/include::split_page" ></div>
+					    </div>
+				    </form> 
+				</article>
+			</div>
+		</section>
+		<!--脚部-->
+		<div th:include="front/include :: footer"></div>
+	</head>
+	<body>
+	</body>
+</html>

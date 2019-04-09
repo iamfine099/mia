@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+	<meta charset="utf-8">
+	<head th:include="front/include :: header"></head>
+	<body>
+		<!--头部-->
+		<head th:include="front/include :: topbar"></head>
+		<!--中间内容-->
+		<section id="expertInfo" class="clear_box">
+			<div class="section_box">
+				<!--中间标题-->
+				<div class="grayStrip">				
+				<div class="publicTitle">
+					<p><span th:text="${user.username}"></span>登录成功！
+					<a th:href="@{/front/cms/out}" class="person_exit">退出</a>
+					</p>
+				</div>
+			</div>
+				<!--左侧信息-->
+				<aside>
+					<div class="public_box">
+						<ul>
+							<li class="listStyle"><a th:href="@{/front/cms/expertInfo}">个人信息</a></li>
+							<li><a th:href="@{/front/cms/open/articleScorelist}">文章评分</a></li>
+							<li><a th:href="@{/front/cms/open/expertCommentArticleList}">已评文章</a></li>
+							<li><a th:href="@{/front/cms/open/expertRecommendArticleList}">文章推荐</a></li>
+							<li><a th:href="@{/front/cms/open/expertCommentList(expertId=${user.busId})}">我的评论</a></li>
+							<li><a th:href="@{/front/cms/mynews}">消息通知</a></li>
+						</ul>
+					</div>
+				</aside>
+			<div class="expertExhibition_content">
+					<div class="expertEx_photo left">
+						<div class="cardphoto">
+							<div class="cardphotolimit">
+								<img th:src="@{${fileObj!=null}?@{${fileObj.url}}:@{/img/morentouxiang.png}}">
+							</div>
+						</div>
+						<div class="cardInfo clear_box">
+							<p>姓名：<span class="cardText" th:text="${expert.expertName}">张广江</span></p>
+							<p>专长：<span th:text="${expert.specialty}">贫血基因表达</span></p>
+							<p>单位：<span th:text="${expert.company}">山东大学第二医院</span></p>
+							<p>编号：<span th:text="${expert.numberCard}">20181254369</span></p>
+						</div>
+					</div>
+					<div class="expertEx_intro min_height">
+						<p class="expertEx_introH">
+							<span class="expertEx_introTitle">姓名</span>
+							<span class="expertEx_introContent" th:text="${expert.expertName}">张广江</span>
+						</p>
+						<p class="expertEx_introH">
+							<span class="expertEx_introTitle">性别</span>
+							<span th:if="${expert.sex eq dict.value}" th:each="dict:${T(com.bootdo.common.utils.DictUtils).getDictList('sex')}" th:value="${dict.value}" th:text="${dict.name}"></span>
+						</p>
+						<!-- <p class="expertEx_introH">
+							<span class="expertEx_introTitle">手机号码</span>
+							<span class="expertEx_introContent" th:text="${expert.phone}">15878954876</span>
+						</p> -->
+						<p class="expertEx_introH">
+							<span class="expertEx_introTitle">电子邮箱</span>
+							<span class="expertEx_introContent" th:text="${expert.email}">15878954876@qq.com</span>
+						</p>
+						<p class="expertEx_introH">
+							<span class="expertEx_introTitle">工作单位</span>
+							<span class="expertEx_introContent" th:text="${expert.company}">济南市历下区</span>
+						</p>
+						<p class="expertEx_introH">
+							<span class="expertEx_introTitle">办公电话</span>
+							<span class="expertEx_introContent" th:text="${expert.officePhone}"></span>
+						</p>
+						<p class="expertEx_introH">
+							<span class="expertEx_introTitle">协会职务</span>
+							<span class="expertEx_introContent" th:text="${expert.office}"></span>
+						</p>
+						<p class="expertEx_introH">
+							<span class="expertEx_introTitle">个人简介</span>
+							<span class="expertEx_introContentDet">
+								<span id="gerenlvli" th:utext="${expert.experience}">
+								
+								</span>
+								<span id="xueshuchengjiu" th:utext="${expert.achievement}"></span>
+								
+								</span>
+						</p>
+					</div>
+				</div>
+			</div>		
+			</section>
+		<!--脚部-->
+		<div th:include="front/include :: footer"></div>
+	</body>
+</html>

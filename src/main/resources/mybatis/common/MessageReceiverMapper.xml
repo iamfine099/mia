@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.common.dao.MessageReceiverDao">
+
+	<select id="get" resultType="com.bootdo.common.domain.MessageReceiverDO">
+		select `f_id`,`f_msg_id`,`f_to`,`f_reply`,`f_reply_time`,`f_to_readed`,`f_from_readed`,`f_memo`,`f_to_time`,`f_from_time`
+		
+		 from t_message_receiver where f_id = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.common.domain.MessageReceiverDO">
+		select `f_id`,`f_msg_id`,u.name as `fTo`,`f_reply`,`f_reply_time`,`f_to_readed`,`f_from_readed`,`f_memo` 
+		from t_message_receiver ,sys_user u 
+		
+        <where>  
+        		f_to = u.user_id 
+		  		  <if test="fId != null and fId != ''"> and f_id = #{fId} </if>
+		  		  <if test="fMsgId != null and fMsgId != ''"> and f_msg_id = #{fMsgId} </if>
+		  		  <if test="fTo != null and fTo != ''"> and f_to = #{fTo} </if>
+		  		  <if test="fReply != null and fReply != ''"> and f_reply = #{fReply} </if>
+		  		  <if test="fReplyTime != null and fReplyTime != ''"> and f_reply_time = #{fReplyTime} </if>
+		  		  <if test="fToReaded != null and fToReaded != ''"> and f_to_readed = #{fToReaded} </if>
+		  		  <if test="fFromReaded != null and fFromReaded != ''"> and f_from_readed = #{fFromReaded} </if>
+		  		  <if test="fMemo != null and fMemo != ''"> and f_memo = #{fMemo} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by f_id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from t_message_receiver
+		 <where>  
+		  		  <if test="fId != null and fId != ''"> and f_id = #{fId} </if>
+		  		  <if test="fMsgId != null and fMsgId != ''"> and f_msg_id = #{fMsgId} </if>
+		  		  <if test="fTo != null and fTo != ''"> and f_to = #{fTo} </if>
+		  		  <if test="fReply != null and fReply != ''"> and f_reply = #{fReply} </if>
+		  		  <if test="fReplyTime != null and fReplyTime != ''"> and f_reply_time = #{fReplyTime} </if>
+		  		  <if test="fToReaded != null and fToReaded != ''"> and f_to_readed = #{fToReaded} </if>
+		  		  <if test="fFromReaded != null and fFromReaded != ''"> and f_from_readed = #{fFromReaded} </if>
+		  		  <if test="fMemo != null and fMemo != ''"> and f_memo = #{fMemo} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.common.domain.MessageReceiverDO" useGeneratedKeys="true" keyProperty="fId">
+		insert into t_message_receiver
+		(
+			`f_msg_id`, 
+			`f_to`, 
+			`f_reply`, 
+			`f_reply_time`, 
+			`f_to_readed`, 
+			`f_to_time`, 
+			`f_from_time`,
+			`f_from_readed`, 	 
+			`f_memo`
+		)
+		values
+		(
+			#{fMsgId}, 
+			#{fTo}, 
+			#{fReply}, 
+			#{fReplyTime}, 
+			#{fToReaded}, 
+			#{fToTime}, 
+			#{fFromTime}, 
+			#{fFromReaded}, 
+			#{fMemo}
+		)
+	</insert>
+	 
+ 
+	 
+	<update id="update" parameterType="com.bootdo.common.domain.MessageReceiverDO">
+		update t_message_receiver 
+		<set>
+			<if test="fMsgId != null">`f_msg_id` = #{fMsgId}, </if>
+			<if test="fTo != null">`f_to` = #{fTo}, </if>
+			<if test="fReply != null">`f_reply` = #{fReply}, </if>
+			<if test="fReplyTime != null">`f_reply_time` = #{fReplyTime}, </if>
+			<if test="fToReaded != null">`f_to_readed` = #{fToReaded}, </if>
+			<if test="fToTime != null">`f_to_time` = #{fToTime}, </if>
+			<if test="fFromTime != null">`f_from_time` = #{fFromTime}, </if>
+			<if test="fFromReaded != null">`f_from_readed` = #{fFromReaded}, </if>
+			<if test="fMemo != null">`f_memo` = #{fMemo}</if>
+		</set>
+		where f_id = #{fId}
+	</update>
+	
+	<delete id="remove">
+		delete from t_message_receiver where f_id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from t_message_receiver where f_id in 
+		<foreach item="fId" collection="array" open="(" separator="," close=")">
+			#{fId}
+		</foreach>
+	</delete>
+
+	<delete id="removeForMsgId">
+		delete from t_message_receiver where f_msg_id = #{value}
+	</delete>
+	
+	<delete id="batchRemoveForMsgIds">
+		delete from t_message_receiver where f_msg_id in 
+		<foreach item="fMsgId" collection="array" open="(" separator="," close=")">
+			#{fMsgId}
+		</foreach>
+	</delete>
+</mapper>

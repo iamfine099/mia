@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+	<meta charset="utf-8">
+	<head th:include="front/include :: header"></head>
+	<body>
+		<!--头部-->
+		<head th:include="front/include :: topbar"></head>
+		<!--中间部分-->
+		<section id="register">
+			<div id="register_form">
+				<p><span>注册用户</span></p>
+				<form action="" method="post">
+				    <div class="item">
+						<label class="phone">手机号&nbsp;&nbsp;</label>
+						<input type="text" name="phone" placeholder="请填写手机号" required="required">
+					</div>
+					<div class="item">
+						<label class="uName">真实姓名&nbsp;&nbsp;</label>
+						<input type="text" name="uName" placeholder="请填写您的真实姓名" required="required">
+					</div>
+					<div class="item">
+						<label class="job">工作单位&nbsp;&nbsp;</label>
+						<input type="text" name="job" placeholder="请填写您的工作单位">
+					</div>
+					<div class="item">
+						<label class="pwd">设置密码&nbsp;&nbsp;</label>
+						<input type="password" name="pwd" placeholder="请设置您的登录密码密码" required="required">
+					</div>
+					<div class="items">
+						<label class="code">验证码&nbsp;&nbsp;</label>
+						<input type="text" name="code" placeholder="请输入验证码" required="required">
+						<input type="button" name="gain" value="获取短信验证码">
+					</div>
+					<div class="read">
+						阅读并接受<a href="#" id="read_per">《用户协议》</a>
+					</div>
+					<div class="btn">
+						<a href="#" id="register_btn">注册</a>
+					</div>
+				</form>	
+			</div>
+		</section>
+		<!--脚部-->
+		<!--这是尾部-->
+		<div th:include="front/include :: footer"></div>
+	</body>
+</html>

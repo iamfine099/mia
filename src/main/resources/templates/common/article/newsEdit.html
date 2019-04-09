@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content">
+						<form class="form-horizontal m-t" id="signupForm">
+						<input id="id" name="id" th:value="${article.id}"  type="hidden">
+							<div class="form-group">
+								<label class="col-sm-3 control-label">标题：</label>
+								<div class="col-sm-8">
+									<input id="title" name="title" th:value="${article.title}" class="form-control" type="text">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">类型：</label>
+								<div class="col-sm-8">
+									<select id="type" name="type" class="form-control">
+										<option th:each="dict:${T(com.bootdo.common.utils.DictUtils).getDictList('news_type')}" th:value="${dict.value}" th:text="${dict.name}" th:selected="${#numbers.formatDecimal(article.type, 1, 0)==#numbers.formatDecimal(dict.value, 1, 0)}"></option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">来源：</label>
+								<div class="col-sm-8">
+									<input id="copyfrom" name="copyfrom" th:value="${article.copyfrom}" class="form-control" type="text">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">摘要：</label>
+								<div class="col-sm-8">
+									<input id="description" name="description" th:value="${article.description}" class="form-control" type="text">
+								</div>
+							</div>
+							<div class="form-group">	
+								<label class="col-sm-3 control-label">附件：</label>
+								<div class="col-sm-8" id='release'>
+									<div class="layui-upload">
+										<button type="button" class="layui-btn layui-btn-normal" id="testList">添加附件</button>
+										<div class="layui-upload-list" id='imgpreBox'>
+											<table class="layui-table">
+												<thead>
+													<tr>
+														<th>文件名</th>
+														<th>操作</th>
+													</tr>
+												</thead>
+												<tbody id="demoList">
+													<tr th:each="m,stat:${fileList}">
+														<input type="hidden" class="fileId" name="fileId" th:value="${m.id}"/>
+														<input type="hidden" class="isDel" name="isDel" th:value="0"/>
+														<td th:id="'textPre'+${stat.count}" th:text="${m.fileName}"></td>
+														<td><button type="button" class="layui-btn layui-btn-xs" onclick="deleteTr(this)">删除</button></td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<input id="content" name="content" th:value="${article.content}" type="hidden"> 
+								<label class="col-sm-3 control-label">正文：</label>
+								<div class="col-sm-8">
+									<div class="ibox-content no-padding">
+										<textarea id="content_sn" class="summernote" name="zhengwen"></textarea>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">是否置顶：</label>
+								<div class="col-sm-8">
+									<label class="radio-inline" th:each="dict:${T(com.bootdo.common.utils.DictUtils).getDictList('yes_no')}">
+										<input type="radio" th:value="${dict.value}" th:text="${dict.name}" name="isTop" 
+											th:checked="${#numbers.formatDecimal(article.isTop, 1, 0)==#numbers.formatDecimal(dict.value, 1, 0)}">
+									</label>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">状态：</label>
+								<div class="col-sm-8">
+									<label class="radio-inline" th:each="dict:${T(com.bootdo.common.utils.DictUtils).getDictList('show_hide')}">
+										<input type="radio" th:value="${dict.value}" th:text="${dict.name}" name="delFlag" 
+											th:checked="${#numbers.formatDecimal(article.delFlag, 1, 0)==#numbers.formatDecimal(dict.value, 1, 0)}">
+									</label>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-8 col-sm-offset-3">
+									<button type="submit" class="btn btn-primary">提交</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+	</div>
+	</div>
+	<div th:include="include::footer"></div>
+	<script type="text/javascript" src="/js/appjs/common/article/newsEdit.js">
+	</script>
+</body>
+</html>

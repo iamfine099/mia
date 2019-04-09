@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content">
+						<form class="form-horizontal m-t" id="signupForm">
+						<input id="memId" name="memId" th:value="${member.memId}"  type="hidden">
+							
+																					<div class="form-group">
+								<label class="col-sm-3 control-label">姓名：</label>
+								<div class="col-sm-8">
+									<input id="memName" name="memName" th:value="${member.memName}" class="form-control" type="text">
+								</div>
+							</div>
+																					<div class="form-group">
+								<label class="col-sm-3 control-label">性别：</label>
+								<div class="col-sm-8">
+									 <select id="sex" name="sex" class="form-control">
+										<option th:each="dict:${T(com.bootdo.common.utils.DictUtils).getDictList('sex')}" th:value="${dict.value}" th:text="${dict.name}" th:selected="${member.sex eq dict.value}"></option>
+									</select> 
+								</div>
+							</div>
+																					<div class="form-group">
+								<label class="col-sm-3 control-label">手机号：</label>
+								<div class="col-sm-8">
+									<input id="phone" name="phone" th:value="${member.phone}" class="form-control" type="text" disabled>
+								</div>
+							</div>
+																																																<div class="form-group">	
+								<label class="col-sm-3 control-label">邮箱：</label>
+								<div class="col-sm-8">
+									<input id="email" name="email" th:value="${member.email}" class="form-control" type="text">
+								</div>
+							</div>
+																					<div class="form-group">
+								<label class="col-sm-3 control-label">状态：</label>
+								<div class="col-sm-8">
+									<!-- <select id="status" name="status" class="form-control">
+										<option th:each="dict:${T(com.bootdo.common.utils.DictUtils).getDictList('status')}" th:value="${dict.value}" th:text="${dict.name}" th:selected="${member.status eq dict.value}"></option>
+									</select> -->
+									<label class="radio-inline" th:each="dict:${T(com.bootdo.common.utils.DictUtils).getDictList('status')}">
+										<input type="radio" th:value="${dict.value}" th:text="${dict.name}" name="status"
+											th:checked="${#numbers.formatDecimal(member.status, 0, 1)==#numbers.formatDecimal(dict.value, 0, 1)}">
+									</label>
+								</div>
+							</div>
+														<div class="form-group">
+								<label class="col-sm-3 control-label">单位：</label>
+								<div class="col-sm-8">
+									<input id="company" name="company" th:value="${member.company}" class="form-control" type="text">
+								</div>
+							</div>
+																					<div class="form-group">
+								<label class="col-sm-3 control-label">专长：</label>
+								<div class="col-sm-8">
+									<input id="specialty_id" type="hidden">
+									<input id="specialty" name="specialty" th:value="${member.specialty}" class="form-control" type="text" readonly>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">会员头像：</label>
+								<div class="col-sm-8">
+									<button type="button" class="layui-btn" id="headImg">上传图片</button>
+									<div class="layui-upload-list">
+									    <img class="layui-upload-img" id="headImg_img" th:src="@{${fileObj != null }? @{${fileObj.url}} : @{''}}">
+									    <p id="imguploaddemoText"></p>
+									  </div>	
+								</div>
+							</div>
+																					<div class="form-group">
+								<label class="col-sm-3 control-label">号码牌：</label>
+								<div class="col-sm-8">
+									<input id="numberCard" name="numberCard" th:value="${member.numberCard}" class="form-control" type="text">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">审核内容：</label>
+								<div class="col-sm-8">
+									<textarea cols="2" id="auditContent" name="auditContent" class="form-control" th:text="${member.auditContent}"></textarea>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-8 col-sm-offset-3">
+									<button type="submit" class="btn btn-primary">提交</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+	</div>
+	</div>
+	<div th:include="include::footer"></div>
+	<script type="text/javascript" src="/js/appjs/mia/member/edit.js">
+	</script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+	<meta charset="utf-8">
+	<head th:include="front/include :: header"></head>
+	<body>
+		<head th:include="front/include :: topbar"></head>
+		<!--这是身体-->
+		<section class="bodyFrame">
+			<div class="grayStrip clear">
+				<div class="textLink">
+					<a th:href="@{/front/cms}">首页</a>
+				</div>
+				<div class="textLink">
+					<a href="">>&nbsp;&nbsp;协会会员</a>
+				</div>
+			</div>
+			<div class="bodyContent">
+				<ul class="selectionBar">
+					<li class="selectionBarText choosed"><a href="">协会会员</a></li>
+				</ul>
+			<form  method="post" id="signupForm" action="/front/cms/open/expertlist">
+				<div class="expertList_photoWall">
+					<div class="clear_box">
+						<ul>
+							<li class="expertPhoto left" th:each="m ,stat: ${pageUtils.rows}">
+								<a th:href="@{/front/cms/open/expert/detail(expertId=${m.expertId})}">
+									<div class="expertPhotoBox">
+										<img th:src="@{${m.url!=null}?@{${m.url}}:@{/img/morentouxiang.png}}">
+									</div>
+									<span class="expertName" th:text="${m.expertName}"></span>
+									<span class="expertIntro" th:text="${m.company}"></span>
+								</a>
+							</li>
+						</ul>
+					</div>
+					<!--分页-->
+					<div class="GCpageNum" th:include="front/include::split_page" ></div>
+				</div>
+				
+			</form>
+			</div>
+		</section>
+		<!--这是尾部-->
+		<div th:include="front/include :: footer"></div>
+	</body>
+</html>

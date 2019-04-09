@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+	<head th:include="front/include::header"></head>
+	<body>
+		<!--这是头-->
+		<head th:include="front/include :: topbar"></head>
+		<!--这是身子-->
+		<section class="total">
+			<div class="grayStrip">
+				<div class="publicTitle">
+					<p><span th:text="${user.username}"></span>登录成功！
+					<a th:href="@{/front/cms/out}" class="person_exit">退出</a>
+					</p>
+				</div>
+			</div>
+			<!--这是选择盒子-->
+			<div class="bodyContent">
+				<ul class="selectionBar">
+				 <li class="selectionBarText"><a th:href="@{/front/cms/personalInfo}">个人信息</a></li>
+					<li class="selectionBarText choosed"><a th:href="@{/front/cms/modifyPwd}">修改密码</a></li>
+					<li class="selectionBarText"><a th:href="@{/front/cms/release}">我要发布</a></li>
+					<li class="selectionBarText"><a th:href="@{/front/cms/drafts}">草稿箱</a></li>
+					<li class="selectionBarText"><a th:href="@{/front/cms/myArticle}">我的文章</a></li> 
+					<li class="selectionBarText"><a th:href="@{/front/cms/open/recommendarticlelist}">推荐文章</a></li>
+					<li class="selectionBarText"><a th:href="@{/front/cms/mynews}">消息通知</a></li>
+				</ul>
+				<div class="modifyPersonalInfo" id="signupForm">
+						<p class="personalInfotitle">修改密码</p>
+							
+							<div class="messageBoardInfo">
+								<div class="personalInfoName left">原密码：</div>
+								<div><input type="password" id="old_pwd" name='old_pwd'  class="messageBoardInput" placeholder="请输入旧密码，长度为6-16个字符" /></div>
+							</div>
+							<div class="messageBoardInfo">
+								<div class="personalInfoName left">新密码：</div>
+								<div><input type="password" id="new_pwd" name='new_pwd'  class="messageBoardInput" placeholder="请输入新密码，长度为6-16个字符"/></div>
+							</div>
+							<div class="messageBoardInfo">
+								<div class="personalInfoName left">确认密码：</div>
+								<div><input type="password" id="confirmPwd" name='confirmPwd'  class="messageBoardInput" placeholder="请输入新密码，长度为6-16个字符"/></div>
+							</div>
+							
+							<div class="modifyPwd_box">
+								<button class="modify_btn" id="modify_Pwd" type="button">确认修改</button>
+							</div>
+							
+						</div>
+				<!-- <p class="Bigtitle">修改密码</p>
+				<form class="modifyPwd" id="modifyPwd" >
+					<div class="modifyPwd_box">
+						<p>原密码：<input type="password" autocomplete="off" name="old_pwd" id="old_pwd" required  placeholder="请输入旧密码，长度为6-16个字符" ></p>
+					</div>
+					<div class="modifyPwd_box">
+						<p>新密码：<input type="password" autocomplete="off" name="new_pwd" id="new_pwd" required  placeholder="请输入新密码，长度为6-16个字符" ></p>
+					</div>
+					<div class="modifyPwd_box">
+						<p>确认密码：<input type="password" autocomplete="off" name="confirmPwd" id="confirmPwd" placeholder="请输入新密码，长度为6-16个字符" ></p>
+					</div>
+					<div class="modifyPwd_box">
+						<button class="modify_btn" id="modify_Pwd" type="button">确认修改</button>
+					</div>
+				</form> -->
+			</div>
+		</section>
+		
+		<!--这是尾部-->
+		<div th:include="front/include :: footer"></div>
+		<script type="text/javascript" src="/js/front/cms/modifyPwd.js" ></script>
+	</body>
+</html>

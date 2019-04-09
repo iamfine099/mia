@@ -1,0 +1,115 @@
+package ${package}.service.impl;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import ${package}.dao.${className}Dao;
+import ${package}.domain.${className}DO;
+import ${package}.service.${className}Service;
+import com.bootdo.common.utils.excel.ImportExcel;
+import org.springframework.web.multipart.MultipartFile;
+
+import cn.afterturn.easypoi.excel.ExcelExportUtil;
+import cn.afterturn.easypoi.excel.entity.TemplateExportParams;
+
+
+
+@Service
+public class ${className}ServiceImpl implements ${className}Service {
+	@Autowired
+	private ${className}Dao ${classname}Dao;
+	
+	@Override
+	public ${className}DO get(${pk.attrType} ${pk.attrname}){
+		return ${classname}Dao.get(${pk.attrname});
+	}
+	
+	@Override
+	public List<${className}DO> list(Map<String, Object> map){
+		return ${classname}Dao.list(map);
+	}
+	
+	@Override
+	public int count(Map<String, Object> map){
+		return ${classname}Dao.count(map);
+	}
+	
+	@Override
+	public int save(${className}DO ${classname}){
+		return ${classname}Dao.save(${classname});
+	}
+	
+	@Override
+	public int update(${className}DO ${classname}){
+		return ${classname}Dao.update(${classname});
+	}
+	
+	@Override
+	public int remove(${pk.attrType} ${pk.attrname}){
+		return ${classname}Dao.remove(${pk.attrname});
+	}
+	
+	@Override
+	public int batchRemove(${pk.attrType}[] ${pk.attrname}s){
+		return ${classname}Dao.batchRemove(${pk.attrname}s);
+	}
+	/**
+	 * 职位类别导出EXCEL
+	 * @param request
+	 * @param response
+	 * @param out
+	 */
+	public void exportExcel(HttpServletRequest request,
+			HttpServletResponse response, Map<String, Object> map,
+			ServletOutputStream out) {
+		TemplateExportParams params = new TemplateExportParams("templates/doc/${className}.xls");
+		List<${className}DO> list = ${classname}Dao.list(map);
+		Map<String, Object> map1 = new HashMap<String, Object>();
+		map1.put("maplist", list);
+		Workbook workbook = ExcelExportUtil.exportExcel(params,map1);
+		try {
+			String fileName = "${className}"+new Date().getTime()/1000+".xls";
+			response.setContentType("application/octet-stream");
+            response.setHeader("name", fileName);
+            response.setHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
+            response.setHeader("Pragma", "public");
+            response.setDateHeader("Expires", 0);
+            response.setHeader("Content-disposition","attachment; filename=\""+URLEncoder.encode(fileName, "UTF-8")+ "\"");
+			 workbook.write(out);
+			 workbook.close();
+			 out.flush();
+			 out.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	/**
+	 * 导入excel
+	 * @param fileName
+	 * @param file
+	 * @return
+	 * @throws IOException 
+	 * @throws InvalidFormatException 
+	 */
+	public void importExcel(String fileName, MultipartFile file) throws Exception {
+		
+			ImportExcel ei = new ImportExcel(file, 1, 0);
+			List<${className}DO> list = ei.getDataList(${className}DO.class);
+			//
+			for (${className}DO ${classname} : list) {
+				
+				if(${classname} != null) {
+					 ${classname}Dao.save( ${classname});
+				}
+				
+			}
+	}
+}

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+	<meta charset="utf-8">
+	<head th:include="front/include :: header"></head>
+	<body>
+		<!--头部-->
+		<head th:include="front/include :: topbar"></head>
+		<!--中间内容-->
+		<section id="expertComment" class="clear_box">
+			<div class="section_box">
+			    <!--中间标题-->
+				<div class="grayStrip">				
+				<div class="publicTitle">
+					<p><span th:text="${user.username}"></span>登录成功！
+					<a th:href="@{/front/cms/out}" class="person_exit">退出</a>
+					</p>
+				</div>
+			</div>
+				<!--左侧信息-->
+				<aside>
+					<div class="public_box">
+						<ul>
+							<li><a th:href="@{/front/cms/expertInfo}">个人信息</a></li>
+							<li><a th:href="@{/front/cms/open/articleScorelist}">文章评分</a></li>
+							<li><a th:href="@{/front/cms/open/expertCommentArticleList}">已评文章</a></li>
+							<li><a th:href="@{/front/cms/open/expertRecommendArticleList}">文章推荐</a></li>
+							<li class="listStyle"><a th:href="@{/front/cms/open/expertCommentList(expertId=${user.busId})}">我的评论</a></li>
+							<li><a th:href="@{/front/cms/mynews}">消息通知</a></li>
+						</ul>
+					</div>
+				</aside>
+				<article>
+				 <form  method="post" id="signupForm" action="/front/cms/open/expertCommentList">
+					<div class="content_down">
+						<div class="down_box" th:each="m ,stat: ${pageUtils.rows}">
+						<input id="cId" name="cId" th:value="${m.cId}"  type="hidden">
+							<div class="down_con">
+								<p th:text="${m.cContent}">“在美国有很多体系内的医生回想东西医学中心推荐患者，这些患者大多病情复杂，西医治疗效果不佳。”赵静说，中医的整体观，多靶点、多层次的作用和条件，对一些复杂的慢性病治疗有很大的优势，这也正是中医药价值的一种体现。访学的经历更加坚定了她从事中西医结合临床实践和研究的决心。</p>
+							</div>
+							<div class="link">
+								<p>原文章连接：<a th:href="@{/front/cms/open/articleScore/detail(id=${m.articleId})}" th:text="${m.article.title}">【世界传统医药日】赵静：结合医学研究让中医“走出去”更加具象</a></p>
+							    <p>评论时间：<span id="time" th:text="${#dates.format(m.createDate, 'yyyy-MM-dd')}">2015-12-3</span></p>
+							    <button th:if="${m.status ne '1'}" th:onclick="'javascript:remove('+${m.cId}+')'" type="button" class="withdraw_btn">撤回</button>
+							</div>
+						</div>
+						<!--分页-->
+						<div class="EPpageNum" th:include="front/include::split_page" ></div>
+					</div>
+					</form>
+				</article>
+			</div>
+		</section>
+		<!--脚部-->
+		<div th:include="front/include :: footer"></div>
+		<script type="text/javascript" src="/js/front/article/expertComment.js"></script>
+	</body>
+</html>

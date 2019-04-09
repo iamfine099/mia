@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+	<meta charset="utf-8">
+	<head th:include="front/include :: header"></head>
+	<body>
+		<!--头部-->
+		<head th:include="front/include :: topbar"></head>
+		<!--中间内容-->
+		<section id="goodComment">
+		    <div class="section_box">
+				<!--中间标题-->
+				<div class="grayStrip clear">
+				<div class="textLink">
+					<a th:href="@{/front/cms}">首页</a>
+				</div>
+				<div class="textLink">
+					<a href="">>&nbsp;&nbsp;精彩评论</a>
+				</div>
+			</div>
+				<!--左侧信息-->
+				<aside>
+					<div class="list_box">
+						<ul class="selectionBar">
+							<li class="selectionBarText listStyle"><a href="">精彩评论</a></li>
+							
+						</ul>
+					</div>
+				</aside>
+				<article>
+					<form  method="post" id="signupForm" action="/front/cms/open/goodCommentlist">
+				    <div class="content_down">
+						<div class="down_box" th:each="m ,stat: ${pageUtils.rows}">
+							<div class="down_title">
+							    <p><span th:text="${m.expert.expertName}">用户152****7658</span>评论</p>
+							</div>
+							<div class="down_con">
+								<p th:text="${m.cContent}">在美国有很多内的医生回想东西医学中心推荐患者</p>
+							</div>
+							<div class="link">
+								<p>原文章连接：
+									<a th:href="@{/front/cms/open/article/detail(id=${m.article.id})}" th:text="${m.article.title}">【世界传统医药日】赵静：结合医学研究让中医“走出去”更加具象</a>
+								</p>
+								<p>浏览：
+									<span th:text="${m.article.hits}">89</span>点赞：<span th:text="${m.article.recommendNum}">54</span>
+								</p>
+							</div>
+						</div>
+						<!--分页-->
+						<div class="GCpageNum" th:include="front/include::split_page" ></div>
+					</div>
+					</form>
+				</article>
+		    </div>
+		</section>
+		<!--脚部-->
+		<div th:include="front/include :: footer"></div>
+	</body>
+</html>

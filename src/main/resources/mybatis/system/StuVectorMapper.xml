@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.system.dao.StuVectorDao">
+
+	<select id="get" resultType="com.bootdo.system.domain.StuVectorDO">
+		select `f_id`,`f_stu_id`,`f_entrance_grade`,`f_grade`,`f_moral_edu`,`f_language_level`,`f_computer_level`,`f_political_status`,`f_memo` from t_stu_vector where f_id = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.system.domain.StuVectorDO">
+		select `f_id`,`f_stu_id`,`f_entrance_grade`,`f_grade`,`f_moral_edu`,`f_language_level`,`f_computer_level`,`f_political_status`,`f_memo` from t_stu_vector
+        <where>  
+		  		  <if test="fId != null and fId != ''"> and f_id = #{fId} </if>
+		  		  <if test="fStuId != null and fStuId != ''"> and f_stu_id = #{fStuId} </if>
+		  		  <if test="fEntranceGrade != null and fEntranceGrade != ''"> and f_entrance_grade = #{fEntranceGrade} </if>
+		  		  <if test="fGrade != null and fGrade != ''"> and f_grade = #{fGrade} </if>
+		  		  <if test="fMoralEdu != null and fMoralEdu != ''"> and f_moral_edu = #{fMoralEdu} </if>
+		  		  <if test="fLanguageLevel != null and fLanguageLevel != ''"> and f_language_level = #{fLanguageLevel} </if>
+		  		  <if test="fComputerLevel != null and fComputerLevel != ''"> and f_computer_level = #{fComputerLevel} </if>
+		  		  <if test="fPoliticalStatus != null and fPoliticalStatus != ''"> and f_political_status = #{fPoliticalStatus} </if>
+		  		  <if test="fMemo != null and fMemo != ''"> and f_memo = #{fMemo} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by f_id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+	
+ 	<select id="count" resultType="int">
+		select count(*) from t_stu_vector
+		 <where>  
+		  		  <if test="fId != null and fId != ''"> and f_id = #{fId} </if>
+		  		  <if test="fStuId != null and fStuId != ''"> and f_stu_id = #{fStuId} </if>
+		  		  <if test="fEntranceGrade != null and fEntranceGrade != ''"> and f_entrance_grade = #{fEntranceGrade} </if>
+		  		  <if test="fGrade != null and fGrade != ''"> and f_grade = #{fGrade} </if>
+		  		  <if test="fMoralEdu != null and fMoralEdu != ''"> and f_moral_edu = #{fMoralEdu} </if>
+		  		  <if test="fLanguageLevel != null and fLanguageLevel != ''"> and f_language_level = #{fLanguageLevel} </if>
+		  		  <if test="fComputerLevel != null and fComputerLevel != ''"> and f_computer_level = #{fComputerLevel} </if>
+		  		  <if test="fPoliticalStatus != null and fPoliticalStatus != ''"> and f_political_status = #{fPoliticalStatus} </if>
+		  		  <if test="fMemo != null and fMemo != ''"> and f_memo = #{fMemo} </if>
+		  		</where>
+	</select>
+	 
+	 <!--前端列表数据查询-->
+	 <select id="flist" resultType="com.bootdo.system.domain.StuVectorDO">
+		select e.f_stu_id,
+	       v.f_entrance_grade,
+	       v.f_grade,
+	       v.f_moral_edu,
+	       v.f_language_level,
+	       v.f_computer_level,
+	       v.f_political_status,
+	       c.f_unit_category_id,
+	       c.f_unit_category,
+	       e.f_unit_name
+	  from t_employment e, t_stu_vector v, t_unit_category c
+	 where e.f_stu_id = v.f_stu_id
+	   and e.f_unit_category_id = c.f_unit_category_id
+	 order by (
+	           select if(t.f_political_status = null,
+	                      0,
+	                      pow((t.f_entrance_grade - v.f_entrance_grade), 2)) +
+	                   pow((t.f_grade - v.f_grade), 2) +
+	                   pow((t.f_moral_edu - v.f_moral_edu), 2) +
+	                   if(t.f_language_level = v.f_language_level, 0, 1) +
+	                   if(t.f_computer_level = v.f_computer_level, 0, 1) +
+	                   if(t.f_political_status = null,
+	                      0,
+	                      if(t.f_political_status = v.f_political_status,
+	                      0,
+	                      1))
+	             from t_stu_vector t
+	            where t.f_stu_id = #{fStuId}
+	           ) asc
+	    <if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+	<select id="fListCount" resultType="int">
+		select count(e.f_stu_id)
+	  from t_employment e, t_stu_vector v, t_unit_category c
+	 where e.f_stu_id = v.f_stu_id
+	   and e.f_unit_category_id = c.f_unit_category_id
+	</select>
+	
+	<insert id="save" parameterType="com.bootdo.system.domain.StuVectorDO" useGeneratedKeys="true" keyProperty="fId">
+		insert into t_stu_vector
+		(
+			`f_stu_id`, 
+			`f_entrance_grade`, 
+			`f_grade`, 
+			`f_moral_edu`, 
+			`f_language_level`, 
+			`f_computer_level`, 
+			`f_political_status`, 
+			`f_memo`
+		)
+		values
+		(
+			#{fStuId}, 
+			#{fEntranceGrade}, 
+			#{fGrade}, 
+			#{fMoralEdu}, 
+			#{fLanguageLevel}, 
+			#{fComputerLevel}, 
+			#{fPoliticalStatus}, 
+			#{fMemo}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.bootdo.system.domain.StuVectorDO">
+		update t_stu_vector 
+		<set>
+			<if test="fStuId != null">`f_stu_id` = #{fStuId}, </if>
+			<if test="fEntranceGrade != null">`f_entrance_grade` = #{fEntranceGrade}, </if>
+			<if test="fGrade != null">`f_grade` = #{fGrade}, </if>
+			<if test="fMoralEdu != null">`f_moral_edu` = #{fMoralEdu}, </if>
+			<if test="fLanguageLevel != null">`f_language_level` = #{fLanguageLevel}, </if>
+			<if test="fComputerLevel != null">`f_computer_level` = #{fComputerLevel}, </if>
+			<if test="fPoliticalStatus != null">`f_political_status` = #{fPoliticalStatus}, </if>
+			<if test="fMemo != null">`f_memo` = #{fMemo}</if>
+		</set>
+		where f_id = #{fId}
+	</update>
+	
+	<delete id="remove">
+		delete from t_stu_vector where f_id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from t_stu_vector where f_id in 
+		<foreach item="fId" collection="array" open="(" separator="," close=")">
+			#{fId}
+		</foreach>
+	</delete>
+	<!--按照年级删除学生信息-->
+	<delete id="deleteStuVector">
+		delete from t_stu_vector where  f_stu_id in (
+				select s.f_stu_id from t_student s where s.f_year >#{value}
+			)
+	</delete>
+	
+	<!--按照年级查询学生信息-->
+	<select id="getStudentByYear" resultType="com.bootdo.system.domain.StuVectorDO">
+		select s.f_stu_id,
+	       s.f_language_level,
+	       s.f_computer_level,
+	       s.f_political_status,
+	       (select sum(f_grade)
+	          from t_entrance_grade
+	         where f_stu_id = s.f_stu_id) as fEntranceGrade,
+	       
+	       (select max(f_grade)
+	          from (select f_stu_id, sum(f_grade) f_grade
+	                  from t_entrance_grade
+	                 group by f_stu_id) g,
+	               t_student t
+	         where g.f_stu_id = t.f_stu_id
+	           and t.f_year = s.f_year
+	           and t.f_speciality_id = s.f_speciality_id) as maxFEntranceGrade,
+	       (select min(f_grade)
+	          from (select f_stu_id, sum(f_grade) f_grade
+	                  from t_entrance_grade
+	                 group by f_stu_id) g,
+	               t_student t
+	         where g.f_stu_id = t.f_stu_id
+	           and t.f_year = s.f_year
+	           and t.f_speciality_id = s.f_speciality_id) as minFEntranceGrade,
+	       
+	       (select sum(f_total_grade) / sum(f_total_credit)
+	          from t_gpa
+	         where f_stu_id = s.f_stu_id) as fGrade,
+	       
+	       (select max(f_gpa)
+	          from (select f_stu_id,
+	                       sum(f_total_grade) / sum(f_total_credit) f_gpa
+	                  from t_gpa
+	                 group by f_stu_id) g,
+	               t_student t
+	         where g.f_stu_id = t.f_stu_id
+	           and t.f_year = s.f_year
+	           and t.f_speciality_id = s.f_speciality_id
+	           and t.f_stu_id = s.f_stu_id) as maxFGrade,
+	       
+	       (select min(f_gpa)
+	          from (select f_stu_id,
+	                       sum(f_total_grade) / sum(f_total_credit) f_gpa
+	                  from t_gpa
+	                 group by f_stu_id) g,
+	               t_student t
+	         where g.f_stu_id = t.f_stu_id
+	           and t.f_year = s.f_year
+	           and t.f_speciality_id = s.f_speciality_id
+	           and t.f_stu_id = s.f_stu_id) as minFGrade,
+	       
+	       (select avg(f_grade) from t_moral_edu where f_stu_id = s.f_stu_id) as fMoralEdu,
+	       (select max(f_grade)
+	          from (select avg(f_grade) f_grade, f_stu_id
+	                  from t_moral_edu
+	                 group by f_stu_id) g,
+	               t_student t
+	         where g.f_stu_id = t.f_stu_id
+	           and t.f_year = s.f_year
+	           and t.f_speciality_id = s.f_speciality_id
+	           and t.f_stu_id = s.f_stu_id) as maxFMoralEdu,
+	       (select min(f_grade)
+	          from (select avg(f_grade) f_grade, f_stu_id
+	                  from t_moral_edu
+	                 group by f_stu_id) g,
+	               t_student t
+	         where g.f_stu_id = t.f_stu_id
+	           and t.f_year = s.f_year
+	           and t.f_speciality_id = s.f_speciality_id
+	           and t.f_stu_id = s.f_stu_id) as minFMoralEdu
+	  from t_student s
+ 	where s.f_year = #{fYear}
+	</select>
+</mapper>

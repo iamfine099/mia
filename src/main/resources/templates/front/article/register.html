@@ -1,0 +1,59 @@
+<!DOCTYPE HTML>
+<html>
+	<head th:include="front/include :: header"></head>
+	<body>
+		<head th:include="front/include::topbar"></head>
+		<!--中间部分-->
+		<section id="register">
+			<div id="register_form">
+				<p><span>注册用户</span></p>
+				<form method="post" id="signupForm">
+				    <div class="item">
+						<label class="phone">手&nbsp;&nbsp;机&nbsp;&nbsp;号</label>
+						<input type="text" id="phone" name="phone" placeholder="请填写手机号" required="required">
+					</div>
+					<div class="item">
+						<label class="uName">真实姓名</label>
+						<input type="text" id="trueName" name="uName" placeholder="请填写您的真实姓名" required="required">
+					</div>
+					<div class="item">
+						<label class="job">工作单位</label>
+						<input type="text" id="workplace" name="job" placeholder="请填写您的工作单位">
+					</div>
+					<div class="item">
+						<label class="email">邮&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;箱</label>
+						<input type="text" id="email" name="email" placeholder="请填写您的常用邮箱">
+					</div>
+					<div class="item">
+						<label class="email">专&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;长</label>
+							<input type="hidden" id='sp_id' /> 
+							<input type="text" name="specialty" id="specialty" placeholder="请选择您的专长" readonly/>
+					</div>
+					<div class="item">
+						<label class="pwd">设置密码</label>
+						<input type="password" id="pwd" name="pwd" placeholder="请设置您的登录密码" required="required">
+					</div>
+					<div class="item">
+						<label class="rpwd">确认密码</label>
+						<input type="password" id="rpwd" name="rpwd" placeholder="请确认您的登录密码" required="required">
+					</div>
+					<div class="items">
+						<label class="code" id="reCode">验&nbsp;&nbsp;证&nbsp;&nbsp;码</label>
+						<input type="text" id="code" placeholder="请输入验证码" required="required" name="code">
+						<img src="/code/image" onClick="getcode()" id="codeImg"/>
+					</div>
+					<div class="read">
+					    <input type="checkbox" checked class="read_check" name="read_check">
+						阅读并接受<a href="#" id="read_per">《用户协议》</a>
+					</div>
+					<div class="btn">
+						<a href="javaScript:void(0);" id="register_btn">注册</a>
+					</div>
+				</form>	
+			</div>
+		</section>
+		<!--这是尾部-->
+		<div th:include="front/include::footer"></div>
+	</body>
+	<script type="text/javascript" src="/js/front/article/register.js"></script >
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class=" float-e-margins">
+					<div class="">
+						<div class='leftselect helfSelect helfSelectFront'>
+							<div class='tree'>
+								<div id='jstree' ></div>
+							</div>
+						</div>
+						<input type="hidden" id='speciality_id' />
+						<input type="hidden" id='f_name' />
+						<div style='clear:both'></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div th:include="include::footer"></div>
+	<script type="text/javascript" src="/js/front/cms/layeropen.js"></script>
+</body>
+
+</html>
+							
