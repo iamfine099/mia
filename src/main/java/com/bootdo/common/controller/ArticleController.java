@@ -10,6 +10,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.bootdo.common.domain.AchievementDO;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.BeanUtils;
@@ -85,21 +86,29 @@ public class ArticleController extends BaseController {
 		article.setDelFlag("1");
 		article.setIsSyncAdvert("0");
 		article.setType("1");
-		
+		model.addAttribute("article", article);
+
 		//加载文章分类
 		if(article.getCategoryId() != null) {
+
 			CategoryDO category =  categoryService.get(Integer.valueOf(article.getCategoryId()));
 			article.setCategoryName(category.getName());
+			if("videoList".equals(category.getModule())) {
+
+				return "common/article/addVideo";
+			}
+			if("achievementList".equals(category.getModule())) {
+
+				return "common/article/addAchievement";
+			}
 		}
-		
-		model.addAttribute("article", article);
-		
 	    return "common/article/add";
 	}
 
 	@GetMapping("/edit/{id}")
 	@RequiresPermissions("common:article:edit")
 	String edit(@PathVariable("id") Integer id,Model model){
+
 		ArticleDO article = articleService.get(id);
 		model.addAttribute("article", article);
 		
@@ -122,16 +131,32 @@ public class ArticleController extends BaseController {
 				}
 			}
 		}
+		model.addAttribute("fileList", fileList);
+
+		//加载文章分类
+
+		CategoryDO category =  categoryService.get(Integer.valueOf(article.getCategoryId()));
+		/*if("videoList".equals(category.getModule())) {
+
+			return "common/article/addVideo";
+		}*/
+		if("achievementList".equals(category.getModule())) {
+
+			AchievementDO achievementDO = articleService.getAchievement(id);
+			BeanUtils.copyProperties(article, achievementDO);
+			model.addAttribute("article", achievementDO);
+			return "common/article/editAchievement";
+		}
 	    return "common/article/edit";
 	}
-	
+
 	/**
 	 * 保存
 	 */
 	@ResponseBody
 	@PostMapping("/save")
 	@RequiresPermissions("common:article:add")
-	public R save( ArticleDO article,MultipartFile file,HttpServletRequest request,MultipartFile[] files){
+	public R save(ArticleDO article,MultipartFile file,HttpServletRequest request,MultipartFile[] files){
 		if(file !=null) {
 			FileDO  fileDo = this.uploadFile(file, request);
 			if(null != fileDo) {
@@ -170,7 +195,51 @@ public class ArticleController extends BaseController {
 		}
 		return R.error();
 	}
-	
+
+	@ResponseBody
+	@PostMapping("/saveAchievement")
+	@RequiresPermissions("common:article:add")
+	public R saveAchievement(AchievementDO article, MultipartFile file, HttpServletRequest request, MultipartFile[] files){
+
+		if(file !=null) {
+			FileDO  fileDo = this.uploadFile(file, request);
+			if(null != fileDo) {
+				article.setImage(fileDo.getId().toString());
+			}
+		}
+		article.setHits(0);
+		article.setCreateBy(ShiroUtils.getUserId().intValue());
+		article.setCreateTime(new Date());
+		article.setPublishTime(new Date());
+
+		// 保存附件
+		String image = "";
+		if (file != null && files.length > 0) {
+			for (MultipartFile f : files) {
+				FileDO fileDo = this.uploadFile(f, request);
+				if (null != fileDo) {
+					image += fileDo.getId() + ",";
+				}
+			}
+		}
+		if (StringUtils.isNotEmpty(image)) {
+			article.setAttachment(image.substring(0, image.length() - 1));
+		}
+		ArticleDO advert = new ArticleDO();
+		//是否同步到轮播图
+		if("1".equals(article.getIsSyncAdvert())){
+			advert = this.syncAdvert(article, file, files, request);
+		}
+		article.setType(null);
+		if(articleService.saveAchievement(article)>0){
+			if("1".equals(article.getIsSyncAdvert())){
+				articleService.save(advert);
+			}
+			return R.ok();
+		}
+		return R.error();
+}
+
 	public ArticleDO syncAdvert(ArticleDO article,MultipartFile file,MultipartFile[] files,HttpServletRequest request){
 		ArticleDO advert = new ArticleDO();
 		BeanUtils.copyProperties(article, advert);
@@ -197,7 +266,7 @@ public class ArticleController extends BaseController {
 		
 		return advert;
 	}
-	
+
 	/**
 	 * 修改
 	 */
@@ -217,9 +286,9 @@ public class ArticleController extends BaseController {
 			}else {
 				article.setImage(oldArticle.getImage());
 			}
-			
+
 		}
-		
+
 		// 附件
 		String image = "";
 		if (StringUtils.isNotEmpty(fileId) && StringUtils.isNotEmpty(isDel)) {
@@ -247,7 +316,59 @@ public class ArticleController extends BaseController {
 		articleService.update(article);
 		return R.ok();
 	}
-	
+
+	/**
+	 * 修改
+	 */
+	@ResponseBody
+	@RequestMapping("/updateAchievement")
+	@RequiresPermissions("common:article:edit")
+	public R updateAchievement(AchievementDO article,MultipartFile file,HttpServletRequest request,
+							   String fileId, String isDel, MultipartFile[] files){
+
+		ArticleDO oldArticle = articleService.get(article.getId());
+		if(file !=null) {
+			FileDO  fileDo = this.uploadFile(file, request);
+			if(null != fileDo) {
+				article.setImage(fileDo.getId().toString());
+				//删除原来上传的附件
+				if(StringUtils.isNotEmpty(oldArticle.getImage())){
+					this.deleteFile(Long.parseLong(oldArticle.getImage()));
+				}
+			}else {
+				article.setImage(oldArticle.getImage());
+			}
+
+		}
+
+		// 附件
+		String image = "";
+		if (StringUtils.isNotEmpty(fileId) && StringUtils.isNotEmpty(isDel)) {
+			String[] fileIdArray = fileId.split(",");
+			String[] isDelArray = isDel.split(",");
+			for (int i = 0; i < isDelArray.length; i++) {
+				if ("0".equals(isDelArray[i])) {
+					image += fileIdArray[i] + ",";
+				} else {
+					this.deleteFile(Long.parseLong(fileIdArray[i]));
+				}
+			}
+		}
+		if (file != null && files.length > 0) {
+			for (MultipartFile f : files) {
+				FileDO fileDo = this.uploadFile(f, request);
+				if (null != fileDo) {
+					image += fileDo.getId() + ",";
+				}
+			}
+		}
+		if (StringUtils.isNotEmpty(image)) {
+			article.setAttachment(image.substring(0, image.length() - 1));
+		}
+		articleService.updateAchievement(article);
+		return R.ok();
+	}
+
 	/**
 	 * 删除
 	 */

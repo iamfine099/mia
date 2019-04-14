@@ -134,11 +134,11 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/front/cms/layeropen", "anon");
         filterChainDefinitionMap.put("/front/cms/search/**", "anon");
         filterChainDefinitionMap.put("/front/cms/sendCode", "anon");
-        
-        
+
+
         // filterChainDefinitionMap.put("/**", "myFormAuthenticationFilter");
         filterChainDefinitionMap.put("/**", "authc");
-        
+
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         return shiroFilterFactoryBean;
     }

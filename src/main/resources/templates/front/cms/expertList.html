@@ -2,7 +2,7 @@
 <html>
 	<meta charset="utf-8">
 	<head th:include="front/include :: header"></head>
-	<body>
+	<body class="bodyback">
 		<head th:include="front/include :: topbar"></head>
 		<!--这是身体-->
 		<section class="bodyFrame">
@@ -11,12 +11,12 @@
 					<a th:href="@{/front/cms}">首页</a>
 				</div>
 				<div class="textLink">
-					<a href="">>&nbsp;&nbsp;协会会员</a>
+					<a href="">>&nbsp;&nbsp;专家介绍</a>
 				</div>
 			</div>
 			<div class="bodyContent">
 				<ul class="selectionBar">
-					<li class="selectionBarText choosed"><a href="">协会会员</a></li>
+					<li class="selectionBarText choosed"><a href="">专家介绍</a></li>
 				</ul>
 			<form  method="post" id="signupForm" action="/front/cms/open/expertlist">
 				<div class="expertList_photoWall">
@@ -24,13 +24,23 @@
 						<ul>
 							<li class="expertPhoto left" th:each="m ,stat: ${pageUtils.rows}">
 								<a th:href="@{/front/cms/open/expert/detail(expertId=${m.expertId})}">
-									<div class="expertPhotoBox">
-										<img th:src="@{${m.url!=null}?@{${m.url}}:@{/img/morentouxiang.png}}">
+									<div class="expertPhotoBox" style="height: 185px">
+										<!--<img th:src="@{${m.url!=null}?@{${m.url}}:@{/img/morentouxiang.png}}">-->
+										<img src="https://gss0.bdstatic.com/94o3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike272%2C5%2C5%2C272%2C90/sign=f9d597516d59252db71a155655f2685e/902397dda144ad3479aef2ccdda20cf431ad8563.jpg"
+											 style="width: 150px;height: 210px">
 									</div>
-									<span class="expertName" th:text="${m.expertName}"></span>
-									<span class="expertIntro" th:text="${m.company}"></span>
+									<div style="margin-top:5px; background:#c9c9c9 ;text-align: center;width: 131px;
+											vertical-align: middle; padding-top: 10px; padding-bottom: 1px;margin: 20px 28px 0 28px;">
+										<p th:text="${m.expertName}">专家A</p>
+										<p th:text="${m.company}">蒙古医院</p>
+									</div>
+									<!--<span class="expertName" th:text="${m.expertName}"></span>
+									<span class="expertIntro" th:text="${m.company}"></span>-->
 								</a>
 							</li>
+
+
+
 						</ul>
 					</div>
 					<!--分页-->

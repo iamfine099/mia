@@ -80,7 +80,7 @@ function load() {
 									field : 'hits', 
 									title : '点击数' 
 								},
-																{
+								{
 									field : 'isTop', 
 									title : '是否置顶',
 									align : 'center',
@@ -97,7 +97,7 @@ function load() {
 									field : 'createTime', 
 									title : '创建时间' 
 								},
-																{
+								{
 									field : 'delFlag',
 									title : '状态',
 									formatter : function(value, row, index) {
@@ -108,7 +108,7 @@ function load() {
 										}
 									}
 								},
-																{
+								{
 									title : '操作',
 									field : 'id',
 									align : 'center',
@@ -131,6 +131,11 @@ function reLoad() {
 	$('#exampleTable').bootstrapTable('refresh');
 }
 function add() {
+
+    if($("#pCategoryModule").val() == "videoList") {
+
+	}
+
 	layer.open({
 		type : 2,
 		title : '增加',
@@ -139,8 +144,10 @@ function add() {
 		area : [ '800px', '520px' ],
 		content : prefix + '/add?categoryId='+$("#pCategoryId").val() // iframe的url
 	});
+
 }
 function edit(id) {
+
 	layer.open({
 		type : 2,
 		title : '编辑',
@@ -283,6 +290,7 @@ $('#jstree').on("changed.jstree", function(e, data) {
 	} else {
 		//$('#categoryId').val(data.selected[0]);
 		$('#pCategoryId').val(data.selected[0]);
+        $('#pCategoryModule').val(data.node.original.module);
 		var opt = {
 			query : {
 				//categoryId : data.selected[0],

@@ -121,6 +121,12 @@ public class FrontCmsController extends BaseController {
 //		String frontCmsController(){
 //		    return "front/cms/index";
 //		}
+
+	/***
+	 * 跳转主页
+	 * @param model
+	 * @return
+	 */
 	@GetMapping()
 	String frontCmsController(Model model) {
 		LoginUser loginUser = ShiroUtils.getUser();
@@ -2060,6 +2066,12 @@ public class FrontCmsController extends BaseController {
 			int total = articleService.count(query);
 			PageUtils pageUtils = new PageUtils(bContentList, total, query);
 			model.addAttribute("pageUtils", pageUtils);
+
+			//TODO 成果列表页面
+			if(category.getId() == 27) {//TODO 临时写死成果模块编号
+
+				return "front/cms/achievementList";
+			}
 			return "front/cms/articleList";
 			// 调转到list展示页面
 			
@@ -2103,14 +2115,76 @@ public class FrontCmsController extends BaseController {
 			model.addAttribute("fileList", fileList);
 			
 			return "front/cms/article";
+		}else if ("videoList".equals(category.getModule())) {
+
+			if(category.getParentId() != 0){
+				//二级分类
+				params.put("parentId", category.getParentId());
+			}else{
+				//一级分类
+				params.put("parentId", categoryId);
+			}
+			List<CategoryDO> categoryList = categoryService.list(params);
+			params = new HashMap<String, Object>();
+			params.put("categoryId", category.getId());
+			if(category.getParentId() != 0){
+				//二级分类
+				categoryDO = categoryService.get(category.getParentId());
+			}else if(categoryList != null && categoryList.size() > 0){
+				//一级分类
+				categoryDO = categoryList.get(0);
+				params.put("categoryId", categoryDO.getId());
+			}
+			model.addAttribute("categoryList", categoryList);
+			model.addAttribute("category", category);
+			model.addAttribute("categoryDO", categoryDO);
+
+			Query query = new Query(params);
+			List<ArticleDO> bContentList = articleService.list(query);
+			int total = articleService.count(query);
+			PageUtils pageUtils = new PageUtils(bContentList, total, query);
+			model.addAttribute("pageUtils", pageUtils);
+
+			return "front/cms/videoList";
+		} else if ("achievementList".equals(category.getModule())) {
+
+			if(category.getParentId() != 0){
+				//二级分类
+				params.put("parentId", category.getParentId());
+			}else{
+				//一级分类
+				params.put("parentId", categoryId);
+			}
+			List<CategoryDO> categoryList = categoryService.list(params);
+			params = new HashMap<String, Object>();
+			params.put("categoryId", category.getId());
+			if(category.getParentId() != 0){
+				//二级分类
+				categoryDO = categoryService.get(category.getParentId());
+			}else if(categoryList != null && categoryList.size() > 0){
+				//一级分类
+				categoryDO = categoryList.get(0);
+				params.put("categoryId", categoryDO.getId());
+			}
+			model.addAttribute("categoryList", categoryList);
+			model.addAttribute("category", category);
+			model.addAttribute("categoryDO", categoryDO);
+
+			Query query = new Query(params);
+			List<ArticleDO> bContentList = articleService.list(query);
+			int total = articleService.count(query);
+			PageUtils pageUtils = new PageUtils(bContentList, total, query);
+			model.addAttribute("pageUtils", pageUtils);
+
+			return "front/cms/achievementList";
 		}
 		return "front/cms/articleList";
 	}
 	
-	//文章详情
-		@GetMapping("/open/aArticle/detail")
-		public String aArticleDetail(@RequestParam Integer id, Model model) {
-			
+		//文章详情
+	@GetMapping("/open/aArticle/detail")
+	public String aArticleDetail(@RequestParam Integer id, Model model) {
+
 			ArticleDO article = articleService.get(id);
 			if(article.getHits()!=null){
 				article.setHits(article.getHits() + 1);
@@ -2183,9 +2257,18 @@ public class FrontCmsController extends BaseController {
 			params.put("fRel","4");
 			cmsLinkList = cmsLinkService.list(params);
 			model.addAttribute("cmsLinkList4", cmsLinkList);
-			
+
+			if("videoList".equals(category.getModule())) {
+
+				return "front/cms/video";
+			}
+
+			if(article.getCategoryId() == 32) {//TODO 临时写死成果模块编号
+
+				return "front/cms/achievement";
+			}
 			return "front/cms/aArticleDetail";
-		}
+	}
 		
 	// 党建列表
 	@GetMapping("/open/partyBuilding/list")

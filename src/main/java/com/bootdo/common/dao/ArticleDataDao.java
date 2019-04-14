@@ -1,5 +1,6 @@
 package com.bootdo.common.dao;
 
+import com.bootdo.common.domain.AchievementDO;
 import com.bootdo.common.domain.ArticleDataDO;
 
 import java.util.List;
@@ -17,15 +18,21 @@ import org.apache.ibatis.annotations.Mapper;
 public interface ArticleDataDao {
 
 	ArticleDataDO get(Integer id);
-	
+
+	AchievementDO getAchievement(Integer id);
+
 	List<ArticleDataDO> list(Map<String,Object> map);
 	
 	int count(Map<String,Object> map);
 	
 	int save(ArticleDataDO articleData);
-	
+
+	int saveAchievement(AchievementDO articleData);
+
 	int update(ArticleDataDO articleData);
-	
+
+	int updateAchievement(AchievementDO articleData);
+
 	int remove(Integer id);
 	
 	int batchRemove(Integer[] ids);

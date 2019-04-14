@@ -1,5 +1,6 @@
 package com.bootdo.common.service;
 
+import com.bootdo.common.domain.AchievementDO;
 import com.bootdo.common.domain.ArticleDO;
 
 import java.util.List;
@@ -20,7 +21,9 @@ import org.springframework.web.multipart.MultipartFile;
 public interface ArticleService {
 	
 	ArticleDO get(Integer id);
-	
+
+	AchievementDO getAchievement(Integer id);
+
 	List<ArticleDO> draftslist(Map<String, Object> map);
 	
 	List<ArticleDO> myarticlelist(Map<String, Object> map);
@@ -40,9 +43,13 @@ public interface ArticleService {
 	int articleCommentsCount(Map<String, Object> map);
 	
 	int save(ArticleDO article);
-	
+
+	int saveAchievement(AchievementDO article);
+
 	int update(ArticleDO article);
-	
+
+	int updateAchievement(AchievementDO article);
+
 	int remove(Integer id);
 	
 	int batchRemove(Integer[] ids);

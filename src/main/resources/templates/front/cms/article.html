@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
-	
+
 		<meta charset="UTF-8">
 		<head th:include="front/include::header"></head>
 	</head>
-	<body>
-		
+	<body class="bodyback">
+
 		<!--这是身体-->
 		<section class="newsDyC_body">
 			<div th:if="${user.fType eq 'U'}" class="grayStrip clear">
@@ -30,7 +30,7 @@
 					<li th:if="${user.fType eq 'M'}" class="selectionBarText"><a th:href="@{/front/cms/modifyPwd}">修改密码</a></li>
 					<li th:if="${user.fType eq 'M'}" class="selectionBarText"><a th:href="@{/front/cms/release}">我要发布</a></li>
 					<li th:if="${user.fType eq 'M'}" class="selectionBarText"><a th:href="@{/front/cms/drafts}">草稿箱</a></li>
-					<li th:if="${user.fType eq 'M'}" class="selectionBarText"><a th:href="@{/front/cms/myArticle}">我的文章</a></li> 
+					<li th:if="${user.fType eq 'M'}" class="selectionBarText"><a th:href="@{/front/cms/myArticle}">我的文章</a></li>
 					<li th:if="${user.fType eq 'M'}" class="selectionBarText"><a th:href="@{/front/cms/open/recommendarticlelist}">推荐文章</a></li>
 					<li th:if="${user.fType eq 'M'}" class="selectionBarText"><a th:href="@{/front/cms/mynews}">消息通知</a></li>
 					<!-- <li class="selectionBarText"><a href="#">行业资讯</a></li> -->

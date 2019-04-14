@@ -1,5 +1,6 @@
 package com.bootdo.common.service.impl;
 
+import com.bootdo.common.domain.AchievementDO;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,53 +36,60 @@ import cn.afterturn.easypoi.excel.entity.TemplateExportParams;
 
 @Service
 public class ArticleServiceImpl extends BaseServiceImpl implements ArticleService {
+
 	@Autowired
 	private ArticleDao articleDao;
 	@Autowired
 	private ArticleDataDao articleDataDao;
 	@Autowired
 	private ExperevaluateDao experevaluateDao;
-	
+
 	@Override
 	public ArticleDO get(Integer id){
 		return articleDao.get(id);
 	}
-	
+
+    @Override
+    public AchievementDO getAchievement(Integer id){
+
+        return articleDataDao.getAchievement(id);
+    }
+
 	@Override
 	public List<ArticleDO> list(Map<String, Object> map){
 		return articleDao.list(map);
 	}
-	
+
 	@Override
 	public List<ArticleDO> articleCommentsList(Map<String, Object> map){
 		return articleDao.articleCommentsList(map);
 	}
-	
+
 	@Override
 	public List<ArticleDO> expertRecommendList(Map<String, Object> map){
 		return articleDao.expertRecommendList(map);
 	}
-	
+
 	@Override
 	public List<ArticleDO> photolist(Map<String, Object> map){
 		return articleDao.photolist(map);
 	}
-	
+
 	@Override
 	public int count(Map<String, Object> map){
 		return articleDao.count(map);
 	}
-	
+
 	@Override
 	public int expertRecommendCount(Map<String, Object> map){
 		return articleDao.expertRecommendCount(map);
 	}
-	
+
 	@Override
 	public int articleCommentsCount(Map<String, Object> map){
 		return articleDao.articleCommentsCount(map);
 	}
-	
+
 	@Override
 	public int save(ArticleDO article){
 		if(articleDao.save(article) > 0){
@@ -93,19 +101,55 @@ public class ArticleServiceImpl extends BaseServiceImpl implements ArticleServic
 		}
 		return 0;
 	}
-	
+
+	@Override
+	public int saveAchievement(AchievementDO article){
+
+		Integer count = 0;
+		// 1 保存文章
+		articleDao.save(article);
+
+		// 2 保存文章数据
+		ArticleDataDO articleData = new ArticleDataDO();
+		articleData.setId(article.getId());
+		articleData.setCopyfrom(article.getCopyfrom());
+		articleData.setContent(article.getContent());
+		count = articleDataDao.save(articleData);
+
+		// 3 保存成果其他信息
+		articleDataDao.saveAchievement(article);
+		return count;
+	}
+
 	@Override
 	public int update(ArticleDO article){
-		
+
 		articleDao.update(article);
-		
+
 		ArticleDataDO articleDataDO = new ArticleDataDO();
 		articleDataDO.setId(article.getId());
 		articleDataDO.setContent(article.getContent());
 		articleDataDO.setCopyfrom(article.getCopyfrom());
 		return articleDataDao.update(articleDataDO);
 	}
-	
+
+	@Override
+	public int updateAchievement(AchievementDO article){
+
+		Integer count = 0;
+		articleDao.update(article);
+
+		ArticleDataDO articleDataDO = new ArticleDataDO();
+		articleDataDO.setId(article.getId());
+		articleDataDO.setContent(article.getContent());
+		articleDataDO.setCopyfrom(article.getCopyfrom());
+		count = articleDataDao.update(articleDataDO);
+
+		articleDataDao.updateAchievement(article);
+
+		return count;
+	}
+
 	@Override
 	public int remove(Integer id){
 		if(articleDao.remove(id) > 0){
@@ -113,13 +157,13 @@ public class ArticleServiceImpl extends BaseServiceImpl implements ArticleServic
 		}
 		return 1;
 	}
-	
+
 	@Override
 	public int batchRemove(Integer[] ids){
 		articleDao.batchRemove(ids);
 		articleDataDao.batchRemove(ids);
 		return 1;
-		
+
 	}
 	/**
 	 * 职位类别导出EXCEL
@@ -150,35 +194,34 @@ public class ArticleServiceImpl extends BaseServiceImpl implements ArticleServic
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 	/**
 	 * 导入excel
 	 * @param fileName
 	 * @param file
 	 * @return
-	 * @throws IOException 
-	 * @throws InvalidFormatException 
+	 * @throws IOException
 	 */
 	public void importExcel(String fileName, MultipartFile file) throws Exception {
-		
+
 			ImportExcel ei = new ImportExcel(file, 1, 0);
 			List<ArticleDO> list = ei.getDataList(ArticleDO.class);
 			//
 			for (ArticleDO article : list) {
-				
+
 				if(article != null) {
 					 articleDao.save( article);
 				}
-				
+
 			}
 	}
-	
+
 	@Override
 	public List<ArticleDO> articleListForCategoryId(Integer categoryId) {
 		return articleDao.articleListForCategoryId(categoryId);
 	}
-	
+
 	@Override
 	public List<ArticleDO> getRoundList() {
 		return articleDao.getRoundList();
@@ -190,7 +233,7 @@ public class ArticleServiceImpl extends BaseServiceImpl implements ArticleServic
 		if("-1".equals(article.getStatus()) || "0".equals(article.getStatus())){
 			//未通过
 			article.setIsPublish("0");
-			
+
 		}else{
 			article.setIsPublish("1");
 		}
@@ -212,20 +255,20 @@ public class ArticleServiceImpl extends BaseServiceImpl implements ArticleServic
 		}
 		return 1;
 	}
-	
+
 	@Override
 	public int articleReviewBatchScoreCheck(ArticleDO article) {
 		LoginUser loginUser = ShiroUtils.getUser();
 		if("-1".equals(article.getStatus()) || "0".equals(article.getStatus())){
 			//未通过
 			article.setIsPublish("0");
-			
+
 		}else{
 			article.setIsPublish("1");
 		}
 		article.setAuditBy(Integer.parseInt(loginUser.getUser().getUserId().toString()));
 		if(articleDao.articleReviewBatchCheck(article) > 0){
-			
+
 		}
 		return 1;
 	}
@@ -304,7 +347,7 @@ public class ArticleServiceImpl extends BaseServiceImpl implements ArticleServic
 		// TODO Auto-generated method stub
 		return articleDao.articleReviewlist(map);
 	}
-	
+
 	@Override
 	public int articleReviewCount(Map<String, Object> map){
 		return articleDao.articleReviewCount(map);

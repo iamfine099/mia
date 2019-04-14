@@ -52,6 +52,8 @@ public class Tree<T> {
 	 */
 	private boolean hasChildren = false;
 
+	private String module;
+
 	public String getId() {
 		return id;
 	}
@@ -124,8 +126,16 @@ public class Tree<T> {
 		this.parentId = parentId;
 	}
 
+	public String getModule() {
+		return module;
+	}
+
+	public void setModule(String module) {
+		this.module = module;
+	}
+
 	public Tree(String id, String text, Map<String, Object> state, boolean checked, Map<String, Object> attributes,
-			List<Tree<T>> children, boolean isParent, boolean isChildren, String parentID) {
+				List<Tree<T>> children, boolean isParent, boolean isChildren, String parentID) {
 		super();
 		this.id = id;
 		this.text = text;

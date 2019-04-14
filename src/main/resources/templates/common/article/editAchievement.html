@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+<div class="wrapper wrapper-content ">
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="ibox float-e-margins">
+				<div class="ibox-content">
+					<form class="form-horizontal m-t" id="signupForm">
+						<input id="id" name="id" th:value="${article.id}"  type="hidden">
+						<div class="form-group">
+							<label class="col-sm-3 control-label">栏目：</label>
+							<div class="col-sm-8">
+								<input id="categoryId" name="categoryId" class="hidden"
+									   th:value="${article.categoryId}"> <input
+									id="categoryName" name="categoryName" class="form-control"
+									type="text" style="cursor: pointer;" onclick="openCategory()"
+									readonly="readonly" placeholder="所属栏目"
+									th:value="${article.categoryName}">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label">成果标题：</label>
+							<div class="col-sm-8">
+								<input id="title" name="title" th:value="${article.title}" class="form-control" type="text">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label">关键字：</label>
+							<div class="col-sm-8">
+								<input id="keywords" name="keywords" class="form-control" type="text" th:value="${article.keywords}">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label">摘要：</label>
+							<div class="col-sm-8">
+								<textarea rows="3" name="description" class="form-control"  th:text="${article.description}"></textarea>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label">省份：</label>
+							<div class="col-sm-8">
+								<input id="province" name="province" th:value="${article.province}" class="form-control" type="text">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-sm-3 control-label">简介：</label>
+							<div class="col-sm-8">
+								<input id="intro" name="intro" th:value="${article.intro}" class="form-control" type="text">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-sm-3 control-label">成果作者：</label>
+							<div class="col-sm-8">
+								<input id="author" name="author" th:value="${article.author}" class="form-control" type="text">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-sm-3 control-label">电话：</label>
+							<div class="col-sm-8">
+								<input id="tel" name="tel" th:value="${article.tel}" class="form-control" type="text">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label">金额：</label>
+							<div class="col-sm-8">
+								<input id="money" name="money" th:value="${article.money}" class="form-control" type="text">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label">时间：</label>
+							<div class="col-sm-8">
+								<input id="date" name="date" th:value="${article.date}" class="form-control" type="text">
+							</div>
+						</div>
+
+
+						<div class="form-group">
+							<label class="col-sm-3 control-label">缩略图：</label>
+							<div class="col-sm-8">
+								<button type="button" class="layui-btn" id="imgupload">缩略图</button>
+								<div class="layui-upload-list">
+									<img class="layui-upload-img" id="imguploaddemo" th:src="@{${fileObj != null }? @{${fileObj.url}} : @{''}}">
+									<p id="imguploaddemoText"></p>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label">附件：</label>
+							<div class="col-sm-8" id='release'>
+								<div class="layui-upload">
+									<button type="button" class="layui-btn layui-btn-normal" id="testList">添加附件</button>
+									<div class="layui-upload-list" id='imgpreBox'>
+										<table class="layui-table">
+											<thead>
+											<tr>
+												<th>文件名</th>
+												<th>操作</th>
+											</tr>
+											</thead>
+											<tbody id="demoList">
+											<tr th:each="m,stat:${fileList}">
+												<input type="hidden" class="fileId" name="fileId" th:value="${m.id}"/>
+												<input type="hidden" class="isDel" name="isDel" th:value="0"/>
+												<td th:id="'textPre'+${stat.count}" th:text="${m.fileName}"></td>
+												<td><button type="button" class="layui-btn layui-btn-xs" onclick="deleteTr(this)">删除</button></td>
+											</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<input id="achievementIntro" name="achievementIntro" type="hidden" th:value="${article.achievementIntro}">
+							<label class="col-sm-3 control-label">成果简介：</label>
+							<div class="col-sm-8">
+								<div class="ibox-content no-padding">
+									<div id="achievementIntro_sn" class="summernote"></div>
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<input id="applicationCategory" name="applicationCategory" type="hidden" th:value="${article.applicationCategory}">
+							<label class="col-sm-3 control-label">应用范围：</label>
+							<div class="col-sm-8">
+								<div class="ibox-content no-padding">
+									<div id="applicationCategory_sn" class="summernote"></div>
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<input id="prospectAnalysis" name="prospectAnalysis" type="hidden" th:value="${article.prospectAnalysis}">
+							<label class="col-sm-3 control-label">前景分析：</label>
+							<div class="col-sm-8">
+								<div class="ibox-content no-padding">
+									<div id="prospectAnalysis_sn" class="summernote"></div>
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<input id="detailInformation" name="detailInformation" type="hidden" th:value="${article.detailInformation}">
+							<label class="col-sm-3 control-label">详细信息：</label>
+							<div class="col-sm-8">
+								<div class="ibox-content no-padding">
+									<div id="detailInformation_sn" class="summernote"></div>
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-sm-3 control-label">来源：</label>
+							<div class="col-sm-8">
+								<input id="copyfrom" name="copyfrom" class="form-control"
+									   type="text" th:value="${article.copyfrom}">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label">是否置顶：</label>
+							<div class="col-sm-8">
+								<label class="radio-inline" th:each="dict:${T(com.bootdo.common.utils.DictUtils).getDictList('yes_no')}">
+									<input type="radio" th:value="${dict.value}" th:text="${dict.name}" name="isTop"
+										   th:checked="${#numbers.formatDecimal(article.isTop, 1, 0)==#numbers.formatDecimal(dict.value, 1, 0)}" >
+								</label>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label">状态：</label>
+							<div class="col-sm-8">
+								<label class="radio-inline" th:each="dict:${T(com.bootdo.common.utils.DictUtils).getDictList('show_hide')}">
+									<input type="radio" th:value="${dict.value}" th:text="${dict.name}" name="delFlag"
+										   th:checked="${#numbers.formatDecimal(article.delFlag, 1, 0)==#numbers.formatDecimal(dict.value, 1, 0)}">
+								</label>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-8 col-sm-offset-3">
+								<button type="submit" class="btn btn-primary">提交</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div th:include="include::footer"></div>
+<script type="text/javascript" src="/js/appjs/common/article/editAchievement.js">
+</script>
+</body>
+</html>

@@ -19,6 +19,13 @@
  		where id = #{value}
 	</select>
 
+	<select id="getAchievement" resultType="com.bootdo.common.domain.AchievementDO">
+		select
+			*
+ 		from t_achievement_data
+ 		where id = #{value}
+	</select>
+
 	<select id="list" resultType="com.bootdo.common.domain.ArticleDataDO">
 		select
 			<include refid="columns" />
@@ -60,7 +67,40 @@
 			#{copyfrom}
 		)
 	</insert>
-	 
+
+	<insert id="saveAchievement" parameterType="com.bootdo.common.domain.AchievementDO">
+		insert into t_achievement_data
+		(
+			`id`,
+			`province`,
+			`intro`,
+			`author`,
+			`tel`,
+			`money`,
+			`date`,
+			`achievement_intro`,
+			`application_category`,
+			`prospect_analysis`,
+			`detail_information`,
+			`copyfrom`
+		)
+		values
+		(
+			#{id},
+			#{province},
+			#{intro},
+			#{author},
+			#{tel},
+			#{money},
+			#{date},
+			#{achievementIntro},
+			#{applicationCategory},
+			#{prospectAnalysis},
+			#{detailInformation},
+			#{copyfrom}
+		)
+	</insert>
+
 	<update id="update" parameterType="com.bootdo.common.domain.ArticleDataDO">
 		update t_article_data 
 		<set>
@@ -69,7 +109,27 @@
 		</set>
 		where id = #{id}
 	</update>
-	
+
+	<update id="updateAchievement" parameterType="com.bootdo.common.domain.AchievementDO">
+		update t_achievement_data
+		<set>
+			<if test="province != null">`province` = #{province}, </if>
+			<if test="intro != null">`intro` = #{intro}, </if>
+			<if test="author != null">`author` = #{author}, </if>
+			<if test="tel != null">`tel` = #{tel}, </if>
+			<if test="money != null">`money` = #{money}, </if>
+			<if test="date != null">`date` = #{date}, </if>
+
+			<if test="achievementIntro != null">`achievement_intro` = #{achievementIntro}, </if>
+			<if test="applicationCategory != null">`application_category` = #{applicationCategory}, </if>
+			<if test="prospectAnalysis != null">`prospect_analysis` = #{prospectAnalysis}, </if>
+			<if test="detailInformation != null">`detail_information` = #{detailInformation}, </if>
+
+			<if test="copyfrom != null">`copyfrom` = #{copyfrom}</if>
+		</set>
+		where id = #{id}
+	</update>
+
 	<delete id="remove">
 		delete from t_article_data where id = #{value}
 	</delete>

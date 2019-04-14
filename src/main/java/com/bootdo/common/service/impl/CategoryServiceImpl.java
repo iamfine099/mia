@@ -136,7 +136,11 @@ public class CategoryServiceImpl extends BaseServiceImpl implements CategoryServ
 	public Tree<CategoryDO> getTree() {
 		List<Tree<CategoryDO>> trees = new ArrayList<Tree<CategoryDO>>();
 		Map<String,Object> params = new HashMap<String, Object>();
-		params.put("notInId", new Integer[]{Constant.CATEGORY_ADVERT_BANNER,Constant.CATEGORY_MEM_ARTICLE,Constant.CATEGORY_RECOMMEND_ARTICLE,Constant.CATEGORY_MEM_MIA});
+		params.put("notInId", new Integer[]{
+				Constant.CATEGORY_ADVERT_BANNER,
+				Constant.CATEGORY_MEM_ARTICLE,
+				Constant.CATEGORY_RECOMMEND_ARTICLE,
+				Constant.CATEGORY_MEM_MIA});
 		List<CategoryDO> categorys = categoryDao.list(params);
 		for (CategoryDO category : categorys) {
 			Tree<CategoryDO> tree = new Tree<CategoryDO>();
@@ -146,6 +150,7 @@ public class CategoryServiceImpl extends BaseServiceImpl implements CategoryServ
 			Map<String, Object> state = new HashMap<>(16);
 			state.put("opened", true);
 			tree.setState(state);
+			tree.setModule(category.getModule());
 			trees.add(tree);
 		}
 		// 默认顶级菜单为０，根据数据库实际情况调整

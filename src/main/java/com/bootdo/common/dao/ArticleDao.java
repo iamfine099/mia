@@ -17,7 +17,7 @@ import org.apache.ibatis.annotations.Mapper;
 public interface ArticleDao {
 
 	ArticleDO get(Integer id);
-	
+
 	List<ArticleDO> list(Map<String,Object> map);
 	
 	List<ArticleDO> articleCommentsList(Map<String,Object> map);

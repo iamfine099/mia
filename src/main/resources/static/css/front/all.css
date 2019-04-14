@@ -63,11 +63,13 @@ header{
 	border-left:none;
 	font-size:13px;
 }
-/*锟斤拷锟斤拷锟斤拷锟斤拷*/
+/*锟斤拷锟斤拷锟斤拷锟斤拷
+background:url("../img/logoBg.png") no-repeat;*/
+
 .logo{
 	width:100%;
 	height:300px;
-	background:url("../img/logoBg.png") no-repeat;
+
 	background-size:cover;
 	display:flex;
 	justify-content:center;
@@ -103,7 +105,7 @@ header{
 }
 nav{
 	width:1200px;
-	background:#037edb;
+	background:#333;
 	position:relative;
 	z-index:2;
 	bottom:0;
@@ -117,7 +119,7 @@ nav{
 	flex:1;
 	height:53px;
 	text-align:center;
-	cursor:pointer; 
+	cursor:pointer;
 	position:relative;
 }
 .navList li .secondList{
@@ -139,11 +141,12 @@ nav{
 	line-height:40px;
 }
 
+/*background:#1A66B3;*/
 .navList li:after{
 	content:" ";
 	width:1px;
 	height:15px;
-	background:#1A66B3;
+
 	position:absolute;
 	right:0;
 	top:20px;
@@ -458,7 +461,7 @@ footer{
 
 #index .login_form .items label {
 	font-size: 14px;
-	vertical-align: top; 
+	vertical-align: top;
 	margin-right: 85px;
 	font-weight:normal;
 }
@@ -596,7 +599,7 @@ footer{
 	width:320px;
 	font-size:14px;
 }
- 
+
 #index #notice li{
 	width: 415px;
 }
@@ -742,10 +745,10 @@ footer{
 
 #index aside .comment li .yuan{
 	white-space: nowrap;
-    overflow: hidden;
-    -o-text-overflow: ellipsis;
-    text-overflow: ellipsis;
-    -moz-binding: url(ellipsis.xml#ellipsis);
+	overflow: hidden;
+	-o-text-overflow: ellipsis;
+	text-overflow: ellipsis;
+	-moz-binding: url(ellipsis.xml#ellipsis);
 }
 }
 
@@ -1016,7 +1019,7 @@ footer{
 	height:35px;
 	padding:10px;
 	border: 1px solid gainsboro;
-    border-radius: 5px;
+	border-radius: 5px;
 }
 #articleScore .content_btn .edit_btn {
 	background: green;
@@ -1034,12 +1037,12 @@ footer{
 
 #articleScore .reviewBox .review {
 	margin-top: 60px;
-    background: #f8f8f8;
-    width: 900px;
-    padding: 15px;
-    resize: none;
-    color: #999999;
-    border: 1px solid #dddddd;
+	background: #f8f8f8;
+	width: 900px;
+	padding: 15px;
+	resize: none;
+	color: #999999;
+	border: 1px solid #dddddd;
 }
 
 #articleScore .reviewBox .review_btn {
@@ -1104,7 +1107,7 @@ footer{
  * **/
 #goodComment{
 	width: 100%;
-	
+
 }
 
 #goodComment .section_box {
@@ -1210,9 +1213,9 @@ footer{
 #goodComment .link p:nth-of-type(1){
 	width:750px;
 	white-space: nowrap;
-    overflow: hidden;
-    -o-text-overflow: ellipsis;
-    text-overflow: ellipsis;
+	overflow: hidden;
+	-o-text-overflow: ellipsis;
+	text-overflow: ellipsis;
 }
 
 #goodComment .link a {
@@ -1233,7 +1236,7 @@ footer{
 	background-color: #f1f1f3;
 	margin: 60px 0 120px 0;
 }
- .GCpageNum p{
+.GCpageNum p{
 	font-size: 14px;
 	height: 30px;
 	line-height: 30px;
@@ -1278,7 +1281,7 @@ footer{
 .publicTitle p span{
 	color:#037EDB;
 	margin:0 10px;
-} 
+}
 .public_box{
 	width:232px;
 	float:left;
@@ -1318,10 +1321,10 @@ footer{
 }
 #release article .article_title{
 	width:900px;
-	height:35px; 
-	line-height:35px; 
-	display:block; 
-	border:1px #dcdcdc solid; 
+	height:35px;
+	line-height:35px;
+	display:block;
+	border:1px #dcdcdc solid;
 	margin:15px 0 30px 0;
 	color:gray;
 }
@@ -1330,10 +1333,10 @@ footer{
 	color:gray;
 }
 #release article .content{
-	width:900px; 
+	width:900px;
 	height:280px;
-	line-height:35px; 
-	display:block; 
+	line-height:35px;
+	display:block;
 	margin-top:15px;
 	border:1px #dcdcdc solid;
 	resize:none;
@@ -1448,8 +1451,8 @@ footer{
 	background-color: white;
 	margin: 0 0 0 282px;
 	white-space: nowrap;
-    overflow: hidden;
-    -o-text-overflow: ellipsi
+	overflow: hidden;
+	-o-text-overflow: ellipsis;
 }
 
 .newsDy_article ul li{
@@ -1559,14 +1562,14 @@ footer{
 	width:131px;
 	margin: 15px auto;
 	margin-bottom: 0;
-	overflow:hidden; 
+	overflow:hidden;
 	text-overflow:ellipsis;
 	display:-moz-box;
 	display: -ms-flexbox;
-	display:-webkit-box; 
+	display:-webkit-box;
 	-webkit-box-orient:vertical;
 	-moz-box-orient:vertical;
-	-webkit-line-clamp:2; 
+	-webkit-line-clamp:2;
 }
 
 .expertName{
@@ -1582,7 +1585,7 @@ footer{
 	font-size:14px;
 	width: 918px;
 	margin: 0 0 150px 284px;
-	
+
 }
 .expertEx_photo{
 	height:430px;
@@ -1677,15 +1680,15 @@ footer{
 	flex-wrap:wrap;
 }
 .recommendBox_1,.recommendBox_2{
-	display: inline-block;	
+	display: inline-block;
 	margin: 5px 80px 5px 2px;
 }
 .recommendBox_3{
-	display: inline-block;	
+	display: inline-block;
 	margin:-6px 0 0 0;
 }
 .recommendBox_4,.recommendBox_5,.recommendBox_6{
-	display: inline-block;	
+	display: inline-block;
 	margin: 5px 64px 2px 2px;
 }
 .recommendBox_2 select,.recommendBox_3 select,.recommendBox_5 select{
@@ -1734,7 +1737,7 @@ footer{
 	position:relative;
 	width: 900px;
 	background-color: white;
-	margin: 0 0 0 295px;/* 
+	margin: 0 0 0 295px;/*
 	white-space: nowrap;
     overflow: hidden;
     -o-text-overflow: ellipsis;
@@ -1881,7 +1884,7 @@ footer{
 .expertInfo{
 	width: 420px;
 	margin: 0px auto;
-	
+
 }
 .expertInfo_box{
 	position: relative;
@@ -1916,7 +1919,7 @@ footer{
 .expertInfo{
 	width: 420px;
 	margin: 0px auto;
-	
+
 }
 .expertInfo_box{
 	position: relative;
@@ -1985,20 +1988,20 @@ footer{
 #expertComment .link p:nth-of-type(1){
 	width:650px;
 	white-space: nowrap;
-    overflow: hidden;
-    -o-text-overflow: ellipsis;
-    text-overflow: ellipsis;
-    margin-top:10px;
+	overflow: hidden;
+	-o-text-overflow: ellipsis;
+	text-overflow: ellipsis;
+	margin-top:10px;
 }
 #expertComment .link p:nth-of-type(2){
-    margin-top:10px;
+	margin-top:10px;
 }
 #expertComment .link a {
 	color: gray;
 	white-space: nowrap;
-    overflow: hidden;
-    -o-text-overflow: ellipsis;
-    text-overflow: ellipsis;
+	overflow: hidden;
+	-o-text-overflow: ellipsis;
+	text-overflow: ellipsis;
 }
 
 #expertComment .link:hover a{
@@ -2125,20 +2128,20 @@ footer{
 #expertComment .link p:nth-of-type(1){
 	width:650px;
 	white-space: nowrap;
-    overflow: hidden;
-    -o-text-overflow: ellipsis;
-    text-overflow: ellipsis;
-    margin-top:10px;
+	overflow: hidden;
+	-o-text-overflow: ellipsis;
+	text-overflow: ellipsis;
+	margin-top:10px;
 }
 #expertComment .link p:nth-of-type(2){
-    margin-top:10px;
+	margin-top:10px;
 }
 #expertComment .link a {
 	color: gray;
 	white-space: nowrap;
-    overflow: hidden;
-    -o-text-overflow: ellipsis;
-    text-overflow: ellipsis;
+	overflow: hidden;
+	-o-text-overflow: ellipsis;
+	text-overflow: ellipsis;
 }
 
 #expertComment .link:hover a{
@@ -2211,7 +2214,7 @@ footer{
 	display:inline-block;
 	margin:0 10px 0 4px;
 }
-.fabu_box 
+.fabu_box
 .fabu_down .fabu_search{
 	margin-top:3px;
 	width:70px;
@@ -2307,7 +2310,7 @@ footer{
 	background-color: #f1f1f3;
 	margin: 30px 0 85px 0px;
 }
- .EPpageNum p{
+.EPpageNum p{
 	font-size: 14px;
 	height: 30px;
 	line-height: 30px;
@@ -2343,7 +2346,7 @@ footer{
 }
 #release .layui-btn{
 	background: #037EDB;
-    border-radius: 5px;
+	border-radius: 5px;
 }
 
 .min_height{
@@ -2360,7 +2363,7 @@ footer{
 	padding:0 10px;
 }
 #tijiao{
-	
+
 }
 .floatnone{
 	float:none;
@@ -2430,12 +2433,12 @@ footer{
 	height:35px;
 	line-height:35px;
 	font-weight:bold;
-	color:#black;
+	color: black;
 }
 .personalInfotitle{
 	font-size:16px;
 	margin:20px 0 30px 210px;
-	color:#black;
+	color: black;
 }
 .login_hidden{
 	padding:35px;
@@ -2471,9 +2474,9 @@ footer{
 	margin-top:20px;
 	float:right;
 	color:#037EDB;
-}	
+}
 .mine{
-	display:block-inline;
+	display: inline-block;
 }
 
 .article_down{
@@ -2546,7 +2549,7 @@ footer{
 	background-color: #f1f1f3;
 	margin: 30px 0 50px 0px;
 }
- .tuijianpageNum p{
+.tuijianpageNum p{
 	font-size: 14px;
 	height: 30px;
 	line-height: 30px;
@@ -2583,13 +2586,13 @@ footer{
 	width:100%;
 }
 .memberBox li {
-    float: left;
-    width: 265px;
-    height: 35px;
-    line-height: 35px;
-    font-size: 14px;
-    padding-left: 10px;
-    background: url(../img/dian.png) no-repeat 0px center;
+	float: left;
+	width: 265px;
+	height: 35px;
+	line-height: 35px;
+	font-size: 14px;
+	padding-left: 10px;
+	background: url(../img/dian.png) no-repeat 0px center;
 }
 .wrap{
 	margin:0 0 50px 0;
@@ -2598,7 +2601,7 @@ footer{
 	height:50px;
 	width:100%;
 	border-bottom:1px solid #ccc;
-	
+
 }
 .buildHeader .buildHeaderDiv{
 	border-bottom:2px solid #037edb;
@@ -2620,12 +2623,12 @@ footer{
 	line-height:54px;
 	width:100%;
 	white-space: nowrap;
-    overflow: hidden;
-    -o-text-overflow: ellipsis;
-    text-overflow: ellipsis;
-    font-size:20px;
-    color:#33333;
-    font-weight:bold;
+	overflow: hidden;
+	-o-text-overflow: ellipsis;
+	text-overflow: ellipsis;
+	font-size:20px;
+	color:#666666;
+	font-weight:bold;
 }
 .buildOneBody{
 	width:100%;
@@ -2646,10 +2649,10 @@ footer{
 	word-break:break-all;
 	line-height:26px;
 	display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 3;
-    overflow: hidden;
-    text-overflow: ellipsis;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 3;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 .buildOneMore{
 	position:absolute;
@@ -2658,4 +2661,143 @@ footer{
 	text-align:center;
 	right:15px;
 	bottom:0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+		add new
+*/
+
+/*背景*/
+.bodyback{
+
+	background:url("../img/view.jpg") no-repeat;
+	background-size: cover;
+}
+
+/*#videoList*/
+.grid ul {
+	margin: auto -10px;
+	height: auto;
+	overflow: hidden;
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.grid ul li {
+	float: left;
+	width: 300px;
+	padding-bottom: 30px;
+	position: relative;
+}
+
+.grid ul li .thumb {
+	line-height: 1;
+	text-align: center;
+	width: 280px;
+	height: 180px;
+	overflow: hidden;
+	-webkit-transition: .15s all linear;
+	-moz-transition: .15s all linear;
+	-o-transition: .15s all linear;
+	transition: .15s all linear;
+	color: #FFF;
+	box-shadow: 0 0 2px rgba(255, 255, 255, .15);
+}
+
+
+
+.grid ul li .data {
+	border-top: 1px solid #f2f2f2;
+	padding: 8px 5px;
+	color: #999;
+}
+
+.grid ul li .item {
+	margin: auto 10px;
+	background-color: #FFF;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
+	overflow: hidden;
+	position: relative;
+	border: 10px solid #FFF;
+	border-bottom-color: rgb(255, 255, 255);
+	border-bottom-style: solid;
+	border-bottom-width: 10px;
+	border-bottom: 0 none;
+}
+
+
+a {
+
+	outline: 0;
+	cursor: pointer;
+	-webkit-transition: all .3s ease-out;
+	-moz-transition: all .3s ease-out;
+	-o-transition: all .3s ease-out;
+	transition: all .3s ease-out;
+	text-decoration: none;
+}
+
+
+.grid ul li .title a {
+	color: #888;
+	font-size: 12px;
+	display: block;
+	height: 18px;
+	line-height: 18px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.grid ul li .extra {
+	position: absolute;
+	left: 0;
+	top: 0;
+	height: auto;
+	overflow: hidden;
+	width: 100%;
+	background-color: #222;
+	color: #FFF;
+	margin: 0;
+	padding: 8px 10px;
+	box-sizing: border-box;
+	-webkit-transform: translateY(-50px);
+	-moz-transform: translateY(-50px);
+	-ms-transform: translateY(-50px);
+	-o-transform: translateY(-50px);
+	transform: translateY(-50px);
+	-webkit-transition: -webkit-transform .2s cubic-bezier(0.33, 0, 0.2, 1);
+	-moz-transition: -moz-transform .2s cubic-bezier(0.33, 0, 0.2, 1);
+	-o-transition: -o-transform .2s cubic-bezier(0.33, 0, 0.2, 1);
+	transition: transform .2s cubic-bezier(0.33, 0, 0.2, 1);
+}
+
+.newback {
+
+	background: url("../img/new.jpg") no-repeat 0 center;
+	background-size: 210px 100px;
+}
+
+.tuijianback {
+
+	background: url("../img/tuijian.jpg") no-repeat 0 center;
+	background-size: 210px 100px;
+}
+
+.deployback {
+
+	background: url("../img/deploy.jpg") no-repeat 0 center;
+	background-size: 210px 100px;
 }

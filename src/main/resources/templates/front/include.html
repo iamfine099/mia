@@ -71,8 +71,8 @@
 				<!--导航部分-->
 				<div class="logo">
 					<div class="text">
-						<h1><img src='/img/newlogo.png'/></h1>
-						<!-- <h2>SHANDONG&nbsp;&nbsp;MEDICAL&nbsp;&nbsp;INFORMATION&nbsp;&nbsp;ASSICIATION</h2> -->
+						<h1>山东省医药卫生科技成果展示平台</h1>
+						<h2>SHANDONG DISPLAY PLATFORM OF MEDICINE AND HEALTH INFORMATION</h2>
 					</div>
 					<nav>
 					    <ul class="navList">
@@ -81,11 +81,11 @@
 					    		<a class='firstNav' th:target="${vo.target}" th:href="${vo.module eq 'link'}? @{${vo.href}} : @{'/front/cms/open/page/'+${vo.id}}" th:text="${vo.name}"></a>
 					    		<div class='secondList'>
 					    			<div class='secondListOne' th:each="svo:${T(com.bootdo.cms.util.CmsUtils).getCategoryList(vo.id,0,'')}">
-										<a th:target="${svo.target}" th:href="${svo.module eq 'link'}? @{${svo.href}} : @{'/front/cms/open/page/'+${svo.id}}" th:text="${svo.name}"></a>
+										<a style="color: white" th:target="${svo.target}" th:href="${svo.module eq 'link'}? @{${svo.href}} : @{'/front/cms/open/page/'+${svo.id}}" th:text="${svo.name}"></a>
 									</div>
 					    			<div style="clear:both;"></div>	
 					    		</div>
-					    		<div class='secondNav' th:if="${T(com.bootdo.cms.util.CmsUtils).getCategoryList(vo.id,0,'').size()>0}">
+					    		<div class='secondNav' style="background:#1A66B3" th:if="${T(com.bootdo.cms.util.CmsUtils).getCategoryList(vo.id,0,'').size()>0}">
 					    	
 					    		</div>	
 					    	</li>

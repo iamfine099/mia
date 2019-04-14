@@ -65,6 +65,7 @@
  		where a.id = #{value}
 	</select>
 
+
 	<select id="list" resultType="com.bootdo.common.domain.ArticleDO">
 		select
 			<include refid="columns" />
