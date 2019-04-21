@@ -5,588 +5,85 @@
 <body class="bodyback">
 <!--这是身体-->
 <section class="total">
-    <div class="grayStrip clear" th:if="${category.parentId} == 0">
+    <div class="grayStrip clear">
         <div class="textLink">
             <a th:href="@{/front/cms}">首页</a>
         </div>
         <div class="textLink">
-            <a th:href="@{'/front/cms/open/page/'+${category.id}}" th:utext="'>&nbsp;&nbsp;'+${category.name}">首页</a>
-        </div>
-        <div class="textLink" th:if="${categoryDO.id != null}">
-            <a th:href="@{'/front/cms/open/page/'+${categoryDO.id}}"
-               th:utext="'>&nbsp;&nbsp;'+${categoryDO.name}">首页</a>
-        </div>
-    </div>
-    <div class="grayStrip clear" th:if="${category.parentId} != 0">
-        <div class="textLink">
-            <a th:href="@{/front/cms}">首页</a>
-        </div>
-        <div class="textLink">
-            <a th:href="@{'/front/cms/open/page/'+${categoryDO.id}}"
-               th:utext="'>&nbsp;&nbsp;'+${categoryDO.name}">首页</a>
-        </div>
-        <div class="textLink">
-            <a th:href="@{'/front/cms/open/page/'+${category.id}}" th:utext="'>&nbsp;&nbsp;'+${category.name}">首页</a>
+            <a th:href="@{/front/cms/open/recommendarticlelist}">>&nbsp;&nbsp;成果展示</a>
         </div>
     </div>
     <!--这是选择盒子-->
     <div class="bodyContent">
 
-
-        <ul class="selectionBar" th:if="${category.parentId} == 0">
-            <li th:if="${categoryList.size()} > 0" th:each="val,stat:${categoryList}"
-                th:class="${stat.index} == 0 ? 'choosed selectionBarText':'selectionBarText'"
-                style="border-top:1px solid #dcdcdc ;"><a th:href="@{'/front/cms/open/page/'+${val.id}}"
-                                                          th:text="${val.name}">通知公告</a></li>
-            <li th:if="${categoryList.size()} == 0" class="selectionBarText choosed"
-                style="border-top:1px solid #dcdcdc ;"><a th:href="@{'/front/cms/open/page/'+${category.id}}"
-                                                          th:text="${category.name}">通知公告</a></li>
-        </ul>
-        <ul class="selectionBar" th:if="${category.parentId} != 0">
-            <li th:if="${categoryList.size()} > 0" th:each="val,stat:${categoryList}"
-                th:class="${val.id == category.id} ? 'choosed selectionBarText':'selectionBarText'"
-                style="border-top:1px solid #dcdcdc ;"><a th:href="@{'/front/cms/open/page/'+${val.id}}" th:text="${val.name}">通知公告</a></li>
+        <ul class="selectionBar">
+            <li class="selectionBarText choosed">
+                <a th:href="@{/front/cms/open/achievementList}">成果展示</a>
+            </li>
         </ul>
 
+        <form method="post" id="signupForm"  class="min_height" action="/front/cms/open/achievementList">
 
+            <div id="fabu_box" class="fabu_box" style="width: 900px;float: right;height: 60px;">
 
+                <div class="fabu_top" style="float: right;margin-right: 20px;">
+                    <p><input class="fabu" id="title" name="title" type="text" value="" placeholder="输入标题搜索"></p>
+                    <button class="fabu_search" type="submit">搜索</button>
+                </div>
+            </div>
 
-        <form method="post" id="signupForm" th:action="@{'/front/cms/open/page/'+${category.id}}" class="min_height">
             <div class="article_down grid" >
-                <!--<ul class="article_list">
-                    <li th:each="m ,stat: ${pageUtils.rows}">
-                        <a th:href="${#strings.isEmpty(m.href)} ? @{/front/cms/open/aArticle/detail(id=${m.id})} : ${m.href}"
-                           th:text="${m.title}">但干细胞治疗心脏病并非没有希望</a>
-                        <span class="writer_time" th:text="${m.createTime} == null ? null : ${#dates.format(m.createTime, 'yyyy-MM-dd')}">2018-10-11</span>
-                    </li>
-                </ul>-->
-
                 <ul>
-
-                    <li class="group"  style="padding-top: 1px">
+                    <li class="group"  style="padding-left: 15px; padding-top: 1px" th:each="m ,stat: ${pageUtils.rows}">
                         <div class="item" style="box-shadow: 0 0 1px rgba(0, 0, 0, 0.15);">
-                            <div class="thumb" style="height: 60px">
-                                <h2>
-                                    <a href="/front/cms/open/aArticle/detail?id=189"
+                            <div class="thumb" style="height: 60px; width: 100%">
+                                <h2 style="margin-top: 5px;">
+                                    <a th:text="${m.title}"
+                                       th:href="@{/front/cms/open/articleScore/detail(id=${m.id})}"
                                        style="font-weight: bold; text-align: center;font-size: 15px">
                                         液相芯片检测禽流感病毒试剂盒
                                     </a>
                                 </h2>
                             </div>
                             <div class="data">
-                                <span class="" style="width: 60px;display: block; float: left;">
+                                <span class="" style="width: 100px;display: block; float: left;">
                                     <i class="fa fa-map-marker" style="color: blue"></i>&nbsp;&nbsp;
-                                    <span>山东省</span>
+                                    <span th:text="${m.province}">山东省</span>
 								</span>
-                                <span class="heart-num" style=" margin-left: 80px;">
-                                    <i class="fa fa-link" style="color: blue"></i>&nbsp;&nbsp;
-                                    生物、医疗器械
-                                </span>
+                                <div class="heart-num" style=" margin-left: 20px;">
+                                    <i class="fa fa-link" style="color: blue; float: left; margin-right: 10px"></i>&nbsp;
+                                    <span th:text="${m.intro}" style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;
+                                            width: 105px;display: inline-block;float: left;">生物、医疗器械</span>
+                                </div>
                             </div>
                             <div class="data">
-                                <span class="" style="width: 60px;display: block;float: left;">
+                                <span class="" style="width: 100px;display: block;float: left;">
                                     <i class="fa fa-user" style="color: blue"></i>&nbsp;&nbsp;
-                                    <span>苏轼</span>
+                                    <span th:text="${m.author}">苏轼</span>
 								</span>
-                                <span class="heart-num" style="margin-left: 80px;">
-                                    <i class="fa fa-phone-square" style="color: blue"></i>&nbsp;&nbsp;
-                                    23232323
-                                </span>
+                                <div class="heart-num" style="margin-left: 40px;">
+                                    <i class="fa fa-phone-square" style="color: blue; float: left; margin-right: 10px"></i>&nbsp;
+                                    <span th:text="${m.tel}" style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;
+                                            width: 105px;display: inline-block;float: left;">23232323</span>
+                                </div>
                             </div>
                             <div class="data">
-                                <span class="" style="width: 60px;display: block;float: left;">
+                                <span class="" style="width: 100px;display: block;float: left;">
                                     <i class="fa fa-paper-plane" style="color: blue"></i>&nbsp;&nbsp;
-                                    <span>100万</span>
+                                    <span th:text="${m.money}">100万</span>
 								</span>
-                                <span class="heart-num" style="margin-left: 80px;">
-                                    <i class="fa fa-calendar" style="color: blue"></i>&nbsp;&nbsp;
-                                    2019-05-01
-                                </span>
-                            </div>
-                        </div>
-                    </li>
-
-                    <li class="group"  style="padding-top: 1px">
-                        <div class="item" style="box-shadow: 0 0 1px rgba(0, 0, 0, 0.15);">
-                            <div class="thumb" style="height: 60px">
-                                <h2>
-                                    <a href="/front/cms/open/aArticle/detail?id=189"
-                                       style="font-weight: bold; text-align: center;font-size: 15px">
-                                        液相芯片检测禽流感病毒试剂盒
-                                    </a>
-                                </h2>
-                            </div>
-                            <div class="data">
-                                <span class="" style="width: 60px;display: block; float: left;">
-                                    <i class="fa fa-map-marker" style="color: blue"></i>&nbsp;&nbsp;
-                                    <span>山东省</span>
-								</span>
-                                <span class="heart-num" style=" margin-left: 80px;">
-                                    <i class="fa fa-link" style="color: blue"></i>&nbsp;&nbsp;
-                                    生物、医疗器械
-                                </span>
-                            </div>
-                            <div class="data">
-                                <span class="" style="width: 60px;display: block;float: left;">
-                                    <i class="fa fa-user" style="color: blue"></i>&nbsp;&nbsp;
-                                    <span>苏轼</span>
-								</span>
-                                <span class="heart-num" style="margin-left: 80px;">
-                                    <i class="fa fa-phone-square" style="color: blue"></i>&nbsp;&nbsp;
-                                    23232323
-                                </span>
-                            </div>
-                            <div class="data">
-                                <span class="" style="width: 60px;display: block;float: left;">
-                                    <i class="fa fa-paper-plane" style="color: blue"></i>&nbsp;&nbsp;
-                                    <span>100万</span>
-								</span>
-                                <span class="heart-num" style="margin-left: 80px;">
-                                    <i class="fa fa-calendar" style="color: blue"></i>&nbsp;&nbsp;
-                                    2019-05-01
-                                </span>
-                            </div>
-                        </div>
-                    </li>
-
-                    <li class="group"  style="padding-top: 1px">
-                        <div class="item" style="box-shadow: 0 0 1px rgba(0, 0, 0, 0.15);">
-                            <div class="thumb" style="height: 60px">
-                                <h2>
-                                    <a href="/front/cms/open/aArticle/detail?id=189"
-                                       style="font-weight: bold; text-align: center;font-size: 15px">
-                                        液相芯片检测禽流感病毒试剂盒
-                                    </a>
-                                </h2>
-                            </div>
-                            <div class="data">
-                                <span class="" style="width: 60px;display: block; float: left;">
-                                    <i class="fa fa-map-marker" style="color: blue"></i>&nbsp;&nbsp;
-                                    <span>山东省</span>
-								</span>
-                                <span class="heart-num" style=" margin-left: 80px;">
-                                    <i class="fa fa-link" style="color: blue"></i>&nbsp;&nbsp;
-                                    生物、医疗器械
-                                </span>
-                            </div>
-                            <div class="data">
-                                <span class="" style="width: 60px;display: block;float: left;">
-                                    <i class="fa fa-user" style="color: blue"></i>&nbsp;&nbsp;
-                                    <span>苏轼</span>
-								</span>
-                                <span class="heart-num" style="margin-left: 80px;">
-                                    <i class="fa fa-phone-square" style="color: blue"></i>&nbsp;&nbsp;
-                                    23232323
-                                </span>
-                            </div>
-                            <div class="data">
-                                <span class="" style="width: 60px;display: block;float: left;">
-                                    <i class="fa fa-paper-plane" style="color: blue"></i>&nbsp;&nbsp;
-                                    <span>100万</span>
-								</span>
-                                <span class="heart-num" style="margin-left: 80px;">
-                                    <i class="fa fa-calendar" style="color: blue"></i>&nbsp;&nbsp;
-                                    2019-05-01
-                                </span>
-                            </div>
-                        </div>
-                    </li>
-
-                    <li class="group"  style="padding-top: 1px">
-                        <div class="item" style="box-shadow: 0 0 1px rgba(0, 0, 0, 0.15);">
-                            <div class="thumb" style="height: 60px">
-                                <h2>
-                                    <a href="/front/cms/open/aArticle/detail?id=189"
-                                       style="font-weight: bold; text-align: center;font-size: 15px">
-                                        液相芯片检测禽流感病毒试剂盒
-                                    </a>
-                                </h2>
-                            </div>
-                            <div class="data">
-                                <span class="" style="width: 60px;display: block; float: left;">
-                                    <i class="fa fa-map-marker" style="color: blue"></i>&nbsp;&nbsp;
-                                    <span>山东省</span>
-								</span>
-                                <span class="heart-num" style=" margin-left: 80px;">
-                                    <i class="fa fa-link" style="color: blue"></i>&nbsp;&nbsp;
-                                    生物、医疗器械
-                                </span>
-                            </div>
-                            <div class="data">
-                                <span class="" style="width: 60px;display: block;float: left;">
-                                    <i class="fa fa-user" style="color: blue"></i>&nbsp;&nbsp;
-                                    <span>苏轼</span>
-								</span>
-                                <span class="heart-num" style="margin-left: 80px;">
-                                    <i class="fa fa-phone-square" style="color: blue"></i>&nbsp;&nbsp;
-                                    23232323
-                                </span>
-                            </div>
-                            <div class="data">
-                                <span class="" style="width: 60px;display: block;float: left;">
-                                    <i class="fa fa-paper-plane" style="color: blue"></i>&nbsp;&nbsp;
-                                    <span>100万</span>
-								</span>
-                                <span class="heart-num" style="margin-left: 80px;">
-                                    <i class="fa fa-calendar" style="color: blue"></i>&nbsp;&nbsp;
-                                    2019-05-01
-                                </span>
-                            </div>
-                        </div>
-                    </li>
-
-                    <li class="group"  style="padding-top: 1px">
-                        <div class="item" style="box-shadow: 0 0 1px rgba(0, 0, 0, 0.15);">
-                            <div class="thumb" style="height: 60px">
-                                <h2>
-                                    <a href="/front/cms/open/aArticle/detail?id=189"
-                                       style="font-weight: bold; text-align: center;font-size: 15px">
-                                        液相芯片检测禽流感病毒试剂盒
-                                    </a>
-                                </h2>
-                            </div>
-                            <div class="data">
-                                <span class="" style="width: 60px;display: block; float: left;">
-                                    <i class="fa fa-map-marker" style="color: blue"></i>&nbsp;&nbsp;
-                                    <span>山东省</span>
-								</span>
-                                <span class="heart-num" style=" margin-left: 80px;">
-                                    <i class="fa fa-link" style="color: blue"></i>&nbsp;&nbsp;
-                                    生物、医疗器械
-                                </span>
-                            </div>
-                            <div class="data">
-                                <span class="" style="width: 60px;display: block;float: left;">
-                                    <i class="fa fa-user" style="color: blue"></i>&nbsp;&nbsp;
-                                    <span>苏轼</span>
-								</span>
-                                <span class="heart-num" style="margin-left: 80px;">
-                                    <i class="fa fa-phone-square" style="color: blue"></i>&nbsp;&nbsp;
-                                    23232323
-                                </span>
-                            </div>
-                            <div class="data">
-                                <span class="" style="width: 60px;display: block;float: left;">
-                                    <i class="fa fa-paper-plane" style="color: blue"></i>&nbsp;&nbsp;
-                                    <span>100万</span>
-								</span>
-                                <span class="heart-num" style="margin-left: 80px;">
-                                    <i class="fa fa-calendar" style="color: blue"></i>&nbsp;&nbsp;
-                                    2019-05-01
-                                </span>
-                            </div>
-                        </div>
-                    </li>
-
-                    <li class="group"  style="padding-top: 1px">
-                        <div class="item" style="box-shadow: 0 0 1px rgba(0, 0, 0, 0.15);">
-                            <div class="thumb" style="height: 60px">
-                                <h2>
-                                    <a href="/front/cms/open/aArticle/detail?id=189"
-                                       style="font-weight: bold; text-align: center;font-size: 15px">
-                                        液相芯片检测禽流感病毒试剂盒
-                                    </a>
-                                </h2>
-                            </div>
-                            <div class="data">
-                                <span class="" style="width: 60px;display: block; float: left;">
-                                    <i class="fa fa-map-marker" style="color: blue"></i>&nbsp;&nbsp;
-                                    <span>山东省</span>
-								</span>
-                                <span class="heart-num" style=" margin-left: 80px;">
-                                    <i class="fa fa-link" style="color: blue"></i>&nbsp;&nbsp;
-                                    生物、医疗器械
-                                </span>
-                            </div>
-                            <div class="data">
-                                <span class="" style="width: 60px;display: block;float: left;">
-                                    <i class="fa fa-user" style="color: blue"></i>&nbsp;&nbsp;
-                                    <span>苏轼</span>
-								</span>
-                                <span class="heart-num" style="margin-left: 80px;">
-                                    <i class="fa fa-phone-square" style="color: blue"></i>&nbsp;&nbsp;
-                                    23232323
-                                </span>
-                            </div>
-                            <div class="data">
-                                <span class="" style="width: 60px;display: block;float: left;">
-                                    <i class="fa fa-paper-plane" style="color: blue"></i>&nbsp;&nbsp;
-                                    <span>100万</span>
-								</span>
-                                <span class="heart-num" style="margin-left: 80px;">
-                                    <i class="fa fa-calendar" style="color: blue"></i>&nbsp;&nbsp;
-                                    2019-05-01
-                                </span>
-                            </div>
-                        </div>
-                    </li>
-
-                    <li class="group"  style="padding-top: 1px">
-                        <div class="item" style="box-shadow: 0 0 1px rgba(0, 0, 0, 0.15);">
-                            <div class="thumb" style="height: 60px">
-                                <h2>
-                                    <a href="/front/cms/open/aArticle/detail?id=189"
-                                       style="font-weight: bold; text-align: center;font-size: 15px">
-                                        液相芯片检测禽流感病毒试剂盒
-                                    </a>
-                                </h2>
-                            </div>
-                            <div class="data">
-                                <span class="" style="width: 60px;display: block; float: left;">
-                                    <i class="fa fa-map-marker" style="color: blue"></i>&nbsp;&nbsp;
-                                    <span>山东省</span>
-								</span>
-                                <span class="heart-num" style=" margin-left: 80px;">
-                                    <i class="fa fa-link" style="color: blue"></i>&nbsp;&nbsp;
-                                    生物、医疗器械
-                                </span>
-                            </div>
-                            <div class="data">
-                                <span class="" style="width: 60px;display: block;float: left;">
-                                    <i class="fa fa-user" style="color: blue"></i>&nbsp;&nbsp;
-                                    <span>苏轼</span>
-								</span>
-                                <span class="heart-num" style="margin-left: 80px;">
-                                    <i class="fa fa-phone-square" style="color: blue"></i>&nbsp;&nbsp;
-                                    23232323
-                                </span>
-                            </div>
-                            <div class="data">
-                                <span class="" style="width: 60px;display: block;float: left;">
-                                    <i class="fa fa-paper-plane" style="color: blue"></i>&nbsp;&nbsp;
-                                    <span>100万</span>
-								</span>
-                                <span class="heart-num" style="margin-left: 80px;">
-                                    <i class="fa fa-calendar" style="color: blue"></i>&nbsp;&nbsp;
-                                    2019-05-01
-                                </span>
-                            </div>
-                        </div>
-                    </li>
-
-                    <li class="group"  style="padding-top: 1px">
-                        <div class="item" style="box-shadow: 0 0 1px rgba(0, 0, 0, 0.15);">
-                            <div class="thumb" style="height: 60px">
-                                <h2>
-                                    <a href="/front/cms/open/aArticle/detail?id=189"
-                                       style="font-weight: bold; text-align: center;font-size: 15px">
-                                        液相芯片检测禽流感病毒试剂盒
-                                    </a>
-                                </h2>
-                            </div>
-                            <div class="data">
-                                <span class="" style="width: 60px;display: block; float: left;">
-                                    <i class="fa fa-map-marker" style="color: blue"></i>&nbsp;&nbsp;
-                                    <span>山东省</span>
-								</span>
-                                <span class="heart-num" style=" margin-left: 80px;">
-                                    <i class="fa fa-link" style="color: blue"></i>&nbsp;&nbsp;
-                                    生物、医疗器械
-                                </span>
-                            </div>
-                            <div class="data">
-                                <span class="" style="width: 60px;display: block;float: left;">
-                                    <i class="fa fa-user" style="color: blue"></i>&nbsp;&nbsp;
-                                    <span>苏轼</span>
-								</span>
-                                <span class="heart-num" style="margin-left: 80px;">
-                                    <i class="fa fa-phone-square" style="color: blue"></i>&nbsp;&nbsp;
-                                    23232323
-                                </span>
-                            </div>
-                            <div class="data">
-                                <span class="" style="width: 60px;display: block;float: left;">
-                                    <i class="fa fa-paper-plane" style="color: blue"></i>&nbsp;&nbsp;
-                                    <span>100万</span>
-								</span>
-                                <span class="heart-num" style="margin-left: 80px;">
-                                    <i class="fa fa-calendar" style="color: blue"></i>&nbsp;&nbsp;
-                                    2019-05-01
-                                </span>
-                            </div>
-                        </div>
-                    </li>
-
-                    <li class="group"  style="padding-top: 1px">
-                        <div class="item" style="box-shadow: 0 0 1px rgba(0, 0, 0, 0.15);">
-                            <div class="thumb" style="height: 60px">
-                                <h2>
-                                    <a href="/front/cms/open/aArticle/detail?id=189"
-                                       style="font-weight: bold; text-align: center;font-size: 15px">
-                                        液相芯片检测禽流感病毒试剂盒
-                                    </a>
-                                </h2>
-                            </div>
-                            <div class="data">
-                                <span class="" style="width: 60px;display: block; float: left;">
-                                    <i class="fa fa-map-marker" style="color: blue"></i>&nbsp;&nbsp;
-                                    <span>山东省</span>
-								</span>
-                                <span class="heart-num" style=" margin-left: 80px;">
-                                    <i class="fa fa-link" style="color: blue"></i>&nbsp;&nbsp;
-                                    生物、医疗器械
-                                </span>
-                            </div>
-                            <div class="data">
-                                <span class="" style="width: 60px;display: block;float: left;">
-                                    <i class="fa fa-user" style="color: blue"></i>&nbsp;&nbsp;
-                                    <span>苏轼</span>
-								</span>
-                                <span class="heart-num" style="margin-left: 80px;">
-                                    <i class="fa fa-phone-square" style="color: blue"></i>&nbsp;&nbsp;
-                                    23232323
-                                </span>
-                            </div>
-                            <div class="data">
-                                <span class="" style="width: 60px;display: block;float: left;">
-                                    <i class="fa fa-paper-plane" style="color: blue"></i>&nbsp;&nbsp;
-                                    <span>100万</span>
-								</span>
-                                <span class="heart-num" style="margin-left: 80px;">
-                                    <i class="fa fa-calendar" style="color: blue"></i>&nbsp;&nbsp;
-                                    2019-05-01
-                                </span>
-                            </div>
-                        </div>
-                    </li>
-
-                    <li class="group"  style="padding-top: 1px">
-                        <div class="item" style="box-shadow: 0 0 1px rgba(0, 0, 0, 0.15);">
-                            <div class="thumb" style="height: 60px">
-                                <h2>
-                                    <a href="/front/cms/open/aArticle/detail?id=189"
-                                       style="font-weight: bold; text-align: center;font-size: 15px">
-                                        液相芯片检测禽流感病毒试剂盒
-                                    </a>
-                                </h2>
-                            </div>
-                            <div class="data">
-                                <span class="" style="width: 60px;display: block; float: left;">
-                                    <i class="fa fa-map-marker" style="color: blue"></i>&nbsp;&nbsp;
-                                    <span>山东省</span>
-								</span>
-                                <span class="heart-num" style=" margin-left: 80px;">
-                                    <i class="fa fa-link" style="color: blue"></i>&nbsp;&nbsp;
-                                    生物、医疗器械
-                                </span>
-                            </div>
-                            <div class="data">
-                                <span class="" style="width: 60px;display: block;float: left;">
-                                    <i class="fa fa-user" style="color: blue"></i>&nbsp;&nbsp;
-                                    <span>苏轼</span>
-								</span>
-                                <span class="heart-num" style="margin-left: 80px;">
-                                    <i class="fa fa-phone-square" style="color: blue"></i>&nbsp;&nbsp;
-                                    23232323
-                                </span>
-                            </div>
-                            <div class="data">
-                                <span class="" style="width: 60px;display: block;float: left;">
-                                    <i class="fa fa-paper-plane" style="color: blue"></i>&nbsp;&nbsp;
-                                    <span>100万</span>
-								</span>
-                                <span class="heart-num" style="margin-left: 80px;">
-                                    <i class="fa fa-calendar" style="color: blue"></i>&nbsp;&nbsp;
-                                    2019-05-01
-                                </span>
-                            </div>
-                        </div>
-                    </li>
-
-                    <li class="group"  style="padding-top: 1px">
-                        <div class="item" style="box-shadow: 0 0 1px rgba(0, 0, 0, 0.15);">
-                            <div class="thumb" style="height: 60px">
-                                <h2>
-                                    <a href="/front/cms/open/aArticle/detail?id=189"
-                                       style="font-weight: bold; text-align: center;font-size: 15px">
-                                        液相芯片检测禽流感病毒试剂盒
-                                    </a>
-                                </h2>
-                            </div>
-                            <div class="data">
-                                <span class="" style="width: 60px;display: block; float: left;">
-                                    <i class="fa fa-map-marker" style="color: blue"></i>&nbsp;&nbsp;
-                                    <span>山东省</span>
-								</span>
-                                <span class="heart-num" style=" margin-left: 80px;">
-                                    <i class="fa fa-link" style="color: blue"></i>&nbsp;&nbsp;
-                                    生物、医疗器械
-                                </span>
-                            </div>
-                            <div class="data">
-                                <span class="" style="width: 60px;display: block;float: left;">
-                                    <i class="fa fa-user" style="color: blue"></i>&nbsp;&nbsp;
-                                    <span>苏轼</span>
-								</span>
-                                <span class="heart-num" style="margin-left: 80px;">
-                                    <i class="fa fa-phone-square" style="color: blue"></i>&nbsp;&nbsp;
-                                    23232323
-                                </span>
-                            </div>
-                            <div class="data">
-                                <span class="" style="width: 60px;display: block;float: left;">
-                                    <i class="fa fa-paper-plane" style="color: blue"></i>&nbsp;&nbsp;
-                                    <span>100万</span>
-								</span>
-                                <span class="heart-num" style="margin-left: 80px;">
-                                    <i class="fa fa-calendar" style="color: blue"></i>&nbsp;&nbsp;
-                                    2019-05-01
-                                </span>
-                            </div>
-                        </div>
-                    </li>
-
-                    <li class="group"  style="padding-top: 1px">
-                        <div class="item" style="box-shadow: 0 0 1px rgba(0, 0, 0, 0.15);">
-                            <div class="thumb" style="height: 60px">
-                                <h2>
-                                    <a href="/front/cms/open/aArticle/detail?id=189"
-                                       style="font-weight: bold; text-align: center;font-size: 15px">
-                                        液相芯片检测禽流感病毒试剂盒
-                                    </a>
-                                </h2>
-                            </div>
-                            <div class="data">
-                                <span class="" style="width: 60px;display: block; float: left;">
-                                    <i class="fa fa-map-marker" style="color: blue"></i>&nbsp;&nbsp;
-                                    <span>山东省</span>
-								</span>
-                                <span class="heart-num" style=" margin-left: 80px;">
-                                    <i class="fa fa-link" style="color: blue"></i>&nbsp;&nbsp;
-                                    生物、医疗器械
-                                </span>
-                            </div>
-                            <div class="data">
-                                <span class="" style="width: 60px;display: block;float: left;">
-                                    <i class="fa fa-user" style="color: blue"></i>&nbsp;&nbsp;
-                                    <span>苏轼</span>
-								</span>
-                                <span class="heart-num" style="margin-left: 80px;">
-                                    <i class="fa fa-phone-square" style="color: blue"></i>&nbsp;&nbsp;
-                                    23232323
-                                </span>
-                            </div>
-                            <div class="data">
-                                <span class="" style="width: 60px;display: block;float: left;">
-                                    <i class="fa fa-paper-plane" style="color: blue"></i>&nbsp;&nbsp;
-                                    <span>100万</span>
-								</span>
-                                <span class="heart-num" style="margin-left: 80px;">
-                                    <i class="fa fa-calendar" style="color: blue"></i>&nbsp;&nbsp;
-                                    2019-05-01
-                                </span>
+                                <div class="heart-num" style="margin-left: 40px;">
+                                    <i class="fa fa-calendar" style="color: blue; float: left; margin-right: 10px"></i>&nbsp;
+                                    <span th:text="${m.date}" style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;
+                                            width: 105px;display: inline-block;float: left;">23232323</span>
+                                </div>
                             </div>
                         </div>
                     </li>
                 </ul>
-
                 <div class="tuijianpageNum" th:include="front/include::split_page"></div>
             </div>
         </form>
-
-
-
-
     </div>
 </section>
 <!--这是尾部-->

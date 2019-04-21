@@ -35,7 +35,7 @@ $().ready(function() {
 				},
 				auto: false,
 				accept: 'file',
-				field: 'file',
+				field: 'files',
 				multiple: false,
 				done: function(res) {
 					console.log(res);

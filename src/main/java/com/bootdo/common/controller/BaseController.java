@@ -142,10 +142,13 @@ public class BaseController {
 	 */
 	public  void deleteFile(Long fileId) {
 		if(fileId == null || fileId < 1) return ;
-		String fileName = bootdoConfig.getUploadPath() + sysFileService.get(fileId).getUrl().replace("/files/", "");
-		if (sysFileService.remove(fileId) > 0) {
-			FileUtil.deleteFile(fileName);
-		} 
+		FileDO fileDO = sysFileService.get(fileId);
+		if(fileDO != null) {
+			String fileName = bootdoConfig.getUploadPath() + fileDO.getUrl().replace("/files/", "");
+			if (sysFileService.remove(fileId) > 0) {
+				FileUtil.deleteFile(fileName);
+			}
+		}
 	}
 
 	/**

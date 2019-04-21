@@ -2,7 +2,7 @@
 <html>
 <meta charset="utf-8">
 <head th:include="front/include :: header"></head>
-<body>
+<body class="bodyback">
 <head th:include="front/include :: topbar"></head>
 
 <!--这是身体-->
@@ -35,38 +35,30 @@
 					</tr>
 					<tr>
 						<td class="field-value-td">
-									<span class="field-value-span">
-										<div id="avater-wrapper" style="float: left">
-											<img width="125" height="150" id="avater-img" th:src="@{${fileObj.url!=null}?@{${fileObj.url}}:@{/img/expertEximg_03.png}}">
-										</div>
-										<div id="baseinfo-panel-left">
-											<span class="baseinfo-item baseinfo-title">
-												<span class="baseinfo-value editable" key="name" adddel="false" th:text="${expert.expertName}">简小历</span>
-											</span>
-											<span class="baseinfo-item baseinfo-fields">
-												<!--<span class="baseinfo-value editable" key="sex">男</span>
-												<span class="baseinfo-value editable" key="age" birthday="1995.12">24岁</span>
-												<span class="baseinfo-value editable" key="years">3年经验</span>
-												<span class="baseinfo-value editable" key="mobile">137****2345</span>
-												<span class="baseinfo-value editable" key="email">dxz@jianliben.com</span>
-												<span class="baseinfo-value editable" key="job">产品经理</span>-->
-														<span th:if="${expert.sex eq dict.value}"
-															  th:each="dict:${T(com.bootdo.common.utils.DictUtils).getDictList('sex')}"
-															  th:value="${dict.value}" th:text="${dict.name}"></span>
-														<span class="baseinfo-value"  th:text="${expert.officePhone}"></span>
-														<span class="baseinfo-value"  th:text="${expert.office}"></span>
-														<span class="baseinfo-value" th:text="${expert.email}">15878954876@qq.com</span>
-														<span class="baseinfo-value" th:text="${expert.company}">济南市历下区</span>
-												</span>
-
-
-											<!--<span class="baseinfo-item baseinfo-intro">
-												<span class="baseinfo-value editable" key="intro" adddel="false">一句话向HR介绍自己</span>
-											</span>-->
-										</div>
-										<div id="baseinfo-panel-right">
-										</div>
+							<span class="field-value-span">
+								<div id="avater-wrapper" style="float: left">
+									<img width="125" height="150" id="avater-img" th:src="@{${fileObj.url!=null}?@{${fileObj.url}}:@{/img/expertEximg_03.png}}">
+								</div>
+								<div id="baseinfo-panel-left">
+									<span class="baseinfo-item baseinfo-title">
+										<span class="baseinfo-value editable" key="name" adddel="false" th:text="${expert.expertName}">简小历</span>
 									</span>
+									<span class="baseinfo-item baseinfo-fields">
+
+										<span class="baseinfo-value" th:if="${expert.sex eq dict.value}"
+											  th:each="dict:${T(com.bootdo.common.utils.DictUtils).getDictList('sex')}"
+											  th:value="${dict.value}" th:text="${dict.name}"></span>
+										<span class="baseinfo-value" th:text="${expert.officePhone}"></span>
+										<span class="baseinfo-value" th:text="${expert.office}"></span>
+										<span class="baseinfo-value" th:text="${expert.email}">11@qq.com</span>
+										<span class="baseinfo-value" th:text="${expert.company}">济南市历下区</span>
+									</span>
+									<!--<span class="baseinfo-item baseinfo-intro">
+										<span class="baseinfo-value editable" key="intro" adddel="false">一句话向HR介绍自己</span>
+									</span>-->
+								</div>
+								<div id="baseinfo-panel-right"></div>
+							</span>
 						</td>
 					</tr>
 					</tbody>
@@ -82,7 +74,7 @@
 					</tr>
 					<tr>
 						<td class="field-value-td">
-							<span id="gerenlvli" th:utext="${expert.experience}"></span>
+							<div id="gerenlvli" th:utext="${expert.experience}"></div>
 						</td>
 					</tr>
 					</tbody>
@@ -98,7 +90,7 @@
 					</tr>
 					<tr>
 						<td class="field-value-td">
-							<span id="xueshuchengjiu" th:utext="${expert.achievement}"></span>
+							<div id="xueshuchengjiu" th:utext="${expert.achievement}"></div>
 						</td>
 					</tr>
 					</tbody>

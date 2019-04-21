@@ -7,15 +7,20 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import com.bootdo.common.domain.AchievementDO;
+import com.bootdo.common.domain.DictDO;
+import com.bootdo.common.utils.DictUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.LockedAccountException;
 import org.apache.shiro.subject.Subject;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -114,7 +119,7 @@ public class FrontCmsController extends BaseController {
 	private CategoryService categoryService;
 
 
-	
+
 
 //	@RequestMapping()
 //		
@@ -128,9 +133,9 @@ public class FrontCmsController extends BaseController {
 	 * @return
 	 */
 	@GetMapping()
-	String frontCmsController(Model model) {
+	String frontCmsController(String achievement, String specialty, Model model) {
 		LoginUser loginUser = ShiroUtils.getUser();
-		
+
 		//如果当前登陆人是管理员，则退出登录
 		if(loginUser != null && "A".equals(loginUser.getUser().getfType())){
 			ShiroUtils.logout();
@@ -146,7 +151,7 @@ public class FrontCmsController extends BaseController {
 		}
 		
 		//获取新闻动态
-		Map<String, Object> param = new HashMap<String, Object>();
+		Map<String, Object> param = new HashMap<>();
 		param.put("categoryId", 15);
 		param.put("delFlag", "1");
 		//param.put("status", "1");
@@ -156,7 +161,7 @@ public class FrontCmsController extends BaseController {
 		model.addAttribute("newarticleList", newarticleList);
 		
 		// 获取医学动态
-		param = new HashMap<String, Object>();
+		param = new HashMap<>();
 		param.put("categoryId", 16);
 		param.put("delFlag", "1");
 		// param.put("status", "1");
@@ -166,21 +171,21 @@ public class FrontCmsController extends BaseController {
 		model.addAttribute("intelligenceList", intelligenceList);
 		
 		/*//获取行业资讯
-	    param = new HashMap<String, Object>();
+	    param = new HashMap<>();
 	    param.put("categoryId", 2);
 		param.put("offset", 0);
 		param.put("limit", 6);
 		List<ArticleDO> jobarticleList = articleService.list(param);
 		model.addAttribute("jobarticleList", jobarticleList);*/
 		//会员单位
-		param = new HashMap<String, Object>();
+		param = new HashMap<>();
 	    param.put("categoryId", 13);
 		param.put("offset", 0);
 		param.put("limit", 8);
 		List<ArticleDO> unitList = articleService.list(param);
 		model.addAttribute("unitList", unitList);
 		//下载专区
-		param = new HashMap<String, Object>();
+		param = new HashMap<>();
 	    param.put("categoryId", 14);
 		param.put("offset", 0);
 		param.put("limit", 6);
@@ -188,7 +193,7 @@ public class FrontCmsController extends BaseController {
 		model.addAttribute("downList", downList);
 		
 		//获取通知通告
-		param = new HashMap<String, Object>();
+		param = new HashMap<>();
 		param.put("categoryId", 1);
 		param.put("delFlag", "1");
 		//param.put("status", "1");
@@ -196,42 +201,58 @@ public class FrontCmsController extends BaseController {
 		param.put("limit", 8);
 		List<ArticleDO> notifyarticleList = articleService.list(param);
 		model.addAttribute("notifyarticleList", notifyarticleList);
-		//获取推荐文章
-		param = new HashMap<String, Object>();
+
+		//获取推荐文章(成果展示)
+		param = new HashMap<>();
 		param.put("categoryId", 4);
 		//param.put("delFlag", "1");
 		param.put("status", "1");
 		param.put("isRecommend", "1");
 		param.put("offset", 0);
 		param.put("limit", 8);
+		if(StringUtils.isNotBlank(achievement)) {
+			param.put("type", achievement);
+		}
         List<ArticleDO> recommendarticleList = articleService.list(param);
+		List<ArticleDO> newestAchievementList = recommendarticleList.stream().filter(a -> a.getClassify() != null && a.getClassify().contains("1")).collect(Collectors.toList());
+		List<ArticleDO> recommendAchievementList = recommendarticleList.stream().filter(a -> a.getClassify() != null && a.getClassify().contains("2")).collect(Collectors.toList());
+		List<ArticleDO> deployAchievementList = recommendarticleList.stream().filter(a -> a.getClassify() != null && a.getClassify().contains("3")).collect(Collectors.toList());
 		model.addAttribute("recommendarticleList", recommendarticleList);
+		model.addAttribute("newestAchievementList", newestAchievementList);
+		model.addAttribute("recommendAchievementList", recommendAchievementList);
+		model.addAttribute("deployAchievementList", deployAchievementList);
+
 		//获取精彩评论
-		param = new HashMap<String, Object>();
+		param = new HashMap<>();
 		param.put("offset", 0);
 		param.put("limit", 5);
 		param.put("isRecommend","1");
 		param.put("status", "1");
         List<CommentDO> recommendcommentList = commentService.recommendlist(param);
 		model.addAttribute("recommendcommentList", recommendcommentList);
+
 		//获取专家展示
-	    param = new HashMap<String, Object>();
+	    param = new HashMap<>();
 		param.put("offset", 0);
-		param.put("limit", 20);
+		param.put("limit", 6);
 		param.put("status", "0");
+		if(StringUtils.isNotBlank(specialty)) {
+			param.put("specialty", specialty);
+		}
 		List<ExpertDO> expertList = expertService.list(param);
 		model.addAttribute("expertList", expertList);
 		
 		//获取图片新闻
-		param = new HashMap<String, Object>();
+		param = new HashMap<>();
 		param.put("offset", 0);
 		param.put("limit", 5);
 		param.put("categoryId", 3);
 		param.put("type", 1);
 		List<ArticleDO> photoarticleList = articleService.photolist(param);
 		model.addAttribute("photoarticleList", photoarticleList);
+
 		//中部广告
-		param = new HashMap<String, Object>();
+		param = new HashMap<>();
 		param.put("offset", 0);
 		param.put("limit", 1);
 		param.put("categoryId", 3);
@@ -242,9 +263,30 @@ public class FrontCmsController extends BaseController {
 			advert = photoarticleList.get(0);
 		}
 		model.addAttribute("advert", advert);
-		
+
+		// 政策法规
+		param = new HashMap<>();
+		String policiesCategoryId = DictUtils.getDictValue("policies", "home_page_item", "");
+		param.put("categoryId", policiesCategoryId);
+		param.put("delFlag", "1");
+		param.put("offset", 0);
+		param.put("limit", 6);
+		List<ArticleDO> policiesList = articleService.list(param);
+		model.addAttribute("policiesList", policiesList);
+		model.addAttribute("policiesCategoryId", policiesCategoryId);
+
+		// 视频模块
+		param = new HashMap<>();
+		param.put("categoryType", "videoList");
+		param.put("delFlag", "1");
+		param.put("offset", 0);
+		param.put("limit", 3);
+		List<ArticleDO> videoList = articleService.list(param);
+		model.addAttribute("videoList", videoList);
+		//model.addAttribute("videoCategoryId", videoCategoryId);
+
 		//获取友情链接
-		param = new HashMap<String, Object>();
+		param = new HashMap<>();
 		param.put("offset", 0);
 		param.put("limit", 10);
 		param.put("fStatus",1);
@@ -260,13 +302,28 @@ public class FrontCmsController extends BaseController {
 		param.put("fRel","4");
 		cmsLinkList = cmsLinkService.list(param);
 		model.addAttribute("cmsLinkList4", cmsLinkList);
+
+		// 成果展示类型
+		List<DictDO> achievementTypes = DictUtils.getDictList("business_type");
+		model.addAttribute("achievementTypes", achievementTypes);
+		// 专家展示类型
+		List<DictDO> specialtyTypes = DictUtils.getDictList("specialty");
+		model.addAttribute("specialtyTypes", specialtyTypes);
+
+		model.addAttribute("achievement", achievement);
+		model.addAttribute("specialty", specialty);
 		return "front/cms/index";
 	}
+
 	//专家列表展示
 	@RequestMapping("/open/expertlist")
-	public String expertList(@RequestParam Map<String, Object> params,Model model) {
-		params.put("status","0");
-		Query query = new Query(params);
+	public String expertList(@RequestParam Map<String, Object> params, String name, Model model) {
+
+	    params.put("status","0");
+		if(StringUtils.isNotBlank(name)) {
+		    params.put("expertName", name);
+        }
+	    Query query = new Query(params);
 		List<ExpertDO> expertList = expertService.list(query);
 		int total = expertService.count(query);
 		PageUtils pageUtils = new PageUtils(expertList, total, query);
@@ -431,6 +488,53 @@ public class FrontCmsController extends BaseController {
 			return "front/cms/recommendArticlePersonal";
 		}
 	}
+
+
+	//成果展示列表展示
+	@RequestMapping("/open/achievementList")
+	public String achievementList(@RequestParam Map<String, Object> params, String title, Model model) {
+
+		LoginUser loginUser = ShiroUtils.getUser();
+		params.put("isRecommend", "1");
+		params.put("status", "1");
+		if(!params.containsKey("title")){
+			params.put("title", "");
+		}
+		if(!params.containsKey("datesearch")){
+			params.put("datesearch", "");
+		}
+		if(!params.containsKey("type")){
+			params.put("type", "");
+		}
+		if(StringUtils.isNotBlank(title)) {
+		    params.put("title", title);
+        }
+		//params.put("categoryId", 4);
+		Query query = new Query(params);
+		List<AchievementDO> achievementList = articleService.listAchievement(query);
+		int total = articleService.count(query);
+		PageUtils pageUtils = new PageUtils(achievementList, total, query);
+
+		params.put("offset", 0);
+		params.put("limit", 10);
+		params.put("fStatus",1);
+		params.put("fRel","1");
+		model.addAttribute("cmsLinkList1", cmsLinkService.list(params));
+		params.put("fRel","2");
+		model.addAttribute("cmsLinkList2", cmsLinkService.list(params));
+		params.put("fRel","3");
+		model.addAttribute("cmsLinkList3", cmsLinkService.list(params));
+		params.put("fRel","4");
+		model.addAttribute("cmsLinkList4", cmsLinkService.list(params));
+		model.addAttribute("pageUtils", pageUtils);
+
+		if(loginUser != null) {
+			model.addAttribute("user", ShiroUtils.getUser().getUser());
+		}
+		model.addAttribute("pageUtils", pageUtils);
+		return "front/cms/achievementList";
+	}
+
 	//首页搜索文章
 	@GetMapping("/search/{title}")
 	String search(@PathVariable("title") String title,Model model){
@@ -705,7 +809,7 @@ public class FrontCmsController extends BaseController {
 	
 	/**
 	 * 个人信息
-	 * @param params
+	 * @param model
 	 * @return
 	 */
 	@RequestMapping("/personalInfo")
@@ -724,7 +828,7 @@ public class FrontCmsController extends BaseController {
 		}
 		model.addAttribute("member", member);
 		model.addAttribute("fileObj", fileObj);
-		Map<String, Object> params = new HashMap<String, Object>();
+		Map<String, Object> params = new HashMap<>();
 		params.put("offset", 0);
 		params.put("limit", 10);
 		params.put("fStatus",1);
@@ -744,7 +848,7 @@ public class FrontCmsController extends BaseController {
 	}
 	/**
 	 * 个人信息修改
-	 * @param params
+	 * @param model
 	 * @return
 	 */
 	@RequestMapping("/modifyPersonalInfo")
@@ -803,7 +907,7 @@ public class FrontCmsController extends BaseController {
 	}
 	/**
 	 * 修改密码
-	 * @param params
+	 * @param model
 	 * @return
 	 */
 	@RequestMapping("/modifyPwd")
@@ -834,8 +938,6 @@ public class FrontCmsController extends BaseController {
 	 * 修改
 	 * @param old_Pwd
 	 * @param new_Pwd
-	 * @param memId
-	 * @param userType
 	 * @return
 	 */
 	@RequestMapping("/modifyPwd/update")
@@ -865,7 +967,7 @@ public class FrontCmsController extends BaseController {
 	}
 	/**
 	 * 我要发布
-	 * @param params
+	 * @param model
 	 * @return
 	 */	
 	@RequestMapping("/release")
@@ -891,8 +993,8 @@ public class FrontCmsController extends BaseController {
 	}
 	@RequestMapping("/releasePost")
 	@ResponseBody
-	public R ReleasePost(ArticleDO article,MultipartFile[] file, HttpServletRequest request) {
-		
+	public R ReleasePost(AchievementDO article, MultipartFile[] file, HttpServletRequest request) {
+
 		//默认值
 		LoginUser loginUser = ShiroUtils.getUser();
 		article.setCategoryId(4);
@@ -919,13 +1021,13 @@ public class FrontCmsController extends BaseController {
 		if(StringUtils.isNotEmpty(image)){
 			article.setImage(image.substring(0,image.length()-1));
 		}
-		if(articleService.save(article) > 0){
+		if(articleService.saveAchievement(article) > 0){
+
 			ArticleDataDO articleData = new ArticleDataDO();
 			articleData.setId(article.getId());
 			articleData.setContent(article.getContent());
 			return R.ok();
 		}
-		
 		return R.error();
 	}
 	/***
@@ -1094,7 +1196,7 @@ public class FrontCmsController extends BaseController {
 	
 	/**
 	 * 草稿箱编辑
-	 * @param params
+	 * @param id
 	 * @return
 	 */
 	@RequestMapping("/draftsEdit")
@@ -1102,7 +1204,9 @@ public class FrontCmsController extends BaseController {
 		model.addAttribute("user", ShiroUtils.getUser().getUser());
 		//文章详情
 		ArticleDO articleDO = articleService.get(id);
-		model.addAttribute("articleDO", articleDO);
+		AchievementDO achievementDO = articleService.getAchievement(id);
+		BeanUtils.copyProperties(articleDO, achievementDO);
+		model.addAttribute("articleDO", achievementDO);
 		//附件
 		List<FileDO> fileList = new ArrayList<FileDO>();
 		if(StringUtils.isNotEmpty(articleDO.getImage())){
@@ -1136,7 +1240,7 @@ public class FrontCmsController extends BaseController {
 	}
 	/**
 	 * 草稿箱删除
-	 * @param params
+	 * @param id
 	 * @return
 	 */
 	@PostMapping("/draftsDelete")
@@ -1685,10 +1789,12 @@ public class FrontCmsController extends BaseController {
 	//专家新文章评分详情
 	@GetMapping("/open/articleScore/detail")
 	public String articleScoreDetail(@RequestParam Integer id, Model model) {
+
 		LoginUser loginUser = ShiroUtils.getUser();
-		
 		//查询文章信息
 		ArticleDO article = articleService.get(id);
+		AchievementDO achievementDO = articleService.getAchievement(id);
+		BeanUtils.copyProperties(article, achievementDO);
 		ArticleDataDO data=articleDataService.get(id);
 		if(article.getHits()!=null){
 			article.setHits(article.getHits() + 1);
@@ -1696,9 +1802,10 @@ public class FrontCmsController extends BaseController {
 			article.setHits(1);
 		}
 		articleService.update(article);
+
 		model.addAttribute("data", data);
-		model.addAttribute("article", article);
-		
+		model.addAttribute("article", achievementDO);
+
 		Map<String, Object> params = new HashMap<String, Object>();
 		ExperevaluateDO experevaluate = new ExperevaluateDO();
 		
@@ -1759,8 +1866,9 @@ public class FrontCmsController extends BaseController {
 		params.put("fRel","4");
 		cmsLinkList = cmsLinkService.list(params);
 		model.addAttribute("cmsLinkList4", cmsLinkList);
-		
-		return "front/article/articleScore";
+
+		//return "front/article/articleScore";
+		return "front/cms/achievement";
 	}
 	/**
 	 * 修改
@@ -2027,7 +2135,7 @@ public class FrontCmsController extends BaseController {
 	/**
 	 * 
 	 * @Description: 文章展示页面或者文章列表页面
-	 * @param categories
+	 * @param categoryId
 	 * @param model
 	 * @return
 	 * @author: 窦恩虎
@@ -2067,11 +2175,6 @@ public class FrontCmsController extends BaseController {
 			PageUtils pageUtils = new PageUtils(bContentList, total, query);
 			model.addAttribute("pageUtils", pageUtils);
 
-			//TODO 成果列表页面
-			if(category.getId() == 27) {//TODO 临时写死成果模块编号
-
-				return "front/cms/achievementList";
-			}
 			return "front/cms/articleList";
 			// 调转到list展示页面
 			
@@ -2261,11 +2364,6 @@ public class FrontCmsController extends BaseController {
 			if("videoList".equals(category.getModule())) {
 
 				return "front/cms/video";
-			}
-
-			if(article.getCategoryId() == 32) {//TODO 临时写死成果模块编号
-
-				return "front/cms/achievement";
 			}
 			return "front/cms/aArticleDetail";
 	}

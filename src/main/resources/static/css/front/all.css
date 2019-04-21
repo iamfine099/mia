@@ -222,8 +222,7 @@ footer{
 }
 
 #index .section_top {
-	height: 275px;
-	margin-top: 30px;
+	height: 300px;
 }
 
 
@@ -2682,7 +2681,7 @@ footer{
 /*背景*/
 .bodyback{
 
-	background:url("../img/view.jpg") no-repeat;
+	background:url("../img/background.png") no-repeat;
 	background-size: cover;
 }
 

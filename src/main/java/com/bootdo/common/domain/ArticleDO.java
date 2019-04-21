@@ -118,7 +118,17 @@ public class ArticleDO implements Serializable {
   	
   	//是否同步到轮播图
   	private String isSyncAdvert;
-	
+
+  	private String classify;
+
+	public String getClassify() {
+		return classify;
+	}
+
+	public void setClassify(String classify) {
+		this.classify = classify;
+	}
+
 	/**
 	 * 设置：标识
 	 */

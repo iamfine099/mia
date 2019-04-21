@@ -31,7 +31,9 @@ public interface ArticleService {
 	List<ArticleDO> photolist(Map<String, Object> map);
 	
 	List<ArticleDO> list(Map<String, Object> map);
-	
+
+	List<AchievementDO> listAchievement(Map<String, Object> map);
+
 	List<ArticleDO> articleCommentsList(Map<String,Object> map);
 	
 	List<ArticleDO> expertRecommendList(Map<String, Object> map);

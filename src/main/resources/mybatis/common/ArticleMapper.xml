@@ -4,13 +4,20 @@
 <mapper namespace="com.bootdo.common.dao.ArticleDao">
 
 	<sql id="columns">
-		a.`id`,a.`category_id`,a.`title`,a.`image`,a.`keywords`,a.`description`,a.`hits`,a.`del_flag`,a.`remarks`,a.`create_by`,a.`create_time`,a.`status`,a.`score`,a.`recommend_num`,a.`is_recommend`,a.`is_top`,a.`type`,a.`audit_by`,a.`audit_date`,a.`audit_content`,a.`publish_time`,a.`is_publish`,a.`recommend_date`,a.`top_date`,a.`like_num`,a.`attachment`,a.`href`,
-		ad.`content`,ad.`copyfrom`, c.`name` as "create.name", audit.`username` as "audit.username",f.`url` as "url",t.`name` as category_name
+		a.`id`,a.`category_id`,a.`title`,a.`image`,a.`keywords`,a.`description`,a.`hits`,a.`del_flag`,a.`remarks`,
+		a.`create_by`,a.`create_time`,a.`status`,a.`score`,a.`recommend_num`,a.`is_recommend`,a.`is_top`,a.`type`,
+		a.`audit_by`,a.`audit_date`,a.`audit_content`,a.`publish_time`,a.`is_publish`,a.`recommend_date`,a.`top_date`,
+		a.`like_num`,a.`attachment`,a.`href`,
+		ad.`content`,ad.`copyfrom`, c.`name` as "create.name", audit.`username` as "audit.username",f.`url` as "url",
+		t.`name` as category_name, a.classify
 		</sql>
 	
 	<sql id="commons_where">
 		  <if test="id != null and id != ''"> and a.id = #{id} </if>
 		  <if test="categoryId != null and categoryId != ''"> and a.category_id = #{categoryId} </if>
+		  <if test="categoryType != null and categoryType != ''">
+			  and exists (select 1 from t_category tc where tc.module = #{categoryType} and tc.id = a.category_id)
+		  </if>
 		  <if test="title != null and title != ''"> and a.title like CONCAT('%',#{title},'%') </if>
 		  <if test="image != null and image != ''"> and a.image = #{image} </if>
 		  <if test="keywords != null and keywords != ''"> and a.keywords = #{keywords} </if>
@@ -103,6 +110,51 @@
 			limit #{offset}, #{limit}
 		</if>
 	</select>
+
+	<select id="listAchievement" resultType="com.bootdo.common.domain.AchievementDO">
+		select
+			<include refid="columns" />,
+			achievement_intro ,application_category ,author ,date ,detail_information ,
+			intro ,money ,prospect_analysis ,province ,tel
+		from t_article a
+		left join t_achievement_data tad on tad.id = a.id
+ 		left join t_article_data ad on ad.id = a.id
+ 		left join sys_user c on c.user_id = a.create_by
+ 		left join sys_user audit on audit.user_id = a.audit_by
+ 		left join sys_file f on f.id=a.image
+ 		left join t_category t on t.id = a.category_id
+        <where>
+		  <include refid="commons_where"/>
+		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+
+             <when test="articleType != null and articleType != '' and articleType == 'review'.toString()">
+                order by a.status asc, a.publish_time desc
+            </when>
+
+            <when test="articleType != null and articleType != '' and articleType == 'recommend'.toString()">
+                order by a.is_top desc , a.recommend_num desc, a.publish_time desc
+            </when>
+
+            <when test="articleType != null and articleType != '' and articleType == 'edit'.toString()">
+                order by a.audit_date desc , a.publish_time desc , a.is_top desc , a.recommend_num desc
+            </when>
+
+			<otherwise>
+                order by a.is_top desc , a.id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+
+
+
+
 	<select id="articleReviewlist" resultType="com.bootdo.common.domain.ArticleDO">
 		select
 			<include refid="columns" />
@@ -347,7 +399,8 @@
 			<if test="topDate != null">`top_date` = #{topDate}, </if>
 			<if test="likeNum != null">`like_num` = #{likeNum}, </if>
 			<if test="attachment != null">`attachment` = #{attachment}, </if>
-			<if test="href != null">`href` = #{href} </if>
+			<if test="href != null">`href` = #{href}, </if>
+			<if test="classify != null">`classify` = #{classify}</if>
 		</set>
 		where id = #{id}
 	</update>

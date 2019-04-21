@@ -7,8 +7,8 @@
 <head th:include="front/include :: topbar"></head>
 <!--中间内容-->
 <section id="index">
-	<div class="section_box">
-		<div class="section_top" style="height: 300px">
+	<div class="section_box" style="background: white">
+		<div class="section_top" >
 			<!--轮播图-->
 			<div id="lunbo">
 				<div class="swiper-container">
@@ -31,7 +31,9 @@
 				<div class="tab_title">
 					<p class="title-l">新闻动态<span class="trangle"></span></p>
 					<p class="title-c">医学动态<span class="trangle-c"></span></p>
-					<p class="title-r right"><a th:href="@{/front/cms/open/page/15}" id="news_a">更多</a>></span></p>
+					<p class="title-r right">
+						<a th:href="@{/front/cms/open/page/15}" id="news_a">更多</a>></span>
+					</p>
 				</div>
 				<div class="content">
 					<ul id="news" class='newsNew'>
@@ -92,8 +94,11 @@
 			</div>
 		</div>
 
+
+
+		<!--中间成果展示-->
 		<div style="width: 100%;;background-size: cover;display: flex; justify-content: center;align-items: flex-end;
-                margin-top: 10px">
+                margin-top: 10px" id="achievementShow">
 			<div style="width: 1200px; height: 5px; background: #0c80ba"></div>
 		</div>
 		<div style="width: 100%;;background-size: cover;display: flex; justify-content: center;align-items: flex-end;
@@ -101,20 +106,21 @@
 			<div style="width: 1200px; font-size: 18px">
 				<div style="float: left; font-weight: bold"><span>成果展示</span></div>
 				<div style="float: right">
-					<span>全部</span>
-					|
-					<span>基础科学</span>
-					|
-					<span>临床医学</span>
-					|
-					<span>眼科学</span>
+					<span style="font-size: 16px">
+						<a  href="/" style="font-size: 16px; color: black">
+						全部
+						</a>
+					</span>
+					<span  th:each="achievementType : ${achievementTypes}"  >
+						<a th:href="@{/front/cms(achievement=${achievementType.value})}"
+						   th:text="' | ' + ${achievementType.name}" style="font-size: 16px; color: black">
+						</a>
+					</span>
+					&nbsp;&nbsp;&nbsp;&nbsp;
 				</div>
 			</div>
 		</div>
 		<hr style="border-top: 2px solid #eee; margin-top: 5px">
-
-
-		<!--中间成果展示-->
 		<div class="secton_down" style="height: 400px">
 			<!--左侧内容-->
 			<article>
@@ -122,131 +128,88 @@
 
 					<div class="newback" style="height: 100px; width: 210px; color: white;
                                     margin-bottom: 20px; text-align:center; border-radius:5px;">
-						<p style="padding-top: 60px; font-size: 16px" data-toggle="tab" href="#new">最新成果</p>
+						<p style="padding-top: 60px; font-size: 14px" data-toggle="tab" href="#new">最新成果</p>
 					</div>
 
 					<div class="tuijianback" style="height: 100px; width: 210px; color: white;
                                     margin-bottom: 20px; text-align:center; border-radius:5px">
-						<p style="padding-top: 60px; font-size: 16px" data-toggle="tab" href="#tuijian">推荐成果</p>
+						<p style="padding-top: 60px; font-size: 14px" data-toggle="tab" href="#tuijian">推荐成果</p>
 					</div>
 
 					<div class="deployback" style="height: 100px; width: 210px; color: white;
                                     margin-bottom: 20px; text-align:center; border-radius:5px">
-						<p style="padding-top: 60px; font-size: 16px" data-toggle="tab" href="#deploy">发布成果</p>
+						<p style="padding-top: 60px; font-size: 14px" data-toggle="tab" href="#deploy">发布成果</p>
 					</div>
 				</div>
 				<div class="content_r tab-content">
-					<div class="content_r tab-pane fade in active" style="width: 675px; background: #efefef; line-height: 24px;font-size: 14px;
-                        padding: 7px 0 5px; padding-left: 30px" id="new">
-						<ul class="list_14" style="list-style: inherit; font-size: 18px; line-height: 40px; padding-top: 18px">
-							<li class="topli14" style="width: 100%">
-								<a target="_blank" style="color: black" href="https://news.sina.com.cn/c/2019-04-08/doc-ihvhiqax0727464.shtml">
-									中国拒绝做这件事后 美日欧集体“慌”了</a>
-								<span style="float: right; padding-right: 10px">2019-04-06</span>
-							</li>
-							<li style=" width: 100%">
-								<a target="_blank" style="color: black" href="https://news.sina.com.cn/o/2019-04-08/doc-ihvhiqax0957182.shtml">
-									中国在莫斯科做的这件事 让外国网友眼红了</a>
-								<span style="float: right; padding-right: 10px">2019-04-06</span>
-							</li>
-							<li style="width: 100%">
-								<a target="_blank" style="color: black" href="https://news.sina.com.cn/c/2019-04-08/doc-ihvhiqax0908170.shtml">
-									领大陆身份证被罚 南京大屠杀铁证发现者要告台当局</a>
-								<span style="float: right; padding-right: 10px">2019-04-06</span>
-							</li>
-							<li style="width: 100%">
-								<a target="_blank" style="color: black" href="https://news.sina.com.cn/c/2019-04-08/doc-ihvhiewr4112246.shtml">
-									出国游比国内游便宜？胡锡进算这笔账后网友不淡定了</a>
-								<span style="float: right; padding-right: 10px">2019-04-06</span>
+					<!-- 最新成果 -->
+					<div class="content_r tab-pane fade in active" style="width: 675px; background: #efefef;
+						line-height: 24px;font-size: 14px; padding: 7px 0 5px; padding-left: 30px" id="new">
+						<ul class="list_14" style="list-style: inherit; font-size: 16px; line-height: 35px; padding-top: 18px">
+							<li th:each="recommendarticle : ${newestAchievementList}" style="width: 99%">
+								<a th:href="@{/front/cms/open/articleScore/detail(id=${recommendarticle.id})}"
+								   th:text="${recommendarticle.title}" style="color: black"></a>
+								<span style="float: right; padding-right: 10px" th:text="${#dates.format(recommendarticle.createTime, 'yyyy-MM-dd')}">
+									2019-04-06
+								</span>
 							</li>
 						</ul>
 					</div>
-
+					<!-- 推荐成果 -->
+					<div class="content_r tab-pane fade" style="width: 675px; background: #efefef; line-height: 24px;
+						font-size: 14px; padding: 7px 0 5px; padding-left: 30px" id="tuijian"	>
+						<ul class="list_14" style="list-style: inherit; font-size: 16px; line-height: 35px; padding-top: 18px">
+							<li th:each="recommendarticle : ${recommendAchievementList}" style="width: 99%">
+								<a th:href="@{/front/cms/open/aArticle/detail(id=${recommendarticle.id})}"
+								   th:text="${recommendarticle.title}" style="color: black"></a>
+								<span style="float: right; padding-right: 10px" th:text="${#dates.format(recommendarticle.createTime, 'yyyy-MM-dd')}">
+									2019-04-06
+								</span>
+							</li>
+						</ul>
+					</div>
+					<!-- 发布成果 -->
 					<div class="content_r tab-pane fade" style="width: 675px; background: #efefef; line-height: 24px;font-size: 14px;
                         padding: 7px 0 5px; padding-left: 30px" id="deploy">
-						<ul class="list_14" style="list-style: inherit; font-size: 18px; line-height: 40px; padding-top: 18px">
-							<li class="topli14" style="width: 100%">
-								<a target="_blank" style="color: black" href="https://news.sina.com.cn/c/2019-04-08/doc-ihvhiqax0727464.shtml">
-									111111</a>
-								<span style="float: right; padding-right: 10px">2019-04-06</span>
-							</li>
-							<li style=" width: 100%">
-								<a target="_blank" style="color: black" href="https://news.sina.com.cn/o/2019-04-08/doc-ihvhiqax0957182.shtml">
-									中国在莫斯科做的这件事 让外国网友眼红了</a>
-								<span style="float: right; padding-right: 10px">2019-04-06</span>
-							</li>
-							<li style="width: 100%">
-								<a target="_blank" style="color: black" href="https://news.sina.com.cn/c/2019-04-08/doc-ihvhiqax0908170.shtml">
-									领大陆身份证被罚 南京大屠杀铁证发现者要告台当局</a>
-								<span style="float: right; padding-right: 10px">2019-04-06</span>
-							</li>
-							<li style="width: 100%">
-								<a target="_blank" style="color: black" href="https://news.sina.com.cn/c/2019-04-08/doc-ihvhiewr4112246.shtml">
-									出国游比国内游便宜？胡锡进算这笔账后网友不淡定了</a>
-								<span style="float: right; padding-right: 10px">2019-04-06</span>
-							</li>
-						</ul>
-					</div>
-
-					<div class="content_r tab-pane fade" style="width: 675px; background: #efefef; line-height: 24px;font-size: 14px;
-                        padding: 7px 0 5px; padding-left: 30px" id="tuijian">
-						<ul class="list_14" style="list-style: inherit; font-size: 18px; line-height: 40px; padding-top: 18px">
-							<li class="topli14" style="width: 100%">
-								<a target="_blank" style="color: black" href="https://news.sina.com.cn/c/2019-04-08/doc-ihvhiqax0727464.shtml">
-									22222</a>
-								<span style="float: right; padding-right: 10px">2019-04-06</span>
-							</li>
-							<li style=" width: 100%">
-								<a target="_blank" style="color: black" href="https://news.sina.com.cn/o/2019-04-08/doc-ihvhiqax0957182.shtml">
-									中国在莫斯科做的这件事 让外国网友眼红了</a>
-								<span style="float: right; padding-right: 10px">2019-04-06</span>
-							</li>
-							<li style="width: 100%">
-								<a target="_blank" style="color: black" href="https://news.sina.com.cn/c/2019-04-08/doc-ihvhiqax0908170.shtml">
-									领大陆身份证被罚 南京大屠杀铁证发现者要告台当局</a>
-								<span style="float: right; padding-right: 10px">2019-04-06</span>
-							</li>
-							<li style="width: 100%">
-								<a target="_blank" style="color: black" href="https://news.sina.com.cn/c/2019-04-08/doc-ihvhiewr4112246.shtml">
-									出国游比国内游便宜？胡锡进算这笔账后网友不淡定了</a>
-								<span style="float: right; padding-right: 10px">2019-04-06</span>
+						<ul class="list_14" style="list-style: inherit; font-size: 16px; line-height: 35px; padding-top: 18px">
+							<li th:each="recommendarticle : ${deployAchievementList}" style="width: 99%">
+								<a th:href="@{/front/cms/open/aArticle/detail(id=${recommendarticle.id})}"
+								   th:text="${recommendarticle.title}" style="color: black"></a>
+								<span style="float: right; padding-right: 10px" th:text="${#dates.format(recommendarticle.createTime, 'yyyy-MM-dd')}">
+									2019-04-06
+								</span>
 							</li>
 						</ul>
 					</div>
 				</div>
 			</article>
-			<!--右侧内容-->
+			<!--右侧视频轮播内容-->
 			<aside style="background: #efefef; border: 10px solid #efefef; ">
 				<div id="myCarousel" class="carousel slide">
-
 					<!-- 轮播（Carousel）项目 -->
 					<div class="carousel-inner">
-						<div class="item active">
-							<img style="height: 215px" src="http://www.stdaily.com/cgzspt/shengwu/201702/518199/images/71376bcd72044ca1a74c1881fd62cbf2.jpg" alt="First slide">
-						</div>
-						<div class="item" >
-							<img style="height: 215px" src="http://www.runoob.com/wp-content/uploads/2014/07/slide2.png" alt="Second slide">
-						</div>
-						<div class="item" >
-							<img style="height: 215px" src="http://www.runoob.com/wp-content/uploads/2014/07/slide3.png" alt="Third slide">
+						<div th:each="m, mStat : ${videoList}"  th:class="${mStat.index}==0 ? 'item active' : 'item'">
+							<a th:href="${#strings.isEmpty(m.href)} ? @{/front/cms/open/aArticle/detail(id=${m.id})} : ${m.href}">
+								<img style="height: 210px" th:src="${m.url}" class="attachment-medium wp-post-image">
+								<div class="title carousel-inner" style="height: 70px; background: white; padding: 10px 10px 10px 10px;">
+									<span style="width: 100% !important; float: left !important; overflow: hidden !important;
+										text-overflow: ellipsis !important; white-space: normal !important;"
+										  th:text="${m.title}">
+										可溶性ST2作为主动脉夹层新型生物标志
+									</span>
+								</div>
+							</a>
 						</div>
 					</div>
 					<!-- 轮播（Carousel）指标 -->
-					<ol class="carousel-indicators" style="bottom: 0px">
+					<ol class="carousel-indicators" style="bottom: 0px;margin-bottom: 80px;">
 						<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
 						<li data-target="#myCarousel" data-slide-to="1"></li>
 						<li data-target="#myCarousel" data-slide-to="2"></li>
 					</ol>
 				</div>
-				<div class="title carousel-inner" style="height: 70px; background: white">
-					<span style="width: 100% !important;
-    float: left !important;
-    overflow: hidden !important;
-    text-overflow: ellipsis !important;
-    white-space: normal !important;">可溶性ST2作为主动脉夹层新型生物标志</span>
-				</div>
-				<div class="title carousel-inner; " style="background: white; margin-top: 10px; height: 35px">
 
+				<div class="title carousel-inner; " style="background: white; margin-top: 10px; height: 35px">
 					<!-- 轮播（Carousel）导航 -->
 					<a class="" href="#myCarousel" role="button" data-slide="next" style="float: right; padding-right: 10px">
 						<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
@@ -260,8 +223,9 @@
 			</aside>
 		</div>
 
+		<!--专家展示-->
 		<div style="width: 100%;;background-size: cover;display: flex; justify-content: center;align-items: flex-end;
-                margin-top: 10px">
+                margin-top: 10px" id="specialtyShow">
 			<div style="width: 1200px; height: 5px; background: #0c80ba"></div>
 		</div>
 		<div style="width: 100%;;background-size: cover;display: flex; justify-content: center;align-items: flex-end;
@@ -269,13 +233,19 @@
 			<div style="width: 1200px; font-size: 18px">
 				<div style="float: left; font-weight: bold"><span>专家展示</span></div>
 				<div style="float: right">
-					<span>全部</span>
-					|
-					<span>基础科学</span>
-					|
-					<span>临床医学</span>
-					|
-					<span>眼科学</span>
+					<span style="font-size: 16px">
+						<a  href="/" style="font-size: 16px; color: black">
+						全部
+						</a>
+					</span>
+					<span  th:each="specialtyType : ${specialtyTypes}"  >
+						<a th:href="@{/front/cms(specialty=${specialtyType.value})}"
+						   th:text="' | ' + ${specialtyType.name}" style="font-size: 16px; color: black">
+						</a>
+					</span>
+
+
+					&nbsp;&nbsp;&nbsp;&nbsp;
 				</div>
 			</div>
 		</div>
@@ -284,118 +254,70 @@
 		<!-- 专家展示 -->
 		<div style="height: 320px; width:100%">
 
-			<div style="width: 150px;height: 210px; margin-left: 42px; float: left; ">
-				<div style="border: 10px solid #FFF; box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.15); overflow: hidden;">
-					<img src="https://gss0.bdstatic.com/94o3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike272%2C5%2C5%2C272%2C90/sign=f9d597516d59252db71a155655f2685e/902397dda144ad3479aef2ccdda20cf431ad8563.jpg" style="width: 150px;height: 210px">
-				</div>
-				<div style="margin-top:10px; background:#c9c9c9 ;text-align: center;vertical-align: middle;
-                padding-top: 10px; padding-bottom: 1px">
-					<p>专家A</p>
-					<p>蒙古医院</p>
-				</div>
+			<div th:each="expert : ${expertList}" style="width: 150px;height: 210px; margin-left: 42px; float: left; ">
+				<a th:href="@{/front/cms/open/expert/detail(expertId=${expert.expertId})}">
+					<div style="border: 10px solid #FFF; box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.15); overflow: hidden;">
+						<img th:src="@{${expert.url!=null}?@{${expert.url}}:@{/img/morentouxiang.png}}" style="width: 150px;height: 210px">
+					</div>
+					<div style="margin-top:10px; background:#c9c9c9 ;text-align: center;vertical-align: middle;
+                			padding-top: 10px; padding-bottom: 1px">
+						<p th:text="${expert.expertName}">专家A</p>
+						<p th:text="${expert.company}">蒙古医院</p>
+					</div>
+				</a>
 			</div>
 
-			<div style="width: 150px;height: 210px; margin-left: 40px; float: left; ">
-				<div style="border: 10px solid #FFF; box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.15); overflow: hidden;">
-					<img src="https://gss0.bdstatic.com/94o3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike272%2C5%2C5%2C272%2C90/sign=f9d597516d59252db71a155655f2685e/902397dda144ad3479aef2ccdda20cf431ad8563.jpg" style="width: 150px;height: 210px">
-				</div>
-				<div style="margin-top:10px; background:#c9c9c9 ;text-align: center;vertical-align: middle;
-                padding-top: 10px; padding-bottom: 1px">
-					<p>专家A</p>
-					<p>蒙古医院</p>
-				</div>
-			</div>
-
-			<div style="width: 150px;height: 210px; margin-left: 40px; float: left; ">
-				<div style="border: 10px solid #FFF; box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.15); overflow: hidden;">
-					<img src="https://gss0.bdstatic.com/94o3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike272%2C5%2C5%2C272%2C90/sign=f9d597516d59252db71a155655f2685e/902397dda144ad3479aef2ccdda20cf431ad8563.jpg" style="width: 150px;height: 210px">
-				</div>
-				<div style="margin-top:10px; background:#c9c9c9 ;text-align: center;vertical-align: middle;
-					padding-top: 10px; padding-bottom: 1px">
-					<p>专家A</p>
-					<p>蒙古医院</p>
-				</div>
-			</div>
-
-			<div style="width: 150px;height: 210px; margin-left: 40px; float: left; ">
-				<div style="border: 10px solid #FFF; box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.15); overflow: hidden;">
-					<img src="https://gss0.bdstatic.com/94o3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike272%2C5%2C5%2C272%2C90/sign=f9d597516d59252db71a155655f2685e/902397dda144ad3479aef2ccdda20cf431ad8563.jpg" style="width: 150px;height: 210px">
-				</div>
-				<div style="margin-top:10px; background:#c9c9c9 ;text-align: center;vertical-align: middle;
-					padding-top: 10px; padding-bottom: 1px">
-					<p>专家A</p>
-					<p>蒙古医院</p>
-				</div>
-			</div>
-
-			<div style="width: 150px;height: 210px; margin-left: 40px; float: left; ">
-				<div style="border: 10px solid #FFF; box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.15); overflow: hidden;">
-					<img src="https://gss0.bdstatic.com/94o3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike272%2C5%2C5%2C272%2C90/sign=f9d597516d59252db71a155655f2685e/902397dda144ad3479aef2ccdda20cf431ad8563.jpg" style="width: 150px;height: 210px">
-				</div>
-				<div style="margin-top:10px; background:#c9c9c9 ;text-align: center;vertical-align: middle;
-					padding-top: 10px; padding-bottom: 1px">
-					<p>专家A</p>
-					<p>蒙古医院</p>
-				</div>
-			</div>
-
-			<div style="width: 150px;height: 210px; margin-left: 40px; float: left; ">
-				<div style="border: 10px solid #FFF; box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.15); overflow: hidden;">
-					<img src="https://gss0.bdstatic.com/94o3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike272%2C5%2C5%2C272%2C90/sign=f9d597516d59252db71a155655f2685e/902397dda144ad3479aef2ccdda20cf431ad8563.jpg" style="width: 150px;height: 210px">
-				</div>
-				<div style="margin-top:10px; background:#c9c9c9 ;text-align: center;vertical-align: middle;
-					padding-top: 10px; padding-bottom: 1px">
-					<p>专家A</p>
-					<p>蒙古医院</p>
-				</div>
-			</div>
 		</div>
 
 		<!--中间底部-->
 		<div class="secton_down" style="height: 300px">
 			<!--左侧内容-->
-			<article style="width: 100%">
-				<div class="content_l" style="width: 370px">
+			<article style="width: 99%">
+				<div class="content_l" style="width: 360px">
 					<div class="title">
 						<span class="title-l">会员单位</span>
-						<span class="title-r right"><a th:href="@{/front/cms/open/notifyarticlelist}">更多</a>></span>
+						<span class="title-r right"><a th:href="@{/front/cms/open/page/13}">更多</a>></span>
 					</div>
 					<div class="content">
-						<ul id='notice'>
-							<li th:each="notifyarticle : ${notifyarticleList}"><a
-									th:href="${#strings.isEmpty(notifyarticle.href)} ? @{/front/cms/open/aArticle/detail(id=${notifyarticle.id})} : ${notifyarticle.href}"
-									th:text="${notifyarticle.title}"></a><span
-									th:text="${#dates.format(notifyarticle.createTime, 'yyyy-MM-dd')}"></span></li>
+						<ul >
+							<li th:each="m : ${unitList}"  >
+								<a th:href="${#strings.isEmpty(m.href)} ? @{/front/cms/open/aArticle/detail(id=${m.id})}
+								: ${m.href}" th:text="${m.title}">
+								</a>
+							</li>
 						</ul>
 					</div>
 				</div>
-				<div class="content_r" style="width: 370px">
+				<div class="content_r" style="width: 360px">
 					<div class="title">
 						<span class="title-l">政策法规</span>
-						<span class="title-r right"><a th:href="@{/front/cms/open/recommendarticlelist}">更多</a>></span>
+						<span class="title-r right">
+							<a th:href="@{/front/cms/open/page/${policiesCategoryId}}">更多</a>
+						</span>
 					</div>
 					<div class="content">
-						<ul id="article">
-							<li th:each="recommendarticle : ${recommendarticleList}"><a
-									th:href="@{/front/cms/open/aArticle/detail(id=${recommendarticle.id})}"
-									th:text="${recommendarticle.title}"></a><span
-									th:text="${recommendarticle.create.name}"></span><span>作者：</span></li>
+						<ul >
+							<li th:each="m : ${policiesList}"  ><a th:href="${#strings.isEmpty(m.href)} ?
+								@{/front/cms/open/aArticle/detail(id=${m.id})} : ${m.href}" th:text="${m.title}"></a>
+							</li>
 						</ul>
 					</div>
 				</div>
-				<div class="content_r" style="width: 370px">
+				<div class="content_r" style="width: 360px">
 					<div class="title">
 						<span class="title-l">相关下载</span>
-						<span class="title-r right"><a th:href="@{/front/cms/open/recommendarticlelist}">更多</a>></span>
+						<span class="title-r right"><a th:href="@{/front/cms/open/page/14}">更多</a>></span>
 					</div>
 					<div class="content">
-						<ul id=
-									"article">
-							<li th:each="recommendarticle : ${recommendarticleList}"><a
-									th:href="@{/front/cms/open/aArticle/detail(id=${recommendarticle.id})}"
-									th:text="${recommendarticle.title}"></a><span
-									th:text="${recommendarticle.create.name}"></span><span>作者：</span></li>
-						</ul>
+						<div class="comment">
+							<ul >
+								<ul >
+									<li th:each="m : ${downList}"  >
+										<a th:href="${#strings.isEmpty(m.href)} ?
+										 @{/front/cms/open/aArticle/detail(id=${m.id})} : ${m.href}" th:text="${m.title}"></a></li>
+								</ul>
+							</ul>
+						</div>
 					</div>
 				</div>
 			</article>
@@ -405,5 +327,11 @@
 <!--脚部-->
 <div th:include="front/include :: footer"></div>
 <script src="/js/front/cms/index.js" type="text/javascript"></script>
+<script th:if="${achievement != null}" >
+    $("body,html").scrollTop($("#achievementShow").offset().top-30);
+</script>
+<script th:if="${specialty != null}" >
+    $("body,html").scrollTop($("#specialtyShow").offset().top-30);
+</script>
 </body>
 </html>

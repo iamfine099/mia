@@ -1,5 +1,6 @@
 package com.bootdo.common.dao;
 
+import com.bootdo.common.domain.AchievementDO;
 import com.bootdo.common.domain.ArticleDO;
 
 import java.util.List;
@@ -19,7 +20,9 @@ public interface ArticleDao {
 	ArticleDO get(Integer id);
 
 	List<ArticleDO> list(Map<String,Object> map);
-	
+
+	List<AchievementDO> listAchievement(Map<String,Object> map);
+
 	List<ArticleDO> articleCommentsList(Map<String,Object> map);
 	
 	List<ArticleDO> expertRecommendList(Map<String,Object> map);

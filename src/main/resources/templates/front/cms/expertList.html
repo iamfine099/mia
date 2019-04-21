@@ -1,56 +1,59 @@
 <!DOCTYPE html>
 <html>
-	<meta charset="utf-8">
-	<head th:include="front/include :: header"></head>
-	<body class="bodyback">
-		<head th:include="front/include :: topbar"></head>
-		<!--这是身体-->
-		<section class="bodyFrame">
-			<div class="grayStrip clear">
-				<div class="textLink">
-					<a th:href="@{/front/cms}">首页</a>
-				</div>
-				<div class="textLink">
-					<a href="">>&nbsp;&nbsp;专家介绍</a>
+<meta charset="utf-8">
+<head th:include="front/include :: header"></head>
+<body class="bodyback">
+<head th:include="front/include :: topbar"></head>
+<!--这是身体-->
+<section class="bodyFrame">
+	<div class="grayStrip clear">
+		<div class="textLink">
+			<a th:href="@{/front/cms}">首页</a>
+		</div>
+		<div class="textLink">
+			<a href="">>&nbsp;&nbsp;专家介绍</a>
+		</div>
+	</div>
+	<div class="bodyContent">
+		<ul class="selectionBar">
+			<li class="selectionBarText choosed"><a href="">专家介绍</a></li>
+		</ul>
+		<form  method="post" id="signupForm" action="/front/cms/open/expertlist">
+
+			<div id="fabu_box" class="fabu_box" style="width: 900px;float: right;height: 60px;">
+				<div class="fabu_top" style="float: right;margin-right: 20px;">
+					<p><input class="fabu" id="name" name="name" type="text" value="" placeholder="输入姓名搜索"></p>
+					<button class="fabu_search" type="submit">搜索</button>
 				</div>
 			</div>
-			<div class="bodyContent">
-				<ul class="selectionBar">
-					<li class="selectionBarText choosed"><a href="">专家介绍</a></li>
-				</ul>
-			<form  method="post" id="signupForm" action="/front/cms/open/expertlist">
-				<div class="expertList_photoWall">
-					<div class="clear_box">
-						<ul>
-							<li class="expertPhoto left" th:each="m ,stat: ${pageUtils.rows}">
-								<a th:href="@{/front/cms/open/expert/detail(expertId=${m.expertId})}">
-									<div class="expertPhotoBox" style="height: 185px">
-										<!--<img th:src="@{${m.url!=null}?@{${m.url}}:@{/img/morentouxiang.png}}">-->
-										<img src="https://gss0.bdstatic.com/94o3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike272%2C5%2C5%2C272%2C90/sign=f9d597516d59252db71a155655f2685e/902397dda144ad3479aef2ccdda20cf431ad8563.jpg"
-											 style="width: 150px;height: 210px">
-									</div>
-									<div style="margin-top:5px; background:#c9c9c9 ;text-align: center;width: 131px;
-											vertical-align: middle; padding-top: 10px; padding-bottom: 1px;margin: 20px 28px 0 28px;">
-										<p th:text="${m.expertName}">专家A</p>
-										<p th:text="${m.company}">蒙古医院</p>
-									</div>
-									<!--<span class="expertName" th:text="${m.expertName}"></span>
-									<span class="expertIntro" th:text="${m.company}"></span>-->
-								</a>
-							</li>
 
-
-
-						</ul>
-					</div>
-					<!--分页-->
-					<div class="GCpageNum" th:include="front/include::split_page" ></div>
+			<div class="expertList_photoWall">
+				<div class="clear_box">
+					<ul>
+						<li class="expertPhoto left" th:each="m ,stat: ${pageUtils.rows}" style="height: 300px">
+							<a th:href="@{/front/cms/open/expert/detail(expertId=${m.expertId})}">
+								<div class="expertPhotoBox" style="height: 210px">
+									<img th:src="@{${m.url!=null}?@{${m.url}}:@{/img/morentouxiang.png}}" style="width: 150px;height: 210px">
+								</div>
+								<div style=" background:#c9c9c9 ;text-align: center;width: 131px;height: 55px;
+											vertical-align: middle; margin: 10px 20px 1px 28px;">
+									<p th:text="${m.expertName}" style="padding-top: 10px;margin-bottom: 3px">专家A</p>
+									<p th:text="${m.company}">蒙古医院</p>
+								</div>
+								<!--<span class="expertName" th:text="${m.expertName}"></span>
+                                <span class="expertIntro" th:text="${m.company}"></span>-->
+							</a>
+						</li>
+					</ul>
 				</div>
-				
-			</form>
+				<!--分页-->
+				<div class="GCpageNum" th:include="front/include::split_page" ></div>
 			</div>
-		</section>
-		<!--这是尾部-->
-		<div th:include="front/include :: footer"></div>
-	</body>
+
+		</form>
+	</div>
+</section>
+<!--这是尾部-->
+<div th:include="front/include :: footer"></div>
+</body>
 </html>

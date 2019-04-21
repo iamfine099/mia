@@ -123,6 +123,7 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/front/cms/open/notifyarticlelist", "anon");
         filterChainDefinitionMap.put("/front/cms/open/newsdylist", "anon");
         filterChainDefinitionMap.put("/front/cms/open/recommendarticlelist", "anon");
+        filterChainDefinitionMap.put("/front/cms/open/achievementList", "anon");
         filterChainDefinitionMap.put("/front/cms/open/expertlist", "anon");
         filterChainDefinitionMap.put("/front/cms/open/goodCommentlist", "anon");
         filterChainDefinitionMap.put("/front/cms/open/articleScore/detail/**", "anon");

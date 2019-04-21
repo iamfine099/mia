@@ -51,13 +51,20 @@ public class ArticleServiceImpl extends BaseServiceImpl implements ArticleServic
 
     @Override
     public AchievementDO getAchievement(Integer id){
-
-        return articleDataDao.getAchievement(id);
+		AchievementDO achievementDO = articleDataDao.getAchievement(id);
+		if(achievementDO == null) {
+			achievementDO = new AchievementDO();
+		}
+        return achievementDO;
     }
 
 	@Override
 	public List<ArticleDO> list(Map<String, Object> map){
 		return articleDao.list(map);
+	}
+
+	public List<AchievementDO> listAchievement(Map<String, Object> map){
+		return articleDao.listAchievement(map);
 	}
 
 	@Override

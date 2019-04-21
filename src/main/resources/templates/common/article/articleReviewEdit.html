@@ -3,69 +3,122 @@
 <meta charset="utf-8">
 <head th:include="include :: header"></head>
 <body class="gray-bg">
-	<div class="wrapper wrapper-content ">
-		<div class="row">
-			<div class="col-sm-12">
-				<div class="ibox float-e-margins">
-					<div class="ibox-content">
-						<form class="form-horizontal m-t" id="signupForm">
+<div class="wrapper wrapper-content ">
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="ibox float-e-margins">
+				<div class="ibox-content">
+					<form class="form-horizontal m-t" id="signupForm">
 						<input id="id" name="id" th:value="${article.id}"  type="hidden">
-							<div class="form-group">
-								<label class="col-sm-3 control-label">标题：</label>
-								<div class="col-sm-8">
-									<input id="title" name="title" th:value="${article.title}" class="form-control" type="text" readonly="readonly">
+						<div class="form-group">
+							<label class="col-sm-3 control-label">标题：</label>
+							<div class="col-sm-8">
+								<input id="title" name="title" th:value="${article.title}" class="form-control" type="text" readonly="readonly">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label">摘要：</label>
+							<div class="col-sm-8">
+								<input id="description" name="description" th:value="${article.description}" class="form-control" type="text" readonly="readonly">
+							</div>
+						</div>
+
+						<div class="form-group" STYLE="display: none">
+							<input id="content" name="content" th:value="${article.content}" type="hidden">
+							<label class="col-sm-3 control-label">正文：</label>
+							<div class="col-sm-8">
+								<div class="ibox-content no-padding">
+									<div id="content_sn" class="summernote"></div>
 								</div>
 							</div>
-							<div class="form-group">
-								<label class="col-sm-3 control-label">摘要：</label>
-								<div class="col-sm-8">
-									<input id="description" name="description" th:value="${article.description}" class="form-control" type="text" readonly="readonly">
-								</div>
-							</div>
-							<div class="form-group">
-								<input id="content" name="content" th:value="${article.content}" type="hidden"> 
-								<label class="col-sm-3 control-label">正文：</label>
-								<div class="col-sm-8">
-									<div class="ibox-content no-padding">
-										<div id="content_sn" class="summernote"></div>
+						</div>
+
+						<div class="form-group" style="min-height: 150px">
+							<label class="col-sm-3 control-label">文章内容：</label>
+							<div class="col-sm-8">
+								<ul id="myTab" class="nav nav-tabs">
+									<li class="active"><a href="#achievementIntro" data-toggle="tab">成果简介</a></li>
+									<li><a href="#applicationCategory"  data-toggle="tab">应用范围</a></li>
+									<li><a href="#prospectAnalysis" data-toggle="tab">前景分析</a></li>
+									<li><a href="#detailInformation" data-toggle="tab">详细信息</a></li>
+								</ul>
+
+								<div id="myTabContent" class="tab-content" style="padding-top: 20px">
+									<div class="tab-pane fade in active" id="achievementIntro">
+										<p th:utext="${article.achievementIntro}">菜鸟教程是一个提供最新的web技术站点，本站免费提供了建站相关的技术文档，帮助广大web技术爱好者快速入门并建立自己的网站。菜鸟先飞早入行——学的不仅是技术，更是梦想。</p>
+									</div>
+									<div class="tab-pane fade" id="applicationCategory">
+										<p th:utext="${article.applicationCategory}">iOS 是一个由苹果公司开发和发布的手机操作系统。
+											最初是于 2007 年首次发布 iPhone、iPod Touch 和 Apple TV。
+											iOS 派生自 OS X，它们共享 Darwin 基础。OS X 操作系统是用在苹果电脑上，iOS 是苹果的移动版本。</p>
+									</div>
+									<div class="tab-pane fade" id="prospectAnalysis">
+										<p th:utext="${article.prospectAnalysis}">jMeter 是一款开源的测试软件。它是 100% 纯 Java 应用程序，用于负载和性能测试。</p>
+									</div>
+									<div class="tab-pane fade" id="detailInformation">
+										<p th:utext="${article.detailInformation}">jMeter 是一款开源的测试软件。它是 100% 纯 Java 应用程序，用于负载和性能测试。</p>
 									</div>
 								</div>
 							</div>
-							<div class="form-group">
-								<label class="col-sm-3 control-label">状态：</label>
-								<div class="col-sm-8">
-									<label class="radio-inline" th:each="dict:${T(com.bootdo.common.utils.DictUtils).getDictList('if_checked')}">
-										<input type="radio" th:value="${dict.value}" th:text="${dict.name}" name="status"
-											th:checked="${#numbers.formatDecimal(article.status, 1, 0)==#numbers.formatDecimal(dict.value, 1, 0)}">
-									</label>
-								</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-sm-3 control-label">状态：</label>
+							<div class="col-sm-8">
+								<label class="radio-inline" th:each="dict:${T(com.bootdo.common.utils.DictUtils).getDictList('if_checked')}">
+									<input type="radio" th:value="${dict.value}" th:text="${dict.name}" name="status"
+										   th:checked="${#numbers.formatDecimal(article.status, 1, 0)==#numbers.formatDecimal(dict.value, 1, 0)}">
+								</label>
 							</div>
-							<div class="form-group">
-								<label class="col-sm-3 control-label">审核内容：</label>
-								<div class="col-sm-8">
-									<textarea cols="2"  id="auditContent" name="auditContent" class="form-control" ></textarea>
-								</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label">成果分类：</label>
+							<input type="hidden" th:value="${article.classify}"  name="classify" id="classify">
+							<div class="col-sm-8">
+								<label class="checkbox-inline" >
+									<input type="checkbox" value="1"  name="classifys"
+										   th:checked="${#strings.contains(article.classify, '1')}">
+									最新成果
+								</label>
+								<label class="checkbox-inline" >
+									<input type="checkbox" value="2"  name="classifys"
+										   th:checked="${#strings.contains(article.classify,'2')}">
+									推荐成果
+								</label>
+								<label class="checkbox-inline" >
+									<input type="checkbox" value="3"  name="classifys"
+										   th:checked="${#strings.contains(article.classify,'3')}">
+									发布成果
+								</label>
 							</div>
-							<!-- <div class="form-group" id="expert_div" style="display:none">
-								<label class="col-sm-3 control-label">打分专家：</label>
-								<div class="col-sm-8">
-									<input id="expertNames"  name="expertNames" class="form-control" readonly onclick='selectexpert()' type="text" required>
-									<input id="expertIds"  name="expertIds" class="form-control" type="hidden" required>
-								</div>
-							</div> -->
-							<div class="form-group">
-								<div class="col-sm-8 col-sm-offset-3">
-									<button type="submit" class="btn btn-primary">提交</button>
-								</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-sm-3 control-label">审核内容：</label>
+							<div class="col-sm-8">
+								<textarea cols="2"  id="auditContent" name="auditContent" class="form-control" ></textarea>
 							</div>
-						</form>
-					</div>
+						</div>
+						<!-- <div class="form-group" id="expert_div" style="display:none">
+                            <label class="col-sm-3 control-label">打分专家：</label>
+                            <div class="col-sm-8">
+                                <input id="expertNames"  name="expertNames" class="form-control" readonly onclick='selectexpert()' type="text" required>
+                                <input id="expertIds"  name="expertIds" class="form-control" type="hidden" required>
+                            </div>
+                        </div> -->
+						<div class="form-group">
+							<div class="col-sm-8 col-sm-offset-3">
+								<button type="submit" class="btn btn-primary">提交</button>
+							</div>
+						</div>
+					</form>
 				</div>
 			</div>
+		</div>
 	</div>
-	</div>
-	<div th:include="include::footer"></div>
-	<script type="text/javascript" src="/js/appjs/common/article/articleReviewEdit.js">
-	</script>
+</div>
+<div th:include="include::footer"></div>
+<script type="text/javascript" src="/js/appjs/common/article/articleReviewEdit.js">
+</script>
 </body>
 </html>

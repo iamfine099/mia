@@ -274,6 +274,7 @@ public class ArticleController extends BaseController {
 	@RequestMapping("/update")
 	@RequiresPermissions("common:article:edit")
 	public R update( ArticleDO article,MultipartFile file,HttpServletRequest request, String fileId, String isDel, MultipartFile[] files){
+
 		ArticleDO oldArticle = articleService.get(article.getId());
 		if(file !=null) {
 			FileDO  fileDo = this.uploadFile(file, request);
@@ -1007,8 +1008,15 @@ public class ArticleController extends BaseController {
 	@GetMapping("/articleReviewEdit/{id}")
 	@RequiresPermissions("common:articleReview:edit")
 	String articleReviewEdit(@PathVariable("id") Integer id,Model model){
-		ArticleDO article = articleService.get(id);
-		model.addAttribute("article", article);
+
+		Map params = new HashMap();
+		params.put("id", id);
+		Query query = new Query(params);
+		List<AchievementDO> achievementList = articleService.listAchievement(query);
+
+		//ArticleDO article = articleService.get(id);
+		if(achievementList.size() > 0)
+			model.addAttribute("article", achievementList.get(0));
 	    return "common/article/articleReviewEdit";
 	}
 	

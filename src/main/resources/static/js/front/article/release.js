@@ -51,10 +51,12 @@ $(function() {
 			return false;
 		}
 		var content_summernote = $($("#content_summernote").summernote('code')).text();
-		if(content_summernote==""){
+
+		/*if(content_summernote==""){
 			layer.alert("正文不能为空");
 			return false;
-		}
+		}*/
+
 		saveArticle();
 	});
 	$('#zancun').on('click', function() {
@@ -71,8 +73,21 @@ function deleteTr(item){
 }
 //发布文章
 function saveArticle() {
-	var content_summernote = $("#content_summernote").summernote('code');
-	$("#content").val(content_summernote);
+	/*var content_summernote = $("#content_summernote").summernote('code');
+	$("#content").val(content_summernote);*/
+
+    var achievement_intro_sn = $("#achievementIntro_sn").summernote('code');
+    $("#achievementIntro").val(achievement_intro_sn);
+
+    var application_category_sn = $("#applicationCategory_sn").summernote('code');
+    $("#applicationCategory").val(application_category_sn);
+
+    var prospect_analysis_sn = $("#prospectAnalysis_sn").summernote('code');
+    $("#prospectAnalysis").val(prospect_analysis_sn);
+
+    var detail_information_sn = $("#detailInformation_sn").summernote('code');
+    $("#detailInformation").val(detail_information_sn);
+    
 	var formData = new FormData($("#signupForm")[0]);
 	$.ajax({
 		cache: true,

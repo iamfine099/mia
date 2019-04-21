@@ -9,10 +9,24 @@ $().ready(function() {
                 sendFile(files);
             }
         }
-    });
-	var content = $("#content").val();
+    })
 
-	$('#content_sn').summernote('code', content);
+	/*var content = $("#content").val();
+	$('#content_sn').summernote('code', content);*/
+
+    var achievementIntro = $("#achievementIntro").val();
+    $('#achievementIntro_sn').summernote('code', achievementIntro);
+
+    var applicationCategory = $("#applicationCategory").val();
+    $('#applicationCategory_sn').summernote('code', applicationCategory);
+
+    var prospectAnalysis = $("#prospectAnalysis").val();
+    $('#prospectAnalysis_sn').summernote('code', prospectAnalysis);
+
+    var detailInformation = $("#detailInformation").val();
+    $('#detailInformation_sn').summernote('code', detailInformation);
+
+
 	validateRule();
 	
 	$("input[name='status']").change(function(){
@@ -30,8 +44,33 @@ $.validator.setDefaults({
 	}
 });
 function update() {
+
+    if($("input[name='classifys']:checked").length == 0 ) {
+        layer.alert("请选择一项成果分类!");
+        return;
+    }
+
 	var content_sn = $("#content_sn").summernote('code');
 	$("#content").val(content_sn);
+
+    var achievementIntro_sn = $("#achievementIntro_sn").summernote('code');
+    $("#achievementIntro").val(achievementIntro_sn);
+
+    var applicationCategory_sn = $("#applicationCategory_sn").summernote('code');
+    $("#content").val(applicationCategory_sn);
+
+    var prospectAnalysis_sn = $("#prospectAnalysis_sn").summernote('code');
+    $("#prospectAnalysis").val(prospectAnalysis_sn);
+
+    var detailInformation_sn = $("#detailInformation_sn").summernote('code');
+    $("#detailInformation").val(detailInformation_sn);
+
+	var classify_array = new Array();
+    $('input[name="classifys"]:checked').each(function(){
+        classify_array.push($(this).val());
+    });
+    $("#classify").val(classify_array.join('|'));
+
 	$.ajax({
 		cache : true,
 		type : "POST",
