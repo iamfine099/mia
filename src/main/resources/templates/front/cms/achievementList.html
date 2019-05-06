@@ -17,12 +17,14 @@
     <div class="bodyContent">
 
         <ul class="selectionBar">
-            <li class="selectionBarText choosed">
-                <a th:href="@{/front/cms/open/achievementList}">成果展示</a>
+            <li class="selectionBarText " th:each="type : ${achievementTypes}"  >
+                <a th:href="@{/front/cms/open/achievementList(type=${type.value})}"
+                   th:text="${type.name}">成果展示
+                </a>
             </li>
         </ul>
 
-        <form method="post" id="signupForm"  class="min_height" action="/front/cms/open/achievementList">
+        <form method="post" id="signupForm"  class="min_height" action="/front/cms/open/achievementList" >
 
             <div id="fabu_box" class="fabu_box" style="width: 900px;float: right;height: 60px;">
 

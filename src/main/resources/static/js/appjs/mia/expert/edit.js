@@ -1,4 +1,9 @@
 $().ready(function() {
+
+    $("#specialty").on('click', function () {
+        layeropen();
+    })
+
 	$('.summernote').summernote({
 		height : '440px',
 		lang : 'zh-CN',
@@ -54,6 +59,7 @@ function update() {
 	var achievement_sn = $("#achievement_sn").summernote('code');
 	$("#achievement").val(achievement_sn);
 	var formData = new FormData($("#signupForm")[0]);
+    formData.set("specialty", $("#sp_id").val());
 	$.ajax({
 		cache : true,
 		type : "POST",
@@ -171,4 +177,33 @@ function validateRule() {
 				}
 			}
 	})
+}
+
+
+function layeropen() {
+    layer.open({
+        type: 2,
+        title: '选择专长',
+        maxmin: true,
+        btn: ['确定', '取消'],
+        shadeClose: false, // 点击遮罩关闭层
+        area: ['40%', '65%'],
+        content: '/front/cms/layeropen',//这里链接到打开的弹出框  layeropen
+        yes: function (index, layero) {
+            var body = layer.getChildFrame('body', index);
+            var id = body.find("#speciality_id").val();
+            var text = body.find("#f_name").val();
+            var value = body.find("#speciality_value").val();
+            if (id != '') {
+
+                $('#specialty').val(text);
+                $('#sp_id').val(value);
+            }
+            layer.close(index); //如果设定了yes回调，需进行手工关闭
+        },
+        btn2: function (index, layero) {
+            layer.close(index);
+        }
+    });
+
 }

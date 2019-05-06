@@ -3,19 +3,27 @@
  */
 
 //数据字典根据value值获取到显示内容
-function getDictLabelByValue(objList,value){
+function getDictLabelByValue(objList, value){
 	
 	 var label = "";
+	 var values = value.split(",");
 	if(objList != null && objList.length>0 ){
-		
-		for(var i=0;i<objList.length;i++){
-			if(objList[i].value == value){
-				
-				label = objList[i].name;
-				break;
-			}
-		}
-	} 
+
+        values.forEach(function(value,i){
+
+            for(var i=0; i<objList.length; i++){
+
+                if(objList[i].value == value){
+
+                    label += objList[i].name + ",";
+                    break;
+                }
+            }
+        })
+	}
+	if(label.length > 0) {
+		label = label.substring(0, label.length -1);
+	}
 	return label;
 }
 

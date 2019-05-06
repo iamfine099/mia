@@ -17,6 +17,12 @@
 		  <if test="lastTime != null and lastTime != ''"> and last_time = #{lastTime} </if>
 		  <if test="company != null and company != ''"> and company = #{company} </if>
 		  <if test="specialty != null and specialty != ''"> and specialty = #{specialty} </if>
+		  <if test="specialtys != null and specialtys != ''">
+				and
+				<foreach item="spec" collection="specialtys" open="(" separator="or" close=")">
+					CONCAT(`specialty`, ',') like CONCAT('%', #{spec}, ',%')
+				</foreach>
+		  </if>
 		  <if test="numberCard != null and numberCard != ''"> and number_card = #{numberCard} </if>
 		  <if test="email != null and email != ''"> and email like CONCAT('%',#{email},'%') </if>
 		</sql>
@@ -30,7 +36,8 @@
 
 	<select id="list" resultType="com.bootdo.mia.domain.ExpertDO">
 		select
-			e.`expert_id`,e.`head_img`,e.`expert_name`,e.`sex`,e.`phone`,e.`status`,e.`create_date`,e.`last_time`,e.`company`,e.`specialty`,e.`number_card`,e.`experience`,e.`achievement`,e.`email`,f.`url` as "url"
+			e.`expert_id`,e.`head_img`,e.`expert_name`,e.`sex`,e.`phone`,e.`status`,e.`create_date`,e.`last_time`,
+			e.`company`,e.`specialty`,e.`number_card`,e.`experience`,e.`achievement`,e.`email`,f.`url` as "url"
 		from t_expert e
 		left join sys_file f on f.id=e.head_img
         <where>  

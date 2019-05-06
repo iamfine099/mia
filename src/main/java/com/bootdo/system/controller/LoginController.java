@@ -46,7 +46,7 @@ public class LoginController extends BaseController {
 	UserService userService;
 	@GetMapping({ "/", "" })
 	String welcome(Model model) {
-		return "redirect:/front/cms";
+		return "forward:/front/cms";
 	}
 
 	@Log("请求访问主页")

@@ -9,6 +9,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.bootdo.common.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -350,28 +351,43 @@ public class UserMessageServiceImpl extends BaseServiceImpl  implements UserMess
 	@Override
 	public List<Tree<CategoryVO>> getAllCategoryTree(Map<String, Object> params){
 		
-		List<Tree<CategoryVO>> trees = new ArrayList<Tree<CategoryVO>>();	
-		String busType = "specialty";
+		List<Tree<CategoryVO>> trees = new ArrayList<>();
+        Map<String, Tree<CategoryVO>> treesMap = new HashMap();
+
+        String busType = "specialty";
 		List<DictDO> dictList =DictUtils.getDictList("specialty");
 		int s=1;
 		for (DictDO dict : dictList) {
 			Tree<CategoryVO> tree = new Tree<CategoryVO>();
-			tree.setId(String.valueOf(s));
-			s=s+1;
-			tree.setParentId("0");
+			//tree.setId(String.valueOf(s));
+			tree.setId(String.valueOf(dict.getId()));
+			s = s + 1;
+			if (dict.getParentId() == null){
+				tree.setParentId("0");
+			}else {
+				tree.setParentId(String.valueOf(dict.getParentId()));
+			}
 			tree.setText(dict.getName());
 			Map<String, Object> state = new HashMap<>(16);
 			state.put("closed", true);
 			tree.setState(state);
 			Map<String, Object> attributes = new HashMap<>(16);
 			attributes.put("ftype", "specialty");
+			attributes.put("value", dict.getValue());
 			tree.setAttributes(attributes);
-			tree.setChildren(true);
+			tree.setChildren(false);
+            treesMap.put(tree.getId(), tree);
 			trees.add(tree);
 		}
+		for(Tree<CategoryVO> tree : trees) {
+            if(treesMap.containsKey(tree.getParentId())) {
+                treesMap.get(tree.getParentId()).setChildren(true);
+            }
+        }
+
 		// 默认顶级菜单为０，根据数据库实际情况调整
 		List<Tree<CategoryVO>>  t = BuildTree.buildList(trees,"0");
-		
+
 		return t;
 	}
 

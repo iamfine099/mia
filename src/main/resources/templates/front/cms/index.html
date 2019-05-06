@@ -5,6 +5,10 @@
 <body class="bodyback">
 <!--头部-->
 <head th:include="front/include :: topbar"></head>
+<div style="justify-content: center;display: flex;">
+	<div style="height: 45px;background: white;width: 1200px;">
+	</div>
+</div>
 <!--中间内容-->
 <section id="index">
 	<div class="section_box" style="background: white">
@@ -13,10 +17,11 @@
 			<div id="lunbo">
 				<div class="swiper-container">
 					<div class="swiper-wrapper">
-						<div class="swiper-slide" th:each="photoarticle : ${photoarticleList}"><a
-								th:href="${#strings.isEmpty(photoarticle.href)} ? @{/front/cms/open/aArticle/detail(id=${photoarticle.id})} : ${photoarticle.href}">
+						<div class="swiper-slide" th:each="photoarticle : ${photoarticleList}">
+							<a th:href="${#strings.isEmpty(photoarticle.href)} ? @{/front/cms/open/aArticle/detail(id=${photoarticle.id})} : ${photoarticle.href}">
 							<img th:src="@{${photoarticle.url!=null}?@{${photoarticle.url}}:@{/img/lunbo01.png}}">
-							<input type="hidden" class="bannerTitle" th:value="${photoarticle.title}"></a></div>
+							<input type="hidden" class="bannerTitle" th:value="${photoarticle.title}"></a>
+						</div>
 					</div>
 					<div class="opacity_Bg">
 						<div class="text" id="showTitle">图片新闻</div>
@@ -29,8 +34,10 @@
 			<!--新闻动态/行业资讯-->
 			<div id="tab">
 				<div class="tab_title">
-					<p class="title-l">新闻动态<span class="trangle"></span></p>
+					<p class="title-l">新闻资讯<span class="trangle"></span></p>
+<!--
 					<p class="title-c">医学动态<span class="trangle-c"></span></p>
+-->
 					<p class="title-r right">
 						<a th:href="@{/front/cms/open/page/15}" id="news_a">更多</a>></span>
 					</p>
@@ -42,12 +49,12 @@
 								th:text="${newarticle.title}"></a><span
 								th:text="${#dates.format(newarticle.createTime, 'yyyy-MM-dd')}"></span></li>
 					</ul>
-					<ul id="news" class='newsNew' style='display:none;'>
+					<!--<ul id="news" class='newsNew' style='display:none;'>
 						<li th:each="m : ${intelligenceList}"><a
 								th:href="${#strings.isEmpty(m.href)} ? @{/front/cms/open/aArticle/detail(id=${m.id})} : ${m.href}"
 								th:text="${m.title}"></a><span
 								th:text="${#dates.format(m.createTime, 'yyyy-MM-dd')}"></span></li>
-					</ul>
+					</ul>-->
 				</div>
 			</div>
 			<!--会员登录-->
@@ -272,8 +279,8 @@
 		<!--中间底部-->
 		<div class="secton_down" style="height: 300px">
 			<!--左侧内容-->
-			<article style="width: 99%">
-				<div class="content_l" style="width: 360px">
+			<article style="width: 100%">
+				<div class="content_l" style="width: 350px; margin-left: 40px">
 					<div class="title">
 						<span class="title-l">会员单位</span>
 						<span class="title-r right"><a th:href="@{/front/cms/open/page/13}">更多</a>></span>
@@ -288,7 +295,7 @@
 						</ul>
 					</div>
 				</div>
-				<div class="content_r" style="width: 360px">
+				<div class="content_r" style="width: 350px">
 					<div class="title">
 						<span class="title-l">政策法规</span>
 						<span class="title-r right">
@@ -303,7 +310,7 @@
 						</ul>
 					</div>
 				</div>
-				<div class="content_r" style="width: 360px">
+				<div class="content_r" style="width: 350px; margin-right: 2px">
 					<div class="title">
 						<span class="title-l">相关下载</span>
 						<span class="title-r right"><a th:href="@{/front/cms/open/page/14}">更多</a>></span>

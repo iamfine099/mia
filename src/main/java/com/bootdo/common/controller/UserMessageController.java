@@ -210,11 +210,9 @@ public class UserMessageController {
 	 */
 	@ResponseBody
 	@PostMapping("/getAllCategoryTree")
-	public   List<Tree<CategoryVO>> getAllCategoryTree(@RequestParam Map<String, Object> params){
-		
-		 List<Tree<CategoryVO>> tree = new  ArrayList<Tree<CategoryVO>>();
-		tree = userMessageService.getAllCategoryTree(params);
-		return tree;
+	public List<Tree<CategoryVO>> getAllCategoryTree(@RequestParam Map<String, Object> params){
+
+		return userMessageService.getAllCategoryTree(params);
 	}
 
 	

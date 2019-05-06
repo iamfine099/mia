@@ -1,10 +1,17 @@
 package com.bootdo.mia.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.validation.constraints.Pattern;
 
+import com.bootdo.common.domain.DictDO;
+import com.bootdo.common.utils.DictUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -70,7 +77,10 @@ public class ExpertDO implements Serializable {
     private String officePhone;
     //协会职务
     private String office;
-    
+
+
+	//专长
+	private String specialtyName;
 	/**
 	 * 设置：专家标识
 	 */
@@ -296,5 +306,20 @@ public class ExpertDO implements Serializable {
 	
 	public void setOffice(String office) {
 		this.office = office;
+	}
+
+
+	public String getSpecialtyName() {
+
+		List list = new ArrayList();
+		Map<String, String> map = DictUtils.getDictList("specialty").stream().
+				collect(Collectors.toMap(DictDO::getValue, DictDO::getName));
+		if(StringUtils.isBlank(specialty)) {
+			return "";
+		}
+		for(String spec : specialty.split(",")) {
+			list.add(map.get(spec));
+		}
+		return StringUtils.join(list, ",");
 	}
 }

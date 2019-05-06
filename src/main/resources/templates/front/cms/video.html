@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+
+<meta charset="UTF-8">
+<head th:include="front/include::header"></head>
+</head>
+<body class="bodyback">
+
+<!--这是身体-->
+<section class="newsDyC_body">
+    <!-- <div class="grayStrip clear">
+        <div class="textLink">
+            <a th:href="@{/front/cms}">首页</a>
+        </div>
+        <div class="textLink">
+            <a th:href="@{'/front/cms/open/page/'+${article.categoryId}}" th:utext="'>&nbsp;&nbsp;'+${article.categoryName}">>&nbsp;&nbsp;文章详情</a>
+        </div>
+    </div> -->
+    <div class="grayStrip clear" th:if="${category.parentId} == 0">
+        <div class="textLink">
+            <a th:href="@{/front/cms}">首页</a>
+        </div>
+        <div class="textLink">
+            <a th:href="@{'/front/cms/open/page/'+${category.id}}" th:utext="'>&nbsp;&nbsp;'+${category.name}">首页</a>
+        </div>
+        <div class="textLink" th:if="${categoryDO.id != null}">
+            <a th:href="@{'/front/cms/open/page/'+${categoryDO.id}}"
+               th:utext="'>&nbsp;&nbsp;'+${categoryDO.name}">首页</a>
+        </div>
+    </div>
+    <div class="grayStrip clear" th:if="${category.parentId} != 0">
+        <div class="textLink">
+            <a th:href="@{/front/cms}">首页</a>
+        </div>
+        <div class="textLink">
+            <a th:href="@{'/front/cms/open/page/'+${categoryDO.id}}"
+               th:utext="'>&nbsp;&nbsp;'+${categoryDO.name}">首页</a>
+        </div>
+        <div class="textLink">
+            <a th:href="@{'/front/cms/open/page/'+${category.id}}" th:utext="'>&nbsp;&nbsp;'+${category.name}">首页</a>
+        </div>
+    </div>
+    <div class="bodyContent">
+        <!--这是选择  新闻动态  还是  行业资讯  的选择框-->
+        <!-- <ul class="selectionBar">
+            <li class="selectionBarText choosed" style="border-top:1px solid #dcdcdc ;"><a th:href="@{'/front/cms/open/page/'+${article.categoryId}}" th:text="${article.categoryName}">文章详情</a></li>
+        </ul> -->
+        <ul class="selectionBar" th:if="${category.parentId} == 0">
+            <li th:if="${categoryList.size()} > 0" th:each="val,stat:${categoryList}"
+                th:class="${stat.index} == 0 ? 'choosed selectionBarText':'selectionBarText'"
+                style="border-top:1px solid #dcdcdc ;"><a th:href="@{'/front/cms/open/page/'+${val.id}}"
+                                                          th:text="${val.name}">通知公告</a></li>
+            <li th:if="${categoryList.size()} == 0" class="selectionBarText choosed"
+                style="border-top:1px solid #dcdcdc ;"><a th:href="@{'/front/cms/open/page/'+${category.id}}"
+                                                          th:text="${category.name}">通知公告</a></li>
+        </ul>
+        <ul class="selectionBar" th:if="${category.parentId} != 0">
+            <li th:if="${categoryList.size()} > 0" th:each="val,stat:${categoryList}"
+                th:class="${val.id == category.id} ? 'choosed selectionBarText':'selectionBarText'"
+                style="border-top:1px solid #dcdcdc ;"><a th:href="@{'/front/cms/open/page/'+${val.id}}"
+                                                          th:text="${val.name}">通知公告</a></li>
+            <!--  <li class="selectionBarText"><a href="#">行业资讯</a></li>-->
+        </ul>
+        <article class="newsDyC_article">
+            <!--这是文章的标题作者时间啥的文章头-->
+            <header class="newsDyC_articleHeader">
+                <h1 th:text="${article.title}">信息所开展“共建生态文明，共享绿色未来”环保公益活动</h1>
+                <div class="newsDyC_articleHeadermore clear">
+                    <p class="left">发布时间:<span id="releaseTime"
+                                               th:text="${article.publishTime} == null ? ${#dates.format(article.createTime, 'yyyy-MM-dd')} : ${#dates.format(article.publishTime, 'yyyy-MM-dd')}">2018-10-25</span>
+                    </p>
+                    <p class="left">阅读：<span class="newsDy_readNum" th:text="${article.hits}">61</span></p>
+                </div>
+            </header>
+            <!--这是文章内容-->
+            <div class="newsDyC_articleText">
+                <div  th:each="m : ${fileList}" >
+                    <video th:src="${m.url}" controls="controls">
+                        your browser does not support the video tag
+                    </video>
+                </div>
+                <!--<embed src='http://player.youku.com/player.php/sid/XNDEyNjk5MTk3Mg==/v.swf' allowFullScreen='true'
+                       quality='high' width='480' height='400' align='middle' allowScriptAccess='always'
+                       type='application/x-shockwave-flash'></embed>-->
+
+                <p id="newsDyC_articleText" th:utext="${article.content}" style="margin-top: 39px">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;公益是一种信念，它承载着前行的动力；公益是一片沃土，它孕育着温暖的力量。10月25日上午，信息所在泉城公园开展了以
+                    “共建生态文明，共享绿色未来”为主题的义务捡垃圾环保公益活动，全部志愿者参加了活动。<br/>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;活动中，志愿者们组成一个个小组，纷纷手持垃圾袋，沿途弯腰拾捡草地上，道路上的烟蒂，纸屑，矿泉水瓶等各种垃圾，沿途遇到了环卫工人
+                    在清扫落叶，志愿者们主动上前帮忙清扫。
+                    <!--<div class="imgInActicle" th:each="m : ${fileList}" >
+                        &lt;!&ndash;<img th:each="m : ${fileList}" th:src="@{${m.url}}">&ndash;&gt;
+                        <p>附件：<span th:text="${m.fileName}">这里是附件名字</span></p>
+                        <a th:href="@{${m.url}}" download target="_blank">点击下载附件</a>
+                    </div>-->
+                </p>
+            </div>
+
+            <div class="newsDyC_articleIndex">
+                <p>上一条:<a th:if="${prevArticle ne null}" th:text="${prevArticle.title}"
+                          th:href="@{/front/cms/open/aArticle/detail(id=${prevArticle.id})}">低碳环保&nbsp;绿色共享&nbsp;健康生活————泉城公园健步走活动</a>
+                </p>
+                <p>下一条:<a th:if="${nextArticle ne null}" th:text="${nextArticle.title}"
+                          th:href="@{/front/cms/open/aArticle/detail(id=${nextArticle.id})}">信息所宋奎勐博士赴英国利物浦参加世界第五届世界卫生体系研究大会</a>
+                </p>
+            </div>
+        </article>
+    </div>
+</section>
+<!--这是尾部-->
+<div th:include="front/include::footer"></div>
+</body>
+</html>

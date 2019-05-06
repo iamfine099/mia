@@ -18,6 +18,9 @@
 		  <if test="categoryType != null and categoryType != ''">
 			  and exists (select 1 from t_category tc where tc.module = #{categoryType} and tc.id = a.category_id)
 		  </if>
+		<if test="parentCategoryId != null and parentCategoryId != ''">
+			  and a.category_id in (select id from t_category tc where  tc.parent_id = #{parentCategoryId} or tc.id = #{parentCategoryId})
+		  </if>
 		  <if test="title != null and title != ''"> and a.title like CONCAT('%',#{title},'%') </if>
 		  <if test="image != null and image != ''"> and a.image = #{image} </if>
 		  <if test="keywords != null and keywords != ''"> and a.keywords = #{keywords} </if>
@@ -41,7 +44,9 @@
 		  <if test="recommendDate != null and recommendDate != ''"> and a.recommend_date = #{recommendDate} </if>
 		  <if test="topDate != null and topDate != ''"> and a.top_date = #{topDate} </if>
 		  <if test="likeNum != null and likeNum != ''"> and a.like_num = #{likeNum} </if>
-		  <if test="specialty != null and specialty != ''"> and e.`specialty` = #{specialty} </if>
+		  <if test="specialty != null and specialty != ''">
+			  and  CONCAT(e.`specialty`, ',') like CONCAT('%', #{specialty}, ',%')
+		  </if>
 		  <if test="pCategoryId != null and pCategoryId != ''">
 		  	and (a.category_id = #{pCategoryId} or t.`parent_id` = #{pCategoryId})
 		  </if>

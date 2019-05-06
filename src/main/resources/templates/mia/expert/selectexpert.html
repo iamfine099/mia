@@ -32,15 +32,15 @@
 											placeholder="">
 									</div>
 								</div>
-								<div class=" pull-left col-md-3 nopadding little-marign">
+								<!--<div class=" pull-left col-md-3 nopadding little-marign">
 									<span  class=" pull-left col-md-4 forSearch">专长:</span>
 									<div class=" pull-left col-md-8 nopadding ">
 										<select id="specialty" name="specialty" class="form-control">
-											<option value="">---请选择---</option>
+											<option value="">-&#45;&#45;请选择-&#45;&#45;</option>
 											<option th:each="dict:${T(com.bootdo.common.utils.DictUtils).getDictList('specialty')}" th:value="${dict.value}" th:text="${dict.name}"></option>
 										</select>
 									</div>
-								</div>
+								</div>-->
 							</form>
 								<div class=" pull-left col-md-3 nopadding little-marign">
 									<button class="pull-left btn btn-success little-marign" type='button' onclick="reLoad()" style="margin-left:10px;">查询</button>

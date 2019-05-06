@@ -11,13 +11,13 @@
 					<a th:href="@{/front/cms}">首页</a>
 				</div>
 				<div class="textLink">
-					<a th:href="@{/front/cms/open/recommendarticlelist}">>&nbsp;&nbsp;推荐文章</a>
+					<a th:href="@{/front/cms/open/recommendarticlelist}">>&nbsp;&nbsp;搜索结果</a>
 				</div>
 			</div>
 			<!--这是选择盒子-->
 			<div class="bodyContent">
 				<ul class="selectionBar">
-					<li class="selectionBarText choosed"><a th:href="@{/front/cms/open/recommendarticlelist}">推荐文章</a></li>
+					<li class="selectionBarText choosed"><a th:href="@{/front/cms/open/recommendarticlelist}">搜索结果</a></li>
 				</ul>
 				
 				<div class="recommendA_article min_height">
@@ -46,17 +46,22 @@
 				    <div class="article_down">
 				       	<ul class="article_list">
 				      		<li th:each="m ,stat: ${pageUtils.rows}">
-				    			<a th:href="@{/front/cms/open/articleScore/detail(id=${m.id})}" th:text="${m.title}">心脏干细胞研究论文造假&nbsp;但干细胞治疗心脏病并非没有希望</a>
-				    			
-					    			<span class="writer">作者：</span>
-					       			<span class="writer_name"  th:text="${m.create.name}">张熙桐</span>
-				    			
-				       			<span class="writer_time" th:text="${m.publishTime} == null ? null : ${#dates.format(m.publishTime, 'yyyy-MM-dd')}">2018-10-11</span>
+
+                            <a th:if="${m.status}== 1" th:href="@{/front/cms/open/articleScore/detail(id=${m.id})}" th:text="${m.title}">
+                                心脏干细胞研究论文造假&nbsp;但干细胞治疗心脏病并非没有希望
+                            </a>
+                            <a th:if="${m.status} != 1" th:href="@{/front/cms/open/aArticle/detail(id=${m.id})}" th:text="${m.title}">
+                                心脏干细胞研究论文造假&nbsp;但干细胞治疗心脏病并非没有希望
+                            </a>
+                            <span class="writer">作者：</span>
+                            <span class="writer_name"  th:text="${m.create.name}">张熙桐</span>
+                            <span class="writer_time" th:text="${m.publishTime} == null ? null : ${#dates.format(m.publishTime, 'yyyy-MM-dd')}">
+                                2018-10-11
+                            </span>
 				       		</li>
 				       	</ul>
 				       	<div class="tuijianpageNum" th:include="front/include::split_page" ></div>
 				    </div>
-				         
 				    </form>
 				    </div>
 			</div>
