@@ -1,11 +1,17 @@
 package com.bootdo.mia.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
+import com.bootdo.common.domain.DictDO;
+import com.bootdo.common.utils.DictUtils;
 import com.bootdo.common.utils.excel.annotation.ExcelField;
 import com.bootdo.system.domain.UserDO;
-
+import org.apache.commons.lang3.StringUtils;
 
 
 /**
@@ -306,5 +312,19 @@ public class MemberDO implements Serializable {
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public String getSpecialtyName() {
+
+		List list = new ArrayList();
+		Map<String, String> map = DictUtils.getDictList("specialty").stream().
+				collect(Collectors.toMap(DictDO::getValue, DictDO::getName));
+		if(StringUtils.isBlank(specialty)) {
+			return "";
+		}
+		for(String spec : specialty.split(",")) {
+			list.add(map.get(spec));
+		}
+		return StringUtils.join(list, ",");
 	}
 }

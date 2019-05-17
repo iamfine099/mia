@@ -30,7 +30,7 @@
 									<input id="description" name="description" th:value="${article.description}" class="form-control" type="text" readonly="readonly">
 								</div>
 							</div>
-							<div class="form-group">
+							<div class="form-group" STYLE="display: none">
 								<input id="content" name="content" th:value="${article.content}" type="hidden"> 
 								<label class="col-sm-3 control-label">正文：</label>
 								<div class="col-sm-8">
@@ -39,6 +39,38 @@
 									</div>
 								</div>
 							</div>
+
+							<div class="form-group" style="min-height: 150px">
+								<label class="col-sm-3 control-label">文章内容：</label>
+								<div class="col-sm-8">
+									<ul id="myTab" class="nav nav-tabs">
+										<li class="active"><a href="#achievementIntro" data-toggle="tab">成果简介</a></li>
+										<li><a href="#applicationCategory"  data-toggle="tab">应用范围</a></li>
+										<li><a href="#prospectAnalysis" data-toggle="tab">前景分析</a></li>
+										<li><a href="#detailInformation" data-toggle="tab">详细信息</a></li>
+									</ul>
+
+									<div id="myTabContent" class="tab-content" style="padding-top: 20px">
+										<div class="tab-pane fade in active" id="achievementIntro">
+											<p th:utext="${article.achievementIntro}">菜鸟教程是一个提供最新的web技术站点，</p>
+										</div>
+										<div class="tab-pane fade" id="applicationCategory">
+											<p th:utext="${article.applicationCategory}">
+												iOS 是一个由苹果公司开发和发布的手机操作系统。
+												最初是于 2007 年首次发布 iPhone、iPod Touch 和 Apple TV。
+												iOS 派生自 OS X，它们共享 Darwin 基础。OS X 操作系统是用在苹果电脑上，iOS 是苹果的移动版本。
+											</p>
+										</div>
+										<div class="tab-pane fade" id="prospectAnalysis">
+											<p th:utext="${article.prospectAnalysis}">jMeter 是一款开源的测试软件。</p>
+										</div>
+										<div class="tab-pane fade" id="detailInformation">
+											<p th:utext="${article.detailInformation}">jMeter 是一款开源的测试软件</p>
+										</div>
+									</div>
+								</div>
+							</div>
+
 							<div class="form-group">
 								<label class="col-sm-3 control-label">是否推荐：</label>
 								<div class="col-sm-8">

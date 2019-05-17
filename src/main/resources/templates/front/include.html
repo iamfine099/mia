@@ -1,7 +1,7 @@
 <head th:fragment="header">
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=0.5, maximum-scale=0.3, minimum-scale=0.3"/>
-	<title>山东省网站</title>
+	<title>山东省医药卫生科技成果展示平台</title>
 	<meta name="keywords" content="">
 	<meta name="description" content="">
 	<link rel="shortcut icon" href="favicon.ico">
@@ -61,7 +61,7 @@
 		<div class="">
 			<!--头部：欢迎光临山东省网站-->
 			<div class="top">
-				<div class="top_l left">欢迎访问山东省网站！</div>
+				<div class="top_l left">欢迎访问山东省医药卫生科技成果展示平台！</div>
 				<div class="top_r right">
 					<div id="clock"></div>
 				</div>
@@ -81,7 +81,7 @@
 				</div>
 				<nav>
 					<ul class="navList">
-						<li class="firstNavItem color_bt"><a class='firstNav' th:href="@{/front/cms}">首页</a></li>
+						<li class="firstNavItem color_bt"><a class='firstNav' th:href="@{/}">首页</a></li>
 						<li class='firstNavItem' th:each="vo:${T(com.bootdo.cms.util.CmsUtils).getMainNavList()}">
 							<a class='firstNav' th:target="${vo.target}" th:href="${vo.module eq 'link'}? @{${vo.href}} : @{'/front/cms/open/page/'+${vo.id}}" th:text="${vo.name}"></a>
 							<div class='secondList'>

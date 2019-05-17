@@ -1,6 +1,7 @@
 bootdo:
   #uploadPath: E:/mia/uploaded_files/
-  uploadPath: F:/miaFile/
+  #uploadPath: /home/data/uploaded_files/
+  uploadPath: C:\1224\
 logging:
   level:
     root: info
@@ -10,9 +11,9 @@ spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driverClassName: com.mysql.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/mia-original?useUnicode=true&characterEncoding=utf8
+    url: jdbc:mysql://39.107.246.239:9876/test1?useUnicode=true&characterEncoding=utf8
     username: root
-    password: root
+    password: 1q2w3e4r.
     initialSize: 1
     minIdle: 3
     maxActive: 20

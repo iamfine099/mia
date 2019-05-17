@@ -1,102 +1,116 @@
 <!DOCTYPE html>
 <html>
-	<meta charset="utf-8">
-	<head th:include="front/include :: header"></head>
-	<body class="bodyback">
-		<!--头部-->
-		<head th:include="front/include :: topbar"></head>
-		<!--中间部分-->
-		<section id="articleScore" class="clear_box min_height">
-			<div class="section_box">
-				<!--中间标题-->
-				<div class="grayStrip">				
-				<div class="publicTitle" th:if="${user != null}">
-					<p><span th:text="${user.username}"></span>登录成功！
-					<a th:href="@{/front/cms/out}" class="person_exit">退出</a>
-					</p>
-				</div>
-			</div>
-				<!--左侧信息-->
-				<aside>
-					<div class="public_box">
-						<ul th:if="${userType == 'E'}">
-							<li class="listStyle"><a href="">文章详情 </a></li>
-							<li><a th:href="@{/front/cms/expertInfo}">个人信息</a></li>
-							<li><a th:href="@{/front/cms/open/articleScorelist}">文章评分</a></li>
-							<li><a th:href="@{/front/cms/open/expertCommentArticleList}">已评文章</a></li>
-							<li><a th:href="@{/front/cms/open/expertRecommendArticleList}">文章推荐</a></li>
-							<li><a th:href="@{/front/cms/open/expertCommentList(expertId=${user.busId})}">我的评论</a></li>
-							<li><a th:href="@{/front/cms/mynews}">消息通知</a></li>
-						</ul>
-						<ul th:if="${userType == 'M'}">
-							<li class="selectionBarText"><a th:href="@{/front/cms/personalInfo}">个人信息</a></li>
-							<li class="selectionBarText"><a th:href="@{/front/cms/modifyPwd}">修改密码</a></li>
-							<li class="selectionBarText"><a th:href="@{/front/cms/release}">我要发布</a></li>
-							<li class="selectionBarText"><a th:href="@{/front/cms/drafts}">草稿箱</a></li>
-							<li class="selectionBarText"><a th:href="@{/front/cms/myArticle}">我的文章</a></li> 
-							<li class="selectionBarText choosed"><a th:href="@{/front/cms/open/recommendarticlelist}">推荐文章</a></li>
-							<li class="selectionBarText"><a th:href="@{/front/cms/mynews}">消息通知</a></li>
-						</ul>
-					</div>
-				</aside>
-				<!--右侧部分-->
-				<article>
-					<div class="content_top">
-						<div class="content_title">
-							<h1 th:text="${article.title}">【世界传统医药日】赵静：结合医学研究让中医“走出去”更加具象</h1>
-							<p><span>作者：</span><span th:text="${article.create} == null ? '' :${article.create.name}">陈小青</span><span class="time">发布时间：</span><span class="time" th:text="${#dates.format(article.publishTime, 'yyyy-MM-dd')}">2018-10-25</span><span>阅读：</span><span th:text="${article.hits}">61</span></p>
-						</div>
-						<div class="content_con">
-							<p th:utext="${article.content}">作为中国科技部发起并资助的某种以国际培训项目负责人、中国中医科学院中医临床基础医学研究所副主任、中国中医科学院中医门诊部内科副主任医师，18年的临床与研究经历，使赵静对中医药“走出去”有了一个相对理性、客观的认识。“中医研究办证论治，用证候分型；西医则是辨病论治，以疾病分型。而每个医学都有可上升和提高的空间。向世界介绍中医药，应该中西医并中，也就是用大家都能听懂的方式去传播。”赵静说，时间之路并不是一帆风顺，对于中医药的作用和价值，甚至她自己都曾彷徨过。</p>
-						</div>
-					</div>
-					<div class="content_btn" th:if="${experevaluate.eetId != null}">
-						<div  id="signupForm4" class="left marginright">
-					    <input id="id" name="id" th:value="${article.id}"  type="hidden">
-					    <input id="isRecommend" name="isRecommend" th:value="${experevaluate.isRecommend}"  type="hidden">
-					    <button th:if="${experevaluate.isRecommend ne '1'}" class="tuijian_btn" onclick="recommend()"><img src="/img/xiaotu_06.png">推荐</button>
-					    <button th:if="${experevaluate.isRecommend eq '1'}" class="tuijian_btn" onclick="recommend()"><img src="/img/xiaotu_06.png">取消推荐</button> 
-					    </div>
-					    <div  id="signupForm1" class="left marginright">
-					    <input id="id" name="id" th:value="${article.id}"  type="hidden">
-					    <input id="isLike" name="isLike" th:value="${experevaluate.isLike}"  type="hidden">
-					    <button th:if="${experevaluate.isLike ne '1'}" class="support_btn" onclick="recommendnum()"><img src="/img/xiaotu_03.png">点赞</button>
-					    <button th:if="${experevaluate.isLike eq '1'}" class="support_btn" onclick="recommendnum()"><img src="/img/xiaotu_03.png">取消点赞</button>
-					    </div>
-					    <div  id="signupForm2">
-					    <input id="id" name="id" th:value="${article.id}"  type="hidden">
-						<button type ="button" class="score_btn"><img src="/img/xiaotu_09.png">评分</button>
-					    <input id="score" name='score' class="score" th:value="${experevaluate.score}"> 
-						</div>
-					</div>
-					<div  id="signupForm3" th:if="${user != null}">
-					<input id="id" name="id" th:value="${article.id}"  type="hidden">
-					<input id="cId" name="cId" th:value="${commentDO.cId}"  type="hidden">
-					<div th:if="${commentDO.status ne '1'}" class="reviewBox">
-						<textarea id="cContent" name='cContent' class="review" th:text="${commentDO.cContent}"></textarea>
-						<button class="review_btn" onclick="comment()">评论</button>
-					</div>
-					</div>
-					<div id="signupForm" action="/front/cms/open/articleScore/detail">
-					<div class="content_down">
-						<div class="down_box" th:each="m ,stat: ${pageUtils.rows}">
-							<div class="down_title">
-							    <p><span th:text="${m.expert.expertName}">用户152****7658</span>评论</p>
-							</div>
-							<div class="down_con">
-								<p th:text="${m.cContent}">“在美国有很多体系内的医生回想东西医学中心推荐患者，这些患者大多病情复杂，西医治疗效果不佳。”赵静说，中医的整体观，多靶点、多层次的作用和条件，对一些复杂的慢性病治疗有很大的优势，这也正是中医药价值的一种体现。访学的经历更加坚定了她从事中西医结合临床实践和研究的决心。</p>
-							</div>
-						</div>
-						<div class="down_more">
-						<p ><a th:href="@{/front/cms/open/goodCommentlist}">查看更多评论</a></p>
-						</div>
-					</div>
-					</div>
-				</article>
-		    </div>
-		</section>
-		<!--脚部-->
-		<div th:include="front/include :: footer"></div>
-		<script type="text/javascript" src="/js/front/article/articleScore.js"></script>
-	</body>
+<meta charset="utf-8">
+<head th:include="front/include :: header"></head>
+<body class="bodyback">
+<!--头部-->
+<head th:include="front/include :: topbar"></head>
+<!--中间部分-->
+<section id="articleScore" class="clear_box min_height">
+    <div class="section_box">
+        <!--中间标题-->
+        <div class="grayStrip">
+            <div class="publicTitle" th:if="${user != null}">
+                <p><span th:text="${user.username}"></span>登录成功！
+                    <a th:href="@{/front/cms/out}" class="person_exit">退出</a>
+                </p>
+            </div>
+        </div>
+        <!--左侧信息-->
+        <aside>
+            <div class="public_box">
+                <ul th:if="${userType == 'E'}">
+                    <li class="listStyle"><a href="">文章详情 </a></li>
+                    <li><a th:href="@{/front/cms/expertInfo}">个人信息</a></li>
+                    <li><a th:href="@{/front/cms/open/articleScorelist}">文章审核</a></li>
+                    <li><a th:href="@{/front/cms/open/expertCommentArticleList}">已审文章</a></li>
+                    <li><a th:href="@{/front/cms/open/expertRecommendArticleList}">文章推荐</a></li>
+                    <li><a th:href="@{/front/cms/open/expertCommentList(expertId=${user.busId})}">我的评论</a></li>
+                    <li><a th:href="@{/front/cms/mynews}">消息通知</a></li>
+                </ul>
+                <ul th:if="${userType == 'M'}">
+                    <li class="selectionBarText"><a th:href="@{/front/cms/personalInfo}">个人信息</a></li>
+                    <li class="selectionBarText"><a th:href="@{/front/cms/modifyPwd}">修改密码</a></li>
+                    <li class="selectionBarText"><a th:href="@{/front/cms/release}">我要发布</a></li>
+                    <li class="selectionBarText"><a th:href="@{/front/cms/drafts}">草稿箱</a></li>
+                    <li class="selectionBarText"><a th:href="@{/front/cms/myArticle}">我的文章</a></li>
+                    <li class="selectionBarText choosed"><a th:href="@{/front/cms/open/recommendarticlelist}">推荐文章</a>
+                    </li>
+                    <li class="selectionBarText"><a th:href="@{/front/cms/mynews}">消息通知</a></li>
+                </ul>
+            </div>
+        </aside>
+        <!--右侧部分-->
+        <article>
+            <div class="content_top">
+                <div class="content_title">
+                    <h1 th:text="${article.title}">【世界传统医药日】赵静：结合医学研究让中医“走出去”更加具象</h1>
+                    <p><span>作者：</span><span th:text="${article.create} == null ? '' :${article.create.name}">陈小青</span><span
+                            class="time">发布时间：</span><span class="time"
+                                                           th:text="${#dates.format(article.publishTime, 'yyyy-MM-dd')}">2018-10-25</span><span>阅读：</span><span
+                            th:text="${article.hits}">61</span></p>
+                </div>
+                <div class="content_con">
+                    <p th:utext="${article.content}">
+                        作为中国科技部发起并资助的某种以国际培训项目负责人、中国中医科学院中医临床基础医学研究所副主任、中国中医科学院中医门诊部内科副主任医师，18年的临床与研究经历，使赵静对中医药“走出去”有了一个相对理性、客观的认识。“中医研究办证论治，用证候分型；西医则是辨病论治，以疾病分型。而每个医学都有可上升和提高的空间。向世界介绍中医药，应该中西医并中，也就是用大家都能听懂的方式去传播。”赵静说，时间之路并不是一帆风顺，对于中医药的作用和价值，甚至她自己都曾彷徨过。</p>
+                </div>
+            </div>
+            <div class="content_btn" th:if="${experevaluate.eetId != null}">
+                <div id="signupForm4" class="left marginright">
+                    <input id="id" name="id" th:value="${article.id}" type="hidden">
+                    <input id="isRecommend" name="isRecommend" th:value="${experevaluate.isRecommend}" type="hidden">
+                    <button th:if="${experevaluate.isRecommend ne '1'}" class="tuijian_btn" onclick="recommend()"><img
+                            src="/img/xiaotu_06.png">推荐
+                    </button>
+                    <button th:if="${experevaluate.isRecommend eq '1'}" class="tuijian_btn" onclick="recommend()"><img
+                            src="/img/xiaotu_06.png">取消推荐
+                    </button>
+                </div>
+                <div id="signupForm1" class="left marginright">
+                    <input id="id" name="id" th:value="${article.id}" type="hidden">
+                    <input id="isLike" name="isLike" th:value="${experevaluate.isLike}" type="hidden">
+                    <button th:if="${experevaluate.isLike ne '1'}" class="support_btn" onclick="recommendnum()"><img
+                            src="/img/xiaotu_03.png">点赞
+                    </button>
+                    <button th:if="${experevaluate.isLike eq '1'}" class="support_btn" onclick="recommendnum()"><img
+                            src="/img/xiaotu_03.png">取消点赞
+                    </button>
+                </div>
+<!--                <div id="signupForm2">
+                    <input id="id" name="id" th:value="${article.id}" type="hidden">
+                    <button type="button" class="score_btn"><img src="/img/xiaotu_09.png">评分</button>
+                    <input id="score" name='score' class="score" th:value="${experevaluate.score}">
+                </div>-->
+            </div>
+            <div id="signupForm3" th:if="${user != null}">
+                <input id="id" name="id" th:value="${article.id}" type="hidden">
+                <input id="cId" name="cId" th:value="${commentDO.cId}" type="hidden">
+                <div th:if="${commentDO.status ne '1'}" class="reviewBox">
+                    <textarea id="cContent" name='cContent' class="review" th:text="${commentDO.cContent}"></textarea>
+                    <button class="review_btn" onclick="comment()">评论</button>
+                </div>
+            </div>
+            <div id="signupForm" action="/front/cms/open/articleScore/detail">
+                <div class="content_down">
+                    <div class="down_box" th:each="m ,stat: ${pageUtils.rows}">
+                        <div class="down_title">
+                            <p><span th:text="${m.expert.expertName}">用户152****7658</span>评论</p>
+                        </div>
+                        <div class="down_con">
+                            <p th:text="${m.cContent}">
+                                “在美国有很多体系内的医生回想东西医学中心推荐患者，这些患者大多病情复杂，西医治疗效果不佳。”赵静说，中医的整体观，多靶点、多层次的作用和条件，对一些复杂的慢性病治疗有很大的优势，这也正是中医药价值的一种体现。访学的经历更加坚定了她从事中西医结合临床实践和研究的决心。</p>
+                        </div>
+                    </div>
+                    <div class="down_more">
+                        <p><a th:href="@{/front/cms/open/goodCommentlist}">查看更多评论</a></p>
+                    </div>
+                </div>
+            </div>
+        </article>
+    </div>
+</section>
+<!--脚部-->
+<div th:include="front/include :: footer"></div>
+<script type="text/javascript" src="/js/front/article/articleScore.js"></script>
+</body>
 </html>

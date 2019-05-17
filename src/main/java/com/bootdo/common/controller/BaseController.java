@@ -61,6 +61,7 @@ public class BaseController {
 		try {
 			FileUtil.uploadFile(file.getBytes(), bootdoConfig.getUploadPath(), fileName);
 		} catch (Exception e) {
+			e.printStackTrace();
 			return null;
 		}
 		if(sysFileService.save(sysFile)>0) {

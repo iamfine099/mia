@@ -370,7 +370,7 @@ public class FrontCmsController extends BaseController {
         for (DictDO dict : specialtyDict) {
 
             if (dict.getParentId() != null) {
-                List tlist = ((List) ((Map) tmp.get(dict.getParentId()).get("value")).get("val"));
+                 List tlist = ((List) ((Map) tmp.get(dict.getParentId()).get("value")).get("val"));
                 Map map51 = new HashMap();
                 map51.put("value", dict.getValue());
                 map51.put("text", dict.getName());
@@ -610,6 +610,7 @@ public class FrontCmsController extends BaseController {
         if (!params.containsKey("type")) {
             params.put("type", "");
         }
+        params.put("excludeCategoryId", "3");
         //params.put("categoryId", 4);
         Query query = new Query(params);
         List<ArticleDO> recommendarticleList = articleService.list(query);
@@ -863,7 +864,7 @@ public class FrontCmsController extends BaseController {
     @GetMapping("/out")
     String out() {
         ShiroUtils.logout();
-        return "redirect:/front/cms";
+        return "redirect:/";
     }
 
     /**
@@ -915,11 +916,20 @@ public class FrontCmsController extends BaseController {
      */
     @RequestMapping("/modifyPersonalInfo")
     public String editStatus(Model model) {
+
         //修改用户表信息
         LoginUser loginUser = ShiroUtils.getUser();
         model.addAttribute("user", ShiroUtils.getUser().getUser());
         MemberDO member = memberService.get(Integer.parseInt(loginUser.getUser().getBusId()));
         model.addAttribute("member", member);
+
+        //获取附件信息
+        FileDO fileObj = new FileDO();
+        if(org.apache.commons.lang3.StringUtils.isNotEmpty(member.getHeadImg())){
+            fileObj = sysFileService.get(Long.parseLong(member.getHeadImg()));
+        }
+        model.addAttribute("fileObj", fileObj);
+
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("offset", 0);
         params.put("limit", 10);
@@ -951,9 +961,24 @@ public class FrontCmsController extends BaseController {
      */
     @ResponseBody
     @RequestMapping("/modifyPersonalInfo/update")
-    public R update(MemberDO member) {
+    public R update(MultipartFile file, HttpServletRequest request, MemberDO member) {
+
+        MemberDO oldMember = memberService.get(member.getMemId());
+        if (file != null) {
+            FileDO fileDo = this.uploadFile(file, request);
+            if (fileDo != null) {
+                member.setHeadImg(fileDo.getId().toString());
+                //删除原来上传的照片
+                if (org.apache.commons.lang3.StringUtils.isNotEmpty(oldMember.getHeadImg())) {
+                    this.deleteFile(Long.parseLong(oldMember.getHeadImg()));
+                }
+            } else {
+                member.setHeadImg(oldMember.getHeadImg());
+            }
+        }
+
         if (memberService.update(member) > 0) {
-            Map<String, Object> map = new HashMap<String, Object>();
+            Map<String, Object> map = new HashMap<>();
             map.put("busId", member.getMemId());
             map.put("fType", new String[]{"M"});
             List<UserDO> userlist = userService.list(map);
@@ -1108,7 +1133,7 @@ public class FrontCmsController extends BaseController {
      */
     @RequestMapping("/articleStorage")
     @ResponseBody
-    public R articleStorage(ArticleDO article, MultipartFile[] file, HttpServletRequest request) {
+    public R articleStorage(AchievementDO article, MultipartFile[] file, HttpServletRequest request) {
 
         //默认值
         LoginUser loginUser = ShiroUtils.getUser();
@@ -1136,20 +1161,21 @@ public class FrontCmsController extends BaseController {
         if (StringUtils.isNotEmpty(image)) {
             article.setImage(image.substring(0, image.length() - 1));
         }
-        if (articleService.save(article) > 0) {
+
+        if (articleService.saveDraft(article) > 0) {
+
             ArticleDataDO articleData = new ArticleDataDO();
             articleData.setId(article.getId());
             articleData.setContent(article.getContent());
             return R.ok();
         }
-
         return R.error();
     }
 
     //草稿箱暂存修改
     @RequestMapping("/articleStoragEdit")
     @ResponseBody
-    public R articleStorageEdit(ArticleDO article, String fileId, String isDel, MultipartFile[] file, HttpServletRequest request) {
+    public R articleStorageEdit(AchievementDO article, String fileId, String isDel, MultipartFile[] file, HttpServletRequest request) {
         //附件
         String image = "";
         if (StringUtils.isNotEmpty(fileId) && StringUtils.isNotEmpty(isDel)) {
@@ -1175,18 +1201,19 @@ public class FrontCmsController extends BaseController {
             article.setImage(image.substring(0, image.length() - 1));
         }
 
-        articleService.update(article);
-        ArticleDataDO articleData = new ArticleDataDO();
+        articleService.updateAchievement(article);
+
+   /*     ArticleDataDO articleData = new ArticleDataDO();
         articleData.setId(article.getId());
         articleData.setContent(article.getContent());
-        articleDataService.update(articleData);
+        articleDataService.update(articleData);*/
         return R.ok();
     }
 
     //草稿箱提交
     @RequestMapping("/releasePostEdit")
     @ResponseBody
-    public R releasePostEdit(ArticleDO article, String fileId, String isDel, MultipartFile[] file, HttpServletRequest request) {
+    public R releasePostEdit(AchievementDO article, String fileId, String isDel, MultipartFile[] file, HttpServletRequest request) {
         // 附件
         String image = "";
         if (StringUtils.isNotEmpty(fileId) && StringUtils.isNotEmpty(isDel)) {
@@ -1212,11 +1239,13 @@ public class FrontCmsController extends BaseController {
             article.setImage(image.substring(0, image.length() - 1));
         }
         article.setIsPublish("1");
-        articleService.update(article);
+        /*articleService.update(article);
         ArticleDataDO articleData = new ArticleDataDO();
         articleData.setId(article.getId());
         articleData.setContent(article.getContent());
-        articleDataService.update(articleData);
+        articleDataService.update(articleData);*/
+        articleService.updateAchievement(article);
+
         return R.ok();
     }
 
@@ -1228,6 +1257,7 @@ public class FrontCmsController extends BaseController {
      */
     @RequestMapping("/drafts")
     public String Drafts(@RequestParam Map<String, Object> params, Model model) {
+
         model.addAttribute("user", ShiroUtils.getUser().getUser());
         if (!params.containsKey("title")) {
             params.put("title", "");
@@ -1273,6 +1303,7 @@ public class FrontCmsController extends BaseController {
      */
     @RequestMapping("/draftsEdit")
     public String draftsEdit(Integer id, Model model) {
+
         model.addAttribute("user", ShiroUtils.getUser().getUser());
         //文章详情
         ArticleDO articleDO = articleService.get(id);

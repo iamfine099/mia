@@ -98,7 +98,7 @@ function load() {
 										field : 'id',
 										align : 'center',
 										formatter : function(value, row, index) {
-											var e = '<a class="btn btn-primary btn-sm '+s_edit_h+'" href="#" mce_href="#" title="选择打分专家" onclick="edit(\''
+											var e = '<a class="btn btn-primary btn-sm '+s_edit_h+'" href="#" mce_href="#" title="选择审核专家" onclick="edit(\''
 													+ row.id
 													+ '\')"><i class="fa fa-edit"></i></a> ';
 											return e ;

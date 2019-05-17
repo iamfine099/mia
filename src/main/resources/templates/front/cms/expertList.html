@@ -6,88 +6,89 @@
 <head th:include="front/include :: topbar"></head>
 <!--这是身体-->
 <section class="bodyFrame">
-	<div class="grayStrip clear">
-		<div class="textLink">
-			<a th:href="@{/front/cms}">首页</a>
-		</div>
-		<div class="textLink">
-			<a href="">>&nbsp;&nbsp;专家介绍</a>
-		</div>
-	</div>
-	<div class="bodyContent">
-		<ul class="selectionBar">
-			<!--<ul class="selectionBar">
+    <div class="grayStrip clear">
+        <div class="textLink">
+            <a th:href="@{/}">首页</a>
+        </div>
+        <div class="textLink">
+            <a href="">>&nbsp;&nbsp;专家介绍</a>
+        </div>
+    </div>
+    <div class="bodyContent">
+        <!--<ul class="selectionBar">
+            &lt;!&ndash;<ul class="selectionBar">
                 <li class="selectionBarText " th:each="spec : ${specialtyDict}">
                     <a th:href="@{/front/cms/open/expertlist(specialty=${spec.value})}"
                        th:text="${spec.name}">成果展示
                     </a>
                 </li>
-            </ul>-->
+            </ul>&ndash;&gt;
 
-			<ul class="selectionBar">
-				<li class="selectionBarText">
-					<a href="/front/cms/open/expertlist">专家介绍
-					</a>
-				</li>
-			</ul>
-		</ul>
-		<form method="post" id="signupForm" action="/front/cms/open/expertlist">
-			<div id="fabu_box" class="fabu_box" style="width: 900px;float: right;height: 100%; margin-right: 20px">
-				<div class="fabu_top" style="float: right;margin-right: 20px;">
-					<p>
-						<input class="fabu" id="name" name="name" type="text" value="" placeholder="输入姓名搜索">
-					</p>
-					<button class="fabu_search" type="submit">搜索</button>
-				</div>
-				<div id="searchcon">
-					<div class="w">
-						<div class="searchcon-w">
-							<div class="yseach sele-advencesele">
-								<div class="con-wrap ovefl-visi">
-									<div class="con-key">专长</div>
-									<div class="con-value">
-										<div class="sele-adve-tab">
-											<div class="seleadve-itemwrap"></div>
-										</div>
-									</div>
+            <ul class="selectionBar">
+                <li class="selectionBarText">
+                    <a href="/front/cms/open/expertlist">专家介绍
+                    </a>
+                </li>
+            </ul>
+        </ul>-->
+        <form method="post" id="signupForm" action="/front/cms/open/expertlist">
+            <div id="fabu_box" class="fabu_box" style="width: 1150px; float: right;height: 100%; margin-right: 20px">
+                <div class="fabu_top" style="float: right; margin-right: 20px;">
+                    <p>
+                        <input class="fabu" id="name" name="name" type="text" value="" placeholder="输入姓名搜索">
+                    </p>
+                    <button class="fabu_search" type="submit">搜索</button>
+                </div>
+                <div id="searchcon">
+                    <div class="w">
+                        <div class="searchcon-w">
+                            <div class="yseach sele-advencesele">
+                                <div class="con-wrap ovefl-visi">
+                                    <div class="con-key">专长</div>
+                                    <div class="con-value">
+                                        <div class="sele-adve-tab">
+                                            <div class="seleadve-itemwrap"></div>
+                                        </div>
+                                    </div>
 
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="expertList_photoWall" style="margin-left: 260px">
-				<div class="clear_box">
-					<ul>
-						<li class="expertPhoto left" th:each="m ,stat: ${pageUtils.rows}" style="height: 300px">
-							<a th:href="@{/front/cms/open/expert/detail(expertId=${m.expertId})}">
-								<div class="expertPhotoBox" style="height: 210px">
-									<img th:src="@{${m.url!=null}?@{${m.url}}:@{/img/morentouxiang.png}}"
-										 style="width: 150px;height: 210px">
-								</div>
-								<div style=" background:#c9c9c9 ;text-align: center;width: 131px;height: 55px;
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="expertList_photoWall" style="width: 1150px; margin-left: 20px">
+                <div class="clear_box">
+                    <ul>
+                        <li class="expertPhoto left" th:each="m ,stat: ${pageUtils.rows}" style="height: 300px">
+                            <a th:href="@{/front/cms/open/expert/detail(expertId=${m.expertId})}">
+                                <div class="expertPhotoBox" style="height: 210px">
+                                    <img th:src="@{${m.url!=null}?@{${m.url}}:@{/img/morentouxiang.png}}"
+                                         style="width: 150px;height: 210px">
+                                </div>
+                                <div style=" background:#c9c9c9 ;text-align: center;width: 131px;height: 55px;
 											vertical-align: middle; margin: 10px 20px 1px 28px;">
-									<p th:text="${m.expertName}" style="padding-top: 10px;margin-bottom: 3px">专家A</p>
-									<p th:text="${m.company}">蒙古医院</p>
-								</div>
-								<!--<span class="expertName" th:text="${m.expertName}"></span>
+                                    <p th:text="${m.expertName}" style="padding-top: 10px;margin-bottom: 3px">专家A</p>
+                                    <p th:text="${m.company}">蒙古医院</p>
+                                </div>
+                                <!--<span class="expertName" th:text="${m.expertName}"></span>
                                 <span class="expertIntro" th:text="${m.company}"></span>-->
-							</a>
-						</li>
-					</ul>
-				</div>
-				<!--分页-->
-				<div class="GCpageNum" th:include="front/include::split_page"></div>
-			</div>
-			<input type="hidden" name="specialtys" id="specialtys">
-			<input type="hidden" name="needSearch" id="needSearch">
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <!--分页-->
+                <div class="GCpageNum" th:include="front/include::split_page"></div>
+            </div>
+            <input type="hidden" name="specialtys" id="specialtys">
+            <input type="hidden" name="needSearch" id="needSearch">
 
-		</form>
-	</div>
+        </form>
+    </div>
 </section>
 <!--这是尾部-->
-<div th:include="front/include :: footer"></div>id
+<div th:include="front/include :: footer"></div>
+id
 </body>
 </html>
 <style>
@@ -200,11 +201,12 @@
 
                                 cond += value.value.toString() + ",";
                             })
-							$("#specialtys").val(cond.substring(0, cond.length -1));
-                            if($("#needSearch").val() == 1) {
+                            $("#specialtys").val(cond.substring(0, cond.length - 1));
+                            if ($("#needSearch").val() == 1) {
                                 $(".fabu_search").click();
-							}
-						}cond
+                            }
+                        }
+                        cond
                     })
                     // 点击叉号删除click
                     $(".w").on("click", ".chosexuanxiang i", function () {
@@ -222,7 +224,7 @@
 
                             cond += value.value.toString() + ",";
                         })
-                        $("#specialtys").val(cond.substring(0, cond.length -1));
+                        $("#specialtys").val(cond.substring(0, cond.length - 1));
                         $(".fabu_search").click();
                     })
                 },
@@ -543,9 +545,11 @@
     function reder() {
 
         var option = {url: "js/data.json", searfunc: searfunc}
+
         function searfunc(arr) {
             console.log(arr);
         }
+
         $("#searchcon").SEarch(option);
 
 
@@ -554,8 +558,8 @@
         var specialtys = specialty.split(",");
         $("#needSearch").val(0);
         specialtys.forEach(function (value, i) {
-            $(".selecbaseul").find("a").each(function(){
-                if(value == $(this).attr("value")) {
+            $(".selecbaseul").find("a").each(function () {
+                if (value == $(this).attr("value")) {
                     $(this).click();
                 }
             });

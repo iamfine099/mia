@@ -94,7 +94,7 @@ function load() {
 									title : '单位' 
 								},
 																{
-									field : 'specialty', 
+									field : 'specialtyName',
 									title : '专长' 
 								},
 																{

@@ -1,6 +1,7 @@
 package com.bootdo.common.service.impl;
 
 import com.bootdo.common.domain.AchievementDO;
+import com.bootdo.common.utils.StringUtils;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -110,6 +111,25 @@ public class ArticleServiceImpl extends BaseServiceImpl implements ArticleServic
 	}
 
 	@Override
+	public int saveDraft(AchievementDO article){
+
+		Integer count = 0;
+		// 1 保存文章
+		articleDao.save(article);
+
+		// 2 保存文章数据
+		ArticleDataDO articleData = new ArticleDataDO();
+		articleData.setId(article.getId());
+		articleData.setCopyfrom(article.getCopyfrom());
+		articleData.setContent(article.getContent());
+		count = articleDataDao.save(articleData);
+
+		// 3 保存成果其他信息
+		articleDataDao.saveAchievement(article);
+		return count;
+	}
+
+	@Override
 	public int saveAchievement(AchievementDO article){
 
 		Integer count = 0;
@@ -133,11 +153,14 @@ public class ArticleServiceImpl extends BaseServiceImpl implements ArticleServic
 
 		articleDao.update(article);
 
-		ArticleDataDO articleDataDO = new ArticleDataDO();
-		articleDataDO.setId(article.getId());
-		articleDataDO.setContent(article.getContent());
-		articleDataDO.setCopyfrom(article.getCopyfrom());
-		return articleDataDao.update(articleDataDO);
+		if(StringUtils.isNotBlank(article.getContent()) || StringUtils.isNotBlank(article.getCopyfrom())) {
+			ArticleDataDO articleDataDO = new ArticleDataDO();
+			articleDataDO.setId(article.getId());
+			articleDataDO.setContent(article.getContent());
+			articleDataDO.setCopyfrom(article.getCopyfrom());
+			return articleDataDao.update(articleDataDO);
+		}
+		return 1;
 	}
 
 	@Override
@@ -146,14 +169,14 @@ public class ArticleServiceImpl extends BaseServiceImpl implements ArticleServic
 		Integer count = 0;
 		articleDao.update(article);
 
-		ArticleDataDO articleDataDO = new ArticleDataDO();
-		articleDataDO.setId(article.getId());
-		articleDataDO.setContent(article.getContent());
-		articleDataDO.setCopyfrom(article.getCopyfrom());
-		count = articleDataDao.update(articleDataDO);
-
-		articleDataDao.updateAchievement(article);
-
+		if(StringUtils.isNotBlank(article.getCopyfrom())) {
+			ArticleDataDO articleDataDO = new ArticleDataDO();
+			articleDataDO.setId(article.getId());
+			articleDataDO.setContent(article.getContent());
+			articleDataDO.setCopyfrom(article.getCopyfrom());
+			count = articleDataDao.update(articleDataDO);
+		}
+		count = articleDataDao.updateAchievement(article);
 		return count;
 	}
 

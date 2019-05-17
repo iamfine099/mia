@@ -877,8 +877,12 @@ public class ArticleController extends BaseController {
 	@GetMapping("/articleReviewScoreEdit/{id}")
 	@RequiresPermissions("common:articleReviewScore:edit")
 	String articleReviewScoreEdit(@PathVariable("id") Integer id,Model model){
+
 		ArticleDO article = articleService.get(id);
-		model.addAttribute("article", article);
+		AchievementDO achievementDO = articleService.getAchievement(id);
+		BeanUtils.copyProperties(article, achievementDO);
+
+		model.addAttribute("article", achievementDO);
 	    return "common/articleReviewScore/edit";
 	}
 	
@@ -1153,8 +1157,11 @@ public class ArticleController extends BaseController {
 	@GetMapping("/articleRecommendEdit/{id}")
 	@RequiresPermissions("common:articleRecommend:edit")
 	String articleRecommendEdit(@PathVariable("id") Integer id,Model model){
+
 		ArticleDO article = articleService.get(id);
-		model.addAttribute("article", article);
+		AchievementDO achievementDO = articleService.getAchievement(id);
+		BeanUtils.copyProperties(article, achievementDO);
+		model.addAttribute("article", achievementDO);
 	    return "common/article/articleRecommendEdit";
 	}
 	

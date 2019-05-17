@@ -91,6 +91,7 @@ function sendFile(files, editor, $editable) {
         processData : false,
         dataType : "json",
         success: function(data) {//data是返回的hash,key之类的值，key是定义的文件名
+
             $('.summernote').summernote('insertImage',data.fileName);
         },
         error:function(){

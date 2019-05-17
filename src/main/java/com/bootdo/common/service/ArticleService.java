@@ -46,6 +46,8 @@ public interface ArticleService {
 	
 	int save(ArticleDO article);
 
+	int saveDraft(AchievementDO article);
+
 	int saveAchievement(AchievementDO article);
 
 	int update(ArticleDO article);

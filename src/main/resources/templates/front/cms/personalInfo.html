@@ -32,7 +32,7 @@
 						</div>
 						<div class="cardInfo clear_box">
 							<p>姓名：<span class="cardText" th:text="${member.memName}">张广江</span></p>
-							<p>专长：<span th:text="${member.specialty}">贫血基因表达</span></p>
+							<p>专长：<span th:text="${member.specialtyName}">贫血基因表达</span></p>
 							<p>单位：<span th:text="${member.company}">山东大学第二医院</span></p>
 							<p>编号：<span th:text="${member.numberCard}">20181254369</span></p>
 						</div>
@@ -56,8 +56,7 @@
 						</p>
 						<p class="expertEx_introH">
 							<span class="expertEx_introTitle">专长</span>
-							<span class="expertEx_introContentDet" th:text="${member.specialty}">
-								
+							<span class="expertEx_introContent" th:text="${member.specialtyName}">
 							</span>
 						</p>
 						<div class="personalInfo_box">

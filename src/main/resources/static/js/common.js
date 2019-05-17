@@ -4,9 +4,12 @@
 
 //数据字典根据value值获取到显示内容
 function getDictLabelByValue(objList, value){
-	
-	 var label = "";
-	 var values = value.split(",");
+
+	if(value == null) {
+		return "";
+	}
+	var label = "";
+	var values = value.split(",");
 	if(objList != null && objList.length>0 ){
 
         values.forEach(function(value,i){

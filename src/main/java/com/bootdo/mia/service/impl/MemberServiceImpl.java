@@ -170,7 +170,8 @@ public class MemberServiceImpl implements MemberService {
 				member.setMemName(params.get("uName").toString());
 				member.setPhone(params.get("phone").toString());
 				member.setEmail(params.get("email").toString());
-				member.setSpecialty(params.get("specialty").toString());
+				//member.setSpecialty(params.get("specialty").toString());
+				member.setSpecialty(params.get("sp_id").toString());
 				member.setStatus("1");
 				member.setCreateDate(new Date());
 				member.setLastTime(new Date());

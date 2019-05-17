@@ -18,8 +18,11 @@
 		  <if test="categoryType != null and categoryType != ''">
 			  and exists (select 1 from t_category tc where tc.module = #{categoryType} and tc.id = a.category_id)
 		  </if>
-		<if test="parentCategoryId != null and parentCategoryId != ''">
+		  <if test="parentCategoryId != null and parentCategoryId != ''">
 			  and a.category_id in (select id from t_category tc where  tc.parent_id = #{parentCategoryId} or tc.id = #{parentCategoryId})
+		  </if>
+		  <if test="excludeCategoryId != null and excludeCategoryId != ''">
+			  and a.category_id != #{excludeCategoryId}
 		  </if>
 		  <if test="title != null and title != ''"> and a.title like CONCAT('%',#{title},'%') </if>
 		  <if test="image != null and image != ''"> and a.image = #{image} </if>

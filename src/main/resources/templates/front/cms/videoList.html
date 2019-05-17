@@ -7,7 +7,7 @@
 <section class="total">
 	<div class="grayStrip clear" th:if="${category.parentId} == 0">
 		<div class="textLink">
-			<a th:href="@{/front/cms}">首页</a>
+			<a th:href="@{/}">首页</a>
 		</div>
 		<div class="textLink">
 			<a th:href="@{'/front/cms/open/page/'+${category.id}}" th:utext="'>&nbsp;&nbsp;'+${category.name}">首页</a>
@@ -19,7 +19,7 @@
 	</div>
 	<div class="grayStrip clear" th:if="${category.parentId} != 0">
 		<div class="textLink">
-			<a th:href="@{/front/cms}">首页</a>
+			<a th:href="@{/}">首页</a>
 		</div>
 		<div class="textLink">
 			<a th:href="@{'/front/cms/open/page/'+${categoryDO.id}}"

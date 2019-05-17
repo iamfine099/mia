@@ -74,12 +74,13 @@ $(document).ready(function() {
     		layer.alert("请购选阅读并接受《用户协议》");
     		return false;
     	}
-    	
-		$.ajax({
+        var formData = $('#signupForm').serialize();
+        formData.set("specialty", $("#sp_id").val());
+        $.ajax({
 			cache : true,
 			type : "POST",
 			url : "/front/cms/registerPost",
-			data: $('#signupForm').serialize(),
+			data: formData,
 			async : false,
 			error : function(request) {
 				parent.layer.alert("Connection error");
@@ -116,9 +117,11 @@ function layeropen(){
 			var body = layer.getChildFrame('body', index);
 			var id=body.find("#speciality_id").val();
 			var text=body.find("#f_name").val();
-			if(id!=''){
+            var value = body.find("#speciality_value").val();
+
+            if(id!=''){
 				$('#specialty').val(text);
-				$('#sp_id').val(id);
+				$('#sp_id').val(value);
 			}
 			layer.close(index); //如果设定了yes回调，需进行手工关闭
 		},

@@ -69,7 +69,7 @@ function load() {
 								},
 																{
 									field : 'type', 
-									title : '文章分类',
+									title : '成果分类',
 									formatter : function(value, row, index) {
 										return getDictLabelByValue(businessTypeJson,value);
 									}
