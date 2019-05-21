@@ -21,12 +21,12 @@
             <a th:href="@{/}">首页</a>
         </div>
         <div class="textLink">
-            <a th:href="@{'/front/cms/open/page/'+${category.id}}" th:utext="'>
+            <a th:href="@{'/open/page/'+${category.id}}" th:utext="'>
                 &nbsp;&nbsp;'+${category.name}">首页
             </a>
         </div>
         <div class="textLink" th:if="${categoryDO.id != null}">
-            <a th:href="@{'/front/cms/open/page/'+${categoryDO.id}}"
+            <a th:href="@{'/open/page/'+${categoryDO.id}}"
                th:utext="'>&nbsp;&nbsp;'+${categoryDO.name}">首页</a>
         </div>
     </div>
@@ -35,11 +35,11 @@
             <a th:href="@{/}">首页</a>
         </div>
         <div class="textLink">
-            <a th:href="@{'/front/cms/open/page/'+${categoryDO.id}}"
+            <a th:href="@{'/open/page/'+${categoryDO.id}}"
                th:utext="'>&nbsp;&nbsp;'+${categoryDO.name}">首页</a>
         </div>
         <div class="textLink">
-            <a th:href="@{'/front/cms/open/page/'+${category.id}}" th:utext="'>&nbsp;&nbsp;'+${category.name}">首页</a>
+            <a th:href="@{'/open/page/'+${category.id}}" th:utext="'>&nbsp;&nbsp;'+${category.name}">首页</a>
         </div>
     </div>
     <div class="bodyContent">
@@ -50,16 +50,16 @@
         <ul class="selectionBar" th:if="${category.parentId} == 0">
             <li th:if="${categoryList.size()} > 0" th:each="val,stat:${categoryList}"
                 th:class="${stat.index} == 0 ? 'choosed selectionBarText':'selectionBarText'"
-                style="border-top:1px solid #dcdcdc ;"><a th:href="@{'/front/cms/open/page/'+${val.id}}"
+                style="border-top:1px solid #dcdcdc ;"><a th:href="@{'/open/page/'+${val.id}}"
                                                           th:text="${val.name}">通知公告</a></li>
             <li th:if="${categoryList.size()} == 0" class="selectionBarText choosed"
-                style="border-top:1px solid #dcdcdc ;"><a th:href="@{'/front/cms/open/page/'+${category.id}}"
+                style="border-top:1px solid #dcdcdc ;"><a th:href="@{'/open/page/'+${category.id}}"
                                                           th:text="${category.name}">通知公告</a></li>
         </ul>
         <ul class="selectionBar" th:if="${category.parentId} != 0">
             <li th:if="${categoryList.size()} > 0" th:each="val,stat:${categoryList}"
                 th:class="${val.id == category.id} ? 'choosed selectionBarText':'selectionBarText'"
-                style="border-top:1px solid #dcdcdc ;"><a th:href="@{'/front/cms/open/page/'+${val.id}}"
+                style="border-top:1px solid #dcdcdc ;"><a th:href="@{'/open/page/'+${val.id}}"
                                                           th:text="${val.name}">通知公告</a></li>
             <!--  <li class="selectionBarText"><a href="#">行业资讯</a></li>-->
         </ul>
@@ -100,10 +100,10 @@
 
             <div class="newsDyC_articleIndex">
                 <p>上一条:<a th:if="${prevArticle ne null}" th:text="${prevArticle.title}"
-                          th:href="@{/front/cms/open/aArticle/detail(id=${prevArticle.id})}">低碳环保&nbsp;绿色共享&nbsp;健康生活————泉城公园健步走活动</a>
+                          th:href="@{/open/aArticle/detail(id=${prevArticle.id})}">低碳环保&nbsp;绿色共享&nbsp;健康生活————泉城公园健步走活动</a>
                 </p>
                 <p>下一条:<a th:if="${nextArticle ne null}" th:text="${nextArticle.title}"
-                          th:href="@{/front/cms/open/aArticle/detail(id=${nextArticle.id})}">信息所宋奎勐博士赴英国利物浦参加世界第五届世界卫生体系研究大会</a>
+                          th:href="@{/open/aArticle/detail(id=${nextArticle.id})}">信息所宋奎勐博士赴英国利物浦参加世界第五届世界卫生体系研究大会</a>
                 </p>
             </div>
         </article>

@@ -10,7 +10,7 @@
             <a th:href="@{/}">首页</a>
         </div>
         <div class="textLink">
-            <a th:href="@{/front/cms/open/recommendarticlelist}">>&nbsp;&nbsp;成果展示</a>
+            <a th:href="@{/open/recommendarticlelist}">>&nbsp;&nbsp;成果展示</a>
         </div>
     </div>
     <!--这是选择盒子-->
@@ -18,13 +18,13 @@
 
         <ul class="selectionBar">
             <li class="selectionBarText " th:each="type : ${achievementTypes}"  >
-                <a th:href="@{/front/cms/open/achievementList(type=${type.value})}"
+                <a th:href="@{/open/achievementList(type=${type.value})}"
                    th:text="${type.name}">成果展示
                 </a>
             </li>
         </ul>
 
-        <form method="post" id="signupForm"  class="min_height" action="/front/cms/open/achievementList" >
+        <form method="post" id="signupForm"  class="min_height" action="/open/achievementList" >
 
             <div id="fabu_box" class="fabu_box" style="width: 900px;float: right;height: 60px;">
 
@@ -41,7 +41,7 @@
                             <div class="thumb" style="height: 60px; width: 100%">
                                 <h2 style="margin-top: 5px;">
                                     <a th:text="${m.title}"
-                                       th:href="@{/front/cms/open/articleScore/detail(id=${m.id})}"
+                                       th:href="@{/open/articleScore/detail(id=${m.id})}"
                                        style="font-weight: bold; text-align: center;font-size: 15px">
                                         液相芯片检测禽流感病毒试剂盒
                                     </a>

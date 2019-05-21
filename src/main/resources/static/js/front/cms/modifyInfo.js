@@ -53,7 +53,7 @@ $().ready(function () {
         $.ajax({
             cache: true,
             type: "POST",
-            url: "/front/cms/modifyPersonalInfo/update",
+            url: "/modifyPersonalInfo/update",
             data: formData,
             async: false,
             contentType: false, //必须false才会避开jQuery对 formdata 的默认处理 XMLHttpRequest会对 formdata 进行正确的处理
@@ -64,7 +64,7 @@ $().ready(function () {
             success: function (data) {
                 if (data.code == 0) {
                     parent.layer.msg("操作成功");
-                    window.location.href = "/front/cms/personalInfo";
+                    window.location.href = "/personalInfo";
 //    				parent.reLoad();
 //    				var index = parent.layer.getFrameIndex(window.name); // 获取窗口索引
 //    				parent.layer.close(index);
@@ -105,7 +105,7 @@ function layeropen() {
         btn: ['确定', '取消'],
         shadeClose: false, // 点击遮罩关闭层
         area: ['40%', '65%'],
-        content: '/front/cms/layeropen',//这里链接到打开的弹出框  layeropen
+        content: '/layeropen',//这里链接到打开的弹出框  layeropen
         yes: function (index, layero) {
             var body = layer.getChildFrame('body', index);
             var id = body.find("#speciality_id").val();

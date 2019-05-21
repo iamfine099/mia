@@ -15,7 +15,7 @@
             <a th:href="@{/}">首页</a>
         </div>
         <div class="textLink">
-            <a th:href="@{/front/cms/open/recommendarticlelist}">>&nbsp;&nbsp;成果展示</a>
+            <a th:href="@{/open/recommendarticlelist}">>&nbsp;&nbsp;成果展示</a>
         </div>
     </div>
 
@@ -23,7 +23,7 @@
         <div class="grayStrip">
             <div class="publicTitle" th:if="${user != null}">
                 <p><span th:text="${user.username}"></span>登录成功！
-                    <a th:href="@{/front/cms/out}" class="person_exit">退出</a>
+                    <a th:href="@{/out}" class="person_exit">退出</a>
                 </p>
             </div>
         </div>
@@ -32,7 +32,7 @@
     <div class="bodyContent">
         <ul class="selectionBar" th:if="${user == null}">
             <li class="selectionBarText choosed">
-                <a th:href="@{/front/cms/open/achievementList}">成果展示</a>
+                <a th:href="@{/open/achievementList}">成果展示</a>
             </li>
         </ul>
         <!--左侧信息-->
@@ -40,21 +40,21 @@
             <div class="public_box">
                 <ul th:if="${userType == 'E'}">
                     <li class="listStyle"><a href="">文章详情 </a></li>
-                    <li><a th:href="@{/front/cms/expertInfo}">个人信息</a></li>
-                    <li><a th:href="@{/front/cms/open/articleScorelist}">文章审核</a></li>
-                    <li><a th:href="@{/front/cms/open/expertCommentArticleList}">已审文章</a></li>
-                    <li><a th:href="@{/front/cms/open/expertRecommendArticleList}">文章推荐</a></li>
-                    <li><a th:href="@{/front/cms/open/expertCommentList(expertId=${user.busId})}">我的评论</a></li>
-                    <li><a th:href="@{/front/cms/mynews}">消息通知</a></li>
+                    <li><a th:href="@{/expertInfo}">个人信息</a></li>
+                    <li><a th:href="@{/open/articleScorelist}">文章审核</a></li>
+                    <li><a th:href="@{/open/expertCommentArticleList}">已审文章</a></li>
+                    <li><a th:href="@{/open/expertRecommendArticleList}">文章推荐</a></li>
+                    <li><a th:href="@{/open/expertCommentList(expertId=${user.busId})}">我的评论</a></li>
+                    <li><a th:href="@{/mynews}">消息通知</a></li>
                 </ul>
                 <ul th:if="${userType == 'M'}">
-                    <li class="selectionBarText"><a th:href="@{/front/cms/personalInfo}">个人信息</a></li>
-                    <li class="selectionBarText"><a th:href="@{/front/cms/modifyPwd}">修改密码</a></li>
-                    <li class="selectionBarText"><a th:href="@{/front/cms/release}">我要发布</a></li>
-                    <li class="selectionBarText"><a th:href="@{/front/cms/drafts}">草稿箱</a></li>
-                    <li class="selectionBarText"><a th:href="@{/front/cms/myArticle}">我的文章</a></li>
-                    <li class="selectionBarText choosed"><a th:href="@{/front/cms/open/recommendarticlelist}">推荐文章</a></li>
-                    <li class="selectionBarText"><a th:href="@{/front/cms/mynews}">消息通知</a></li>
+                    <li class="selectionBarText"><a th:href="@{/personalInfo}">个人信息</a></li>
+                    <li class="selectionBarText"><a th:href="@{/modifyPwd}">修改密码</a></li>
+                    <li class="selectionBarText"><a th:href="@{/release}">我要发布</a></li>
+                    <li class="selectionBarText"><a th:href="@{/drafts}">草稿箱</a></li>
+                    <li class="selectionBarText"><a th:href="@{/myArticle}">我的文章</a></li>
+                    <li class="selectionBarText choosed"><a th:href="@{/open/recommendarticlelist}">推荐文章</a></li>
+                    <li class="selectionBarText"><a th:href="@{/mynews}">消息通知</a></li>
                 </ul>
             </div>
         </aside>
@@ -71,7 +71,7 @@
             </header>
 
             <ul id="myTab" class="nav nav-tabs">
-                <li class="active"><a href="#achievementIntro" data-toggle="tab">成果简介</a></li>
+                <li class="active"><a href="#achievementIntro" data-toggle="tab">成果介绍</a></li>
                 <li><a href="#applicationCategory"  data-toggle="tab">应用范围</a></li>
                 <li><a href="#prospectAnalysis" data-toggle="tab">前景分析</a></li>
                 <li><a href="#detailInformation" data-toggle="tab">详细信息</a></li>
@@ -94,6 +94,10 @@
                 </div>
             </div>
 
+            <div class="imgInActicle" th:each="m : ${fileList}">
+                <p>附件：<span th:text="${m.fileName}">这里是附件名字</span></p>
+                <a th:href="@{${m.url}}" download target="_blank">点击下载附件</a>
+            </div>
 
             <div class="content_btn" th:if="${experevaluate.eetId != null}">
                 <div  id="signupForm4" class="left marginright">
@@ -122,7 +126,7 @@
                     <button class="review_btn" onclick="comment()">评论</button>
                 </div>
             </div>
-            <div id="signupForm" action="/front/cms/open/articleScore/detail">
+            <div id="signupForm" action="/open/articleScore/detail">
                 <div class="content_down">
                     <div class="down_box" th:each="m ,stat: ${pageUtils.rows}">
                         <div class="down_title">
@@ -133,7 +137,7 @@
                         </div>
                     </div>
                     <div class="down_more">
-                        <p ><a th:href="@{/front/cms/open/goodCommentlist}">查看更多评论</a></p>
+                        <p ><a th:href="@{/open/goodCommentlist}">查看更多评论</a></p>
                     </div>
                 </div>
             </div>
@@ -177,7 +181,7 @@
                     <button class="review_btn" onclick="comment()">评论</button>
                 </div>
             </div>
-            <div id="signupForm" action="/front/cms/open/articleScore/detail">
+            <div id="signupForm" action="/open/articleScore/detail">
                 <div class="content_down">
                     <div class="down_box" th:each="m ,stat: ${pageUtils.rows}">
                         <div class="down_title">
@@ -188,7 +192,7 @@
                         </div>
                     </div>
                     <div class="down_more">
-                        <p ><a th:href="@{/front/cms/open/goodCommentlist}">查看更多评论</a></p>
+                        <p ><a th:href="@{/open/goodCommentlist}">查看更多评论</a></p>
                     </div>
                 </div>
             </div>

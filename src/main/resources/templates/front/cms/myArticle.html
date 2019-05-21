@@ -9,23 +9,23 @@
     <div class="grayStrip">
         <div class="publicTitle">
             <p><span th:text="${user.username}"></span>登录成功！
-                <a th:href="@{/front/cms/out}" class="person_exit">退出</a></p>
+                <a th:href="@{/out}" class="person_exit">退出</a></p>
         </div>
     </div>
     <!--这是选择盒子-->
     <div class="bodyContent">
         <ul class="selectionBar">
-            <li class="selectionBarText"><a th:href="@{/front/cms/personalInfo}">个人信息</a></li>
-            <li class="selectionBarText"><a th:href="@{/front/cms/modifyPwd}">修改密码</a></li>
-            <li class="selectionBarText"><a th:href="@{/front/cms/release}">我要发布</a></li>
-            <li class="selectionBarText"><a th:href="@{/front/cms/drafts}">草稿箱</a></li>
-            <li class="selectionBarText choosed"><a th:href="@{/front/cms/myArticle}">我的文章</a></li>
-            <li class="selectionBarText"><a th:href="@{/front/cms/open/recommendarticlelist}">推荐文章</a></li>
-            <li class="selectionBarText"><a th:href="@{/front/cms/mynews}">消息通知</a></li>
+            <li class="selectionBarText"><a th:href="@{/personalInfo}">个人信息</a></li>
+            <li class="selectionBarText"><a th:href="@{/modifyPwd}">修改密码</a></li>
+            <li class="selectionBarText"><a th:href="@{/release}">我要发布</a></li>
+            <li class="selectionBarText"><a th:href="@{/drafts}">草稿箱</a></li>
+            <li class="selectionBarText choosed"><a th:href="@{/myArticle}">我的文章</a></li>
+            <li class="selectionBarText"><a th:href="@{/open/recommendarticlelist}">推荐文章</a></li>
+            <li class="selectionBarText"><a th:href="@{/mynews}">消息通知</a></li>
         </ul>
 
         <div class="recommendA_article min_height">
-            <form method="post" id="signupForm" action="/front/cms/myArticle">
+            <form method="post" id="signupForm" action="/myArticle">
                 <div class="fabu_box" id="fabu_box">
                     <div class="fabu_top">
                         <p>文章标题：<input class="fabu" type="text" name="title" id="title"
@@ -62,7 +62,7 @@
                 <div class="article_down">
                     <ul class="article_list">
                         <li th:each="m ,stat: ${pageUtils.rows}">
-                            <a th:href="@{/front/cms/open/articleScore/detail(id=${m.id})}" th:text="${m.title}">
+                            <a th:href="@{/open/articleScore/detail(id=${m.id})}" th:text="${m.title}">
                                 心脏干细胞研究论文造假&nbsp;但干细胞治疗心脏病并非没有希望
                             </a>
                             <span class="writer">作者：</span>
@@ -78,7 +78,7 @@
         </div>
     </div>
     <!-- <div class="recommendA_article min_height">
-    <form  method="post" id="signupForm" action="/front/cms/myArticle">
+    <form  method="post" id="signupForm" action="/myArticle">
                 <div class="recommendBox">
                 <div class="recommendBox_1">
                     <p>文章标题：<input type="text" name="title" id="title" th:value="${pageUtils.params.title}"/></p>
@@ -109,7 +109,7 @@
                     <ul class="recommendDetail">
                          <li th:each="m ,stat: ${pageUtils.rows}">
                          <img src="/img/BluelistStyle.jpg">
-                         <a th:href="@{/front/cms/open/article/detail(id=${m.id})}" th:text="${m.title}">信息所开展“共建生态文明，共享绿色未来”环保公益活动</a>
+                         <a th:href="@{/open/article/detail(id=${m.id})}" th:text="${m.title}">信息所开展“共建生态文明，共享绿色未来”环保公益活动</a>
                          <span class="recommend_writer">作者：</span>
                          <span th:text="${m.create.name}">作者：五金城</span>
                          <span class="recommend_time" th:text="${#dates.format(m.publishTime, 'yyyy-MM-dd')}">2018-10-11</span>

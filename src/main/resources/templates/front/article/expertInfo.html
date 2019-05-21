@@ -12,7 +12,7 @@
 				<div class="grayStrip">				
 				<div class="publicTitle">
 					<p><span th:text="${user.username}"></span>登录成功！
-					<a th:href="@{/front/cms/out}" class="person_exit">退出</a>
+					<a th:href="@{/out}" class="person_exit">退出</a>
 					</p>
 				</div>
 			</div>
@@ -20,14 +20,14 @@
 				<aside>
 					<div class="public_box">
 						<ul>
-							<li class="listStyle"><a th:href="@{/front/cms/expertInfo}">个人信息</a></li>
-							<li><a th:href="@{/front/cms/open/articleScorelist}">文章审核</a></li>
-							<li><a th:href="@{/front/cms/open/expertCommentArticleList}">已审文章</a></li>
+							<li class="listStyle"><a th:href="@{/expertInfo}">个人信息</a></li>
+							<li><a th:href="@{/open/articleScorelist}">文章审核</a></li>
+							<li><a th:href="@{/open/expertCommentArticleList}">已审文章</a></li>
 <!--
-							<li><a th:href="@{/front/cms/open/expertRecommendArticleList}">文章推荐</a></li>
+							<li><a th:href="@{/open/expertRecommendArticleList}">文章推荐</a></li>
 -->
-							<li><a th:href="@{/front/cms/open/expertCommentList(expertId=${user.busId})}">我的评论</a></li>
-							<li><a th:href="@{/front/cms/mynews}">消息通知</a></li>
+							<li><a th:href="@{/open/expertCommentList(expertId=${user.busId})}">我的评论</a></li>
+							<li><a th:href="@{/mynews}">消息通知</a></li>
 						</ul>
 					</div>
 				</aside>

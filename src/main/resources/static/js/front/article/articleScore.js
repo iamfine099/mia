@@ -13,7 +13,7 @@ $(document).ready(function() {
 		$.ajax({
 			cache : true,
 			type : "POST",
-			url : "/front/cms/score",
+			url : "/score",
 			data : {
 				"id":id,
 				"score":score
@@ -40,7 +40,7 @@ function score() {
 	$.ajax({
 		cache : true,
 		type : "POST",
-		url : "/front/cms/score",
+		url : "/score",
 		data : {
 			"id":id,
 			"score":score
@@ -69,7 +69,7 @@ function comment() {
 	$.ajax({
 		cache : true,
 		type : "POST",
-		url : "/front/cms/comment",
+		url : "/comment",
 		data : {
 			"id":id,
 			"cId":cId,
@@ -98,7 +98,7 @@ function recommendnum() {
 	$.ajax({
 		cache : true,
 		type : "POST",
-		url : "/front/cms/recommendnum",
+		url : "/recommendnum",
 		data : {
 			"id":id,
 			"isLike":isLike
@@ -133,7 +133,7 @@ function recommend() {
 	$.ajax({
 		cache : true,
 		type : "POST",
-		url : "/front/cms/recommend",
+		url : "/recommend",
 		data : {
 			"id":id,
 			"isRecommend":isRecommend

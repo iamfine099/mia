@@ -10,7 +10,7 @@
 					<a th:href="@{/}">首页</a>
 				</div>
 				<div class="textLink">
-					<a th:href="@{/front/cms/open/notifyarticleList}">>&nbsp;&nbsp;通知公告</a>
+					<a th:href="@{open/notifyarticleList}">>&nbsp;&nbsp;通知公告</a>
 				</div>
 			</div>
 			<!--这是选择盒子-->
@@ -19,11 +19,11 @@
 					<li class="selectionBarText choosed" style="border-top:1px solid #dcdcdc ;"><a href="">通知公告</a></li>
 					<!--  <li class="selectionBarText"><a href="#">行业资讯</a></li>-->
 				</ul>
-			    <form  method="post" id="signupForm" action="/front/cms/open/article/detail" class="min_height">
+			    <form  method="post" id="signupForm" action="/open/article/detail" class="min_height">
 			     <div class="article_down">
 				       	<ul class="article_list">
 				      		<li th:each="m ,stat: ${pageUtils.rows}">
-				    			<a th:href="@{/front/cms/open/article/detail(id=${m.id})}" th:text="${m.title}">但干细胞治疗心脏病并非没有希望</a>
+				    			<a th:href="@{/open/article/detail(id=${m.id})}" th:text="${m.title}">但干细胞治疗心脏病并非没有希望</a>
 				    			
 					    			<!-- <span class="writer">阅读量：</span>
 					       			<span class="writer_name" th:text="${m.hits}">88</span> -->

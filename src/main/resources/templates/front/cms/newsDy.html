@@ -10,7 +10,7 @@
 					<a th:href="@{/}">首页</a>
 				</div>
 				<div class="textLink">
-					<a th:href="@{/front/cms/open/newsdylist}">>&nbsp;&nbsp;信息动态</a>
+					<a th:href="@{/open/newsdylist}">>&nbsp;&nbsp;信息动态</a>
 				</div>
 			</div>
 			<!--这是选择盒子-->
@@ -19,12 +19,12 @@
 					<li class="selectionBarText choosed" style="border-top:1px solid #dcdcdc ;"><a href="">信息动态</a></li>
 					<!--  <li class="selectionBarText"><a href="#">行业资讯</a></li>-->
 				</ul>
-				<form  method="post" id="signupForm" action="/front/cms/open/newsdylist">
+				<form  method="post" id="signupForm" action="/open/newsdylist">
 					<!-- <div class="newsDy_article">
 						<ul>
 							<li th:each="m ,stat: ${pageUtils.rows}">
 							<img src="/img/BluelistStyle.jpg">
-							<a th:href="@{/front/cms/open/article/detail(id=${m.id})}" th:text="${m.title}">信息所开展“共建生态文明，共享绿色未来”环保公益活动</a>
+							<a th:href="@{/open/article/detail(id=${m.id})}" th:text="${m.title}">信息所开展“共建生态文明，共享绿色未来”环保公益活动</a>
 							<span class="newsDy_readNum">阅读：</span>
 							<span  th:text="${m.hits}">阅读：38</span>
 							<span class="newsDy_time" ></a>
@@ -37,7 +37,7 @@
 				       	<ul class="article_list">
 				      		<li th:each="m ,stat: ${pageUtils.rows}">
 				      		
-				    			<a th:href="@{/front/cms/open/article/detail(id=${m.id})}" th:text="${m.title}">但干细胞治疗心脏病并非没有希望</a>
+				    			<a th:href="@{/open/article/detail(id=${m.id})}" th:text="${m.title}">但干细胞治疗心脏病并非没有希望</a>
 				    			
 					    			<span class="writer">阅读量：</span>
 					       			<span class="writer_name"  th:text="${m.hits}"></span>

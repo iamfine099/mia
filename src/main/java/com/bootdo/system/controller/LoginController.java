@@ -41,13 +41,15 @@ public class LoginController extends BaseController {
 
 	@Autowired
 	MenuService menuService;
-
 	@Autowired
 	UserService userService;
-	@GetMapping({ "/", "" })
+
+	/*@GetMapping({ "/", "" })
 	String welcome(Model model) {
-		return "forward:/front/cms";
-	}
+
+		System.out.println(112);
+		return "forward:/";
+	}*/
 
 	@Log("请求访问主页")
 	@GetMapping({ "/index" })
@@ -57,10 +59,10 @@ public class LoginController extends BaseController {
 		 String fType = getUser().getUser().getfType();
 		 if("M".equals(fType)){
 			 //普通会员个人中心
-			 return "redirect:/front/cms/personalInfo";
+			 return "redirect:/personalInfo";
 		 }else if("E".equals(fType)){
 			 //专家个人中心
-			 return "redirect:/front/cms/expertInfo";
+			 return "redirect:/expertInfo";
 		 }else{
 			 String backUrl = "index_v1";
 			 List<Tree<MenuDO>> menus = menuService.listMenuTree(getUserId());
@@ -155,7 +157,7 @@ public class LoginController extends BaseController {
 		
 	}
 	@Log("登录")
-	@PostMapping("/login")
+	@PostMapping("/admin/login")
 	@ResponseBody
 	R ajaxLogin(String username, String password,String yz, HttpSession session) {//, String loginType
 		R r = RandomValidateCodeUtils.checkVerify(yz, session);

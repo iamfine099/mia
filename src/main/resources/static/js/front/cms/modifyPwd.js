@@ -31,7 +31,7 @@ $(function(){
 			}
 			$.ajax({
 				type : "POST",
-				url : "/front/cms/modifyPwd/update",
+				url : "/modifyPwd/update",
 				data :{
 					old_Pwd:old_Pwd,
 					new_Pwd:new_Pwd
@@ -42,7 +42,7 @@ $(function(){
 				success : function(data) {
 					if (data.code == 0) {
 						layer.msg("操作成功");
-						window.location.href="/front/cms/personalInfo";
+						window.location.href="/personalInfo";
 					} else {
 						layer.alert(data.msg);
 					}

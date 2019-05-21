@@ -10,7 +10,7 @@
 		a.`like_num`,a.`attachment`,a.`href`,
 		ad.`content`,ad.`copyfrom`, c.`name` as "create.name", audit.`username` as "audit.username",f.`url` as "url",
 		t.`name` as category_name, a.classify
-		</sql>
+	</sql>
 	
 	<sql id="commons_where">
 		  <if test="id != null and id != ''"> and a.id = #{id} </if>

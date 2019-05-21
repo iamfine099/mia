@@ -14,7 +14,7 @@ $(function(){
 	    $("#tab .title-c span").removeClass("trangle");
 	    $('.newsNew').stop().hide();
 	    $('.newsNew').eq(0).stop().show();
-	    $('#news_a').prop("href","/front/cms/open/page/15");
+	    $('#news_a').prop("href","/open/page/15");
 	})
 	$("#tab .title-c").click(function(){
 		$(this).css({
@@ -29,7 +29,7 @@ $(function(){
 	    $("#tab .title-l span").removeClass("trangle");
 	    $('.newsNew').stop().hide();
 	    $('.newsNew').eq(1).stop().show();
-	    $('#news_a').prop("href","/front/cms/open/page/16");
+	    $('#news_a').prop("href","/open/page/16");
 	})
 	
 	//轮播
@@ -111,7 +111,7 @@ $(function(){
 		$.ajax({
 			cache : true,
 			type : "POST",
-			url : "/front/cms/login",
+			url : "/login",
 			data: {
 				'username':username,
 				'password':password,
@@ -146,7 +146,7 @@ $(function(){
 	});
     //注册
     $("#register_btn").click(function(){
-    	parent.location.href = '/front/cms/register';
+    	parent.location.href = '/register';
 	})
 })
 

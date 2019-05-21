@@ -53,11 +53,11 @@ public class UserServiceImpl implements UserService {
     @Override
 //    @Cacheable(key = "#id")
     public UserDO get(Long id) {
-    	if(id ==null || id==0) return new UserDO();
+        if (id == null || id == 0) return new UserDO();
         List<Long> roleIds = userRoleMapper.listRoleId(id);
         UserDO user = userMapper.get(id);
-        if(user.getDeptId() != null){
-        	user.setDeptName(deptMapper.get(user.getDeptId()).getName());
+        if (user.getDeptId() != null) {
+            user.setDeptName(deptMapper.get(user.getDeptId()).getName());
         }
         user.setRoleIds(roleIds);
         return user;
@@ -76,22 +76,22 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public int save(UserDO user) {
-    	List<Long> roles = user.getRoleIds();
-    	if(roles != null && roles.size() > 0){
-    		RoleDO role = roleDao.get(roles.get(0));
-    		if(role != null){
-    			user.setfType(role.getfType());
-    			if("P".equals(role.getfType())){
-    				user.setBusId("0");
-    			}
-    		}
-    	}
+        List<Long> roles = user.getRoleIds();
+        if (roles != null && roles.size() > 0) {
+            RoleDO role = roleDao.get(roles.get(0));
+            if (role != null) {
+                user.setfType(role.getfType());
+                if ("P".equals(role.getfType())) {
+                    user.setBusId("0");
+                }
+            }
+        }
         int count = userMapper.save(user);
         Long userId = user.getUserId();
         userRoleMapper.removeByUserId(userId);
         List<UserRoleDO> list = new ArrayList<>();
-        if(roles != null && roles.size() > 0){
-        	for (Long roleId : roles) {
+        if (roles != null && roles.size() > 0) {
+            for (Long roleId : roles) {
                 UserRoleDO ur = new UserRoleDO();
                 ur.setUserId(userId);
                 ur.setRoleId(roleId);
@@ -106,22 +106,23 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int update(UserDO user) {
-    	List<Long> roles = user.getRoleIds();
-    	if(roles != null && roles.size() > 0){
-    		RoleDO role = roleDao.get(roles.get(0));
-    		if(role != null){
-    			user.setfType(role.getfType());
-    			if("P".equals(role.getfType())){
-    				user.setBusId("0");
-    			}
-    		}
-    	}
+
+        List<Long> roles = user.getRoleIds();
+        if (roles != null && roles.size() > 0) {
+            RoleDO role = roleDao.get(roles.get(0));
+            if (role != null) {
+                user.setfType(role.getfType());
+                if ("P".equals(role.getfType())) {
+                    user.setBusId("0");
+                }
+            }
+        }
         int r = userMapper.update(user);
         Long userId = user.getUserId();
         userRoleMapper.removeByUserId(userId);
         List<UserRoleDO> list = new ArrayList<>();
-        if(roles != null && roles.size() > 0){
-        	for (Long roleId : roles) {
+        if (roles != null && roles.size() > 0) {
+            for (Long roleId : roles) {
                 UserRoleDO ur = new UserRoleDO();
                 ur.setUserId(userId);
                 ur.setRoleId(roleId);
@@ -268,51 +269,52 @@ public class UserServiceImpl implements UserService {
 //        }
 //        return result;
 //    }
+
     /**
      * 绑定openid
      */
     public void bandOpenid() {
-    	
-    	HttpSession session = ContextHolderUtils.getSession();
-    	String openid = (String)session.getAttribute("openid");
-    	//解决重新绑定微信问题，清理原有关联的微信账号
-    	userMapper.updateOpenid(openid);
+
+        HttpSession session = ContextHolderUtils.getSession();
+        String openid = (String) session.getAttribute("openid");
+        //解决重新绑定微信问题，清理原有关联的微信账号
+        userMapper.updateOpenid(openid);
 //    	UserDO userDo= ShiroUtils.getUser().getUser();
 //    	userDo.setOpenid(openid);
 //    	userMapper.update(userDo);
     }
 
-	@Override
-	public int only(Map<String, Object> map) {
-		return userMapper.only(map);
-	}
+    @Override
+    public int only(Map<String, Object> map) {
+        return userMapper.only(map);
+    }
 
-	@Override
-	public int resetpwd(String busId, String fType, String password) {
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("busId",busId);
-		map.put("fType",fType);
-		UserDO user = userMapper.getIdType(map);
-		user.setPassword(MD5Utils.encrypt(user.getUsername(), password));
-		return userMapper.update(user);
-	}
+    @Override
+    public int resetpwd(String busId, String fType, String password) {
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("busId", busId);
+        map.put("fType", fType);
+        UserDO user = userMapper.getIdType(map);
+        user.setPassword(MD5Utils.encrypt(user.getUsername(), password));
+        return userMapper.update(user);
+    }
 
-	@Override
-	public UserDO getIdType(Map<String, Object> map) {
-		return userMapper.getIdType(map);
-	}
+    @Override
+    public UserDO getIdType(Map<String, Object> map) {
+        return userMapper.getIdType(map);
+    }
 
-	@Override
-	public Map<String, Object> updatePersonalImg(MultipartFile file,
-			String avatar_data, Long userId) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public Map<String, Object> updatePersonalImg(MultipartFile file,
+                                                 String avatar_data, Long userId) throws Exception {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
-	@Override
-	public int removeByParam(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return userMapper.removeByParam(map);
-	}
+    @Override
+    public int removeByParam(Map<String, Object> map) {
+        // TODO Auto-generated method stub
+        return userMapper.removeByParam(map);
+    }
 
 }

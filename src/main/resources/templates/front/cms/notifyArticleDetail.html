@@ -19,26 +19,26 @@
 			<div th:if="${user.fType ne 'U'}" class="grayStrip">
 				<div class="publicTitle">
 					<p><span th:text="${user.username}"></span>登录成功！
-					<a th:href="@{/front/cms/out}" class="person_exit">退出</a></p>
+					<a th:href="@{/out}" class="person_exit">退出</a></p>
 				</div>
 			</div>
 			<div class="bodyContent">
 				<!--这是选择  新闻动态  还是  行业资讯  的选择框-->
 				<ul class="selectionBar">
 					<li class="selectionBarText choosed" style="border-top:1px solid #dcdcdc ;"><a href="">消息通知详情</a></li>
-					<li th:if="${user.fType eq 'M'}" class="selectionBarText"><a th:href="@{/front/cms/personalInfo}">个人信息</a></li>
-					<li th:if="${user.fType eq 'M'}" class="selectionBarText"><a th:href="@{/front/cms/modifyPwd}">修改密码</a></li>
-					<li th:if="${user.fType eq 'M'}" class="selectionBarText"><a th:href="@{/front/cms/release}">我要发布</a></li>
-					<li th:if="${user.fType eq 'M'}" class="selectionBarText"><a th:href="@{/front/cms/drafts}">草稿箱</a></li>
-					<li th:if="${user.fType eq 'M'}" class="selectionBarText"><a th:href="@{/front/cms/myArticle}">我的文章</a></li> 
-					<li th:if="${user.fType eq 'M'}" class="selectionBarText"><a th:href="@{/front/cms/open/recommendarticlelist}">推荐文章</a></li>
-					<li th:if="${user.fType eq 'M'}" class="selectionBarText"><a th:href="@{/front/cms/mynews}">消息通知</a></li>
-					<li th:if="$expertInfo{user.fType eq 'E'}" class="selectionBarText"><a th:href="@{/front/cms/expertInfo}">个人信息</a></li>
-					<li th:if="${user.fType eq 'E'}" class="selectionBarText"><a th:href="@{/front/cms/open/articleScorelist}">文章审核</a></li>
-					<li th:if="${user.fType eq 'E'}" class="selectionBarText"><a th:href="@{/front/cms/open/expertCommentArticleList}">已审文章</a></li>
-					<li th:if="${user.fType eq 'E'}" class="selectionBarText"><a th:href="@{/front/cms/open/expertRecommendArticleList}">文章推荐</a></li>
-					<li th:if="${user.fType eq 'E'}" class="selectionBarText"><a th:href="@{/front/cms/open/expertCommentList(expertId=${user.busId})}">我的评论</a></li>
-					<li th:if="${user.fType eq 'E'}" class="selectionBarText"><a th:href="@{/front/cms/mynews}">消息通知</a></li>
+					<li th:if="${user.fType eq 'M'}" class="selectionBarText"><a th:href="@{/personalInfo}">个人信息</a></li>
+					<li th:if="${user.fType eq 'M'}" class="selectionBarText"><a th:href="@{/modifyPwd}">修改密码</a></li>
+					<li th:if="${user.fType eq 'M'}" class="selectionBarText"><a th:href="@{/release}">我要发布</a></li>
+					<li th:if="${user.fType eq 'M'}" class="selectionBarText"><a th:href="@{/drafts}">草稿箱</a></li>
+					<li th:if="${user.fType eq 'M'}" class="selectionBarText"><a th:href="@{/myArticle}">我的文章</a></li>
+					<li th:if="${user.fType eq 'M'}" class="selectionBarText"><a th:href="@{/open/recommendarticlelist}">推荐文章</a></li>
+					<li th:if="${user.fType eq 'M'}" class="selectionBarText"><a th:href="@{/mynews}">消息通知</a></li>
+					<li th:if="$expertInfo{user.fType eq 'E'}" class="selectionBarText"><a th:href="@{/expertInfo}">个人信息</a></li>
+					<li th:if="${user.fType eq 'E'}" class="selectionBarText"><a th:href="@{/open/articleScorelist}">文章审核</a></li>
+					<li th:if="${user.fType eq 'E'}" class="selectionBarText"><a th:href="@{/open/expertCommentArticleList}">已审文章</a></li>
+					<li th:if="${user.fType eq 'E'}" class="selectionBarText"><a th:href="@{/open/expertRecommendArticleList}">文章推荐</a></li>
+					<li th:if="${user.fType eq 'E'}" class="selectionBarText"><a th:href="@{/open/expertCommentList(expertId=${user.busId})}">我的评论</a></li>
+					<li th:if="${user.fType eq 'E'}" class="selectionBarText"><a th:href="@{/mynews}">消息通知</a></li>
 					<!-- <li class="selectionBarText"><a href="#">行业资讯</a></li> -->
 				</ul>
 				<article class="newsDyC_article">
@@ -59,8 +59,8 @@
 						</p>
 					</div>
 					<div class="newsDyC_articleIndex">
-						<p>上一条:<a th:if="${prevUserMessage ne null}" th:text="${prevUserMessage.fTitle}" th:href="@{/front/cms/mynews/detail(id=${prevUserMessage.fMsgId})}">信息所宋奎勐博士赴英国利物浦参加世界第五届世界卫生体系研究大会</a></p>
-						<p>下一条:<a th:if="${nextUserMessage ne null}" th:text="${nextUserMessage.fTitle}" th:href="@{/front/cms/mynews/detail(id=${nextUserMessage.fMsgId})}">低碳环保&nbsp;绿色共享&nbsp;健康生活————泉城公园健步走活动</a></p>
+						<p>上一条:<a th:if="${prevUserMessage ne null}" th:text="${prevUserMessage.fTitle}" th:href="@{/mynews/detail(id=${prevUserMessage.fMsgId})}">信息所宋奎勐博士赴英国利物浦参加世界第五届世界卫生体系研究大会</a></p>
+						<p>下一条:<a th:if="${nextUserMessage ne null}" th:text="${nextUserMessage.fTitle}" th:href="@{/mynews/detail(id=${nextUserMessage.fMsgId})}">低碳环保&nbsp;绿色共享&nbsp;健康生活————泉城公园健步走活动</a></p>
 					</div>
 				</article>
 			</div>

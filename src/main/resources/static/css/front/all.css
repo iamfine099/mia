@@ -755,7 +755,6 @@ footer{
 	text-overflow: ellipsis;
 	-moz-binding: url(ellipsis.xml#ellipsis);
 }
-}
 
 #index aside .comment li:hover a {
 	color: #037EDB;
@@ -2436,7 +2435,7 @@ footer{
 }
 .person_exit {
 	color:#037EDB;
-	display:block-inline;
+	display: inline-block;
 }
 .personalInfoName{
 	width:100px;
@@ -3227,7 +3226,7 @@ ul {
 .tre-acrr {
 	height: 24px;
 	border-color: #999;
-	border-bottom: medium 0;
+	border-bottom: medium;
 	text-decoration: none;
 	position: relative;
 	z-index: 2

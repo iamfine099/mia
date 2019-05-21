@@ -39,7 +39,7 @@ $(document).ready(function() {
 		$.ajax({
 			cache : true,
 			type : "POST",
-			url : "/front/cms/forgetPwdPost",
+			url : "/forgetPwdPost",
 			data: $('#signupForm').serialize(),
 			async : false,
 			error : function(request) {
@@ -49,7 +49,7 @@ $(document).ready(function() {
 				if (data.code == 0) {
 					layer.msg(data.msg);
 					//找回密码成功跳转页面
-					parent.location.href = '/front/cms';
+					parent.location.href = '/';
 				} else {
 					layer.alert(data.msg);
 				}
@@ -74,7 +74,7 @@ $(document).ready(function() {
 		$.ajax({
 			cache : true,
 			type : "POST",
-			url : "/front/cms/sendCode",
+			url : "/sendCode",
 			data: {
 				"email":email
 			},

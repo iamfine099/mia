@@ -54,7 +54,7 @@
             function searchItem() {
                 var keyword=$("#keyword").val();
                 if(keyword != ""){
-                    window.location.href='/front/cms/search/'+keyword
+                    window.location.href='/search/'+keyword
                 }
             }
 		</script>
@@ -83,10 +83,10 @@
 					<ul class="navList">
 						<li class="firstNavItem color_bt"><a class='firstNav' th:href="@{/}">首页</a></li>
 						<li class='firstNavItem' th:each="vo:${T(com.bootdo.cms.util.CmsUtils).getMainNavList()}">
-							<a class='firstNav' th:target="${vo.target}" th:href="${vo.module eq 'link'}? @{${vo.href}} : @{'/front/cms/open/page/'+${vo.id}}" th:text="${vo.name}"></a>
+							<a class='firstNav' th:target="${vo.target}" th:href="${vo.module eq 'link'}? @{${vo.href}} : @{'/open/page/'+${vo.id}}" th:text="${vo.name}"></a>
 							<div class='secondList'>
 								<div class='secondListOne' th:each="svo:${T(com.bootdo.cms.util.CmsUtils).getCategoryList(vo.id,0,'')}">
-									<a style="color: white" th:target="${svo.target}" th:href="${svo.module eq 'link'}? @{${svo.href}} : @{'/front/cms/open/page/'+${svo.id}}" th:text="${svo.name}"></a>
+									<a style="color: white" th:target="${svo.target}" th:href="${svo.module eq 'link'}? @{${svo.href}} : @{'/open/page/'+${svo.id}}" th:text="${svo.name}"></a>
 								</div>
 								<div style="clear:both;"></div>
 							</div>
@@ -94,14 +94,14 @@
 
 							</div>
 						</li>
-						<!-- <li><a th:href="@{/front/cms/open/notifyarticlelist}">通知公告</a></li>
-                        <li><a th:href="@{/front/cms/open/newsdylist}">信息动态</a></li>
-                        <li><a th:href="@{/front/cms/open/recommendarticlelist}">推荐文章</a></li>
-                        <li><a th:href="@{/front/cms/open/expertlist}">协会会员</a></li> -->
+						<!-- <li><a th:href="@{/open/notifyarticlelist}">通知公告</a></li>
+                        <li><a th:href="@{/open/newsdylist}">信息动态</a></li>
+                        <li><a th:href="@{/open/recommendarticlelist}">推荐文章</a></li>
+                        <li><a th:href="@{/open/expertlist}">协会会员</a></li> -->
 						<!-- <li class="line"></li>
-                        <li><a th:href="@{/front/cms/open/goodCommentlist}">精彩评论</a></li>
+                        <li><a th:href="@{/open/goodCommentlist}">精彩评论</a></li>
                         <li class="line"></li>
-                        <li><a th:href="@{/front/cms/leaveMessage}">我要留言</a></li> -->
+                        <li><a th:href="@{s/leaveMessage}">我要留言</a></li> -->
 					</ul>
 
 				</nav>
@@ -179,7 +179,7 @@
         });
         function search() {
             var keyword=$("#keyword").val();
-            window.location.herf='/front/cms/search?title='+keyword
+            window.location.herf='/search?title='+keyword
         }
 
 	</script>

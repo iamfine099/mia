@@ -18,7 +18,7 @@
         <!--<ul class="selectionBar">
             &lt;!&ndash;<ul class="selectionBar">
                 <li class="selectionBarText " th:each="spec : ${specialtyDict}">
-                    <a th:href="@{/front/cms/open/expertlist(specialty=${spec.value})}"
+                    <a th:href="@{/open/expertlist(specialty=${spec.value})}"
                        th:text="${spec.name}">成果展示
                     </a>
                 </li>
@@ -26,12 +26,12 @@
 
             <ul class="selectionBar">
                 <li class="selectionBarText">
-                    <a href="/front/cms/open/expertlist">专家介绍
+                    <a href="/open/expertlist">专家介绍
                     </a>
                 </li>
             </ul>
         </ul>-->
-        <form method="post" id="signupForm" action="/front/cms/open/expertlist">
+        <form method="post" id="signupForm" action="/open/expertlist">
             <div id="fabu_box" class="fabu_box" style="width: 1150px; float: right;height: 100%; margin-right: 20px">
                 <div class="fabu_top" style="float: right; margin-right: 20px;">
                     <p>
@@ -61,7 +61,7 @@
                 <div class="clear_box">
                     <ul>
                         <li class="expertPhoto left" th:each="m ,stat: ${pageUtils.rows}" style="height: 300px">
-                            <a th:href="@{/front/cms/open/expert/detail(expertId=${m.expertId})}">
+                            <a th:href="@{/open/expert/detail(expertId=${m.expertId})}">
                                 <div class="expertPhotoBox" style="height: 210px">
                                     <img th:src="@{${m.url!=null}?@{${m.url}}:@{/img/morentouxiang.png}}"
                                          style="width: 150px;height: 210px">

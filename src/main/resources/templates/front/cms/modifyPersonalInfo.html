@@ -9,18 +9,18 @@
     <div class="grayStrip">
         <div class="publicTitle">
             <p><span th:text="${user.username}"></span>登录成功！
-                <a th:href="@{/front/cms/out}" class="person_exit">退出</a></p>
+                <a th:href="@{/out}" class="person_exit">退出</a></p>
         </div>
     </div>
     <!--这是选择盒子-->
     <div class="bodyContent">
         <ul class="selectionBar">
-            <li class="selectionBarText"><a th:href="@{/front/cms/personalInfo}">个人信息</a></li>
-            <li class="selectionBarText choosed"><a th:href="@{/front/cms/modifyPwd}">修改密码</a></li>
-            <li class="selectionBarText"><a th:href="@{/front/cms/release}">我要发布</a></li>
-            <li class="selectionBarText"><a th:href="@{/front/cms/drafts}">草稿箱</a></li>
-            <li class="selectionBarText"><a th:href="@{/front/cms/myArticle}">我的文章</a></li>
-            <li class="selectionBarText"><a th:href="@{/front/cms/open/recommendarticlelist}">推荐文章</a></li>
+            <li class="selectionBarText"><a th:href="@{/personalInfo}">个人信息</a></li>
+            <li class="selectionBarText choosed"><a th:href="@{/modifyPwd}">修改密码</a></li>
+            <li class="selectionBarText"><a th:href="@{/release}">我要发布</a></li>
+            <li class="selectionBarText"><a th:href="@{/drafts}">草稿箱</a></li>
+            <li class="selectionBarText"><a th:href="@{/myArticle}">我的文章</a></li>
+            <li class="selectionBarText"><a th:href="@{/open/recommendarticlelist}">推荐文章</a></li>
         </ul>
         <form id="signupFormR">
         <div class="modifyPersonalInfo" id="signupForm">

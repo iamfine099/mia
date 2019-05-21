@@ -12,7 +12,7 @@
 				<div class="grayStrip">				
 				<div class="publicTitle">
 					<p><span th:text="${user.username}"></span>登录成功！
-					<a th:href="@{/front/cms/out}" class="person_exit">退出</a>
+					<a th:href="@{/out}" class="person_exit">退出</a>
 					</p>
 				</div>
 			</div>
@@ -20,12 +20,12 @@
 				<aside>
 					<div class="list_box">
 						<ul>
-							<li><a th:href="@{/front/cms/expertInfo}">个人信息</a></li>
-							<li><a th:href="@{/front/cms/open/articleScorelist}">文章审核</a></li>
-							<li class="listStyle"><a th:href="@{/front/cms/open/expertCommentArticleList}">已审文章</a></li>
-							<li><a th:href="@{/front/cms/open/expertRecommendArticleList}">文章推荐</a></li>
-							<li><a th:href="@{/front/cms/open/expertCommentList(expertId=${user.busId})}">我的评论</a></li>
-							<li><a th:href="@{/front/cms/mynews}">消息通知</a></li>
+							<li><a th:href="@{/expertInfo}">个人信息</a></li>
+							<li><a th:href="@{/open/articleScorelist}">文章审核</a></li>
+							<li class="listStyle"><a th:href="@{/open/expertCommentArticleList}">已审文章</a></li>
+							<li><a th:href="@{/open/expertRecommendArticleList}">文章推荐</a></li>
+							<li><a th:href="@{/open/expertCommentList(expertId=${user.busId})}">我的评论</a></li>
+							<li><a th:href="@{/mynews}">消息通知</a></li>
 						</ul>
 					</div>
 				</aside>
@@ -49,7 +49,7 @@
 						<textarea class="review">说点什么...</textarea>
 						<button class="review_btn">评论</button>
 					</div> -->
-					<form  method="post" id="signupForm" action="/front/cms/open/articleScore/detail">
+					<form  method="post" id="signupForm" action="/open/articleScore/detail">
 					<div class="content_down">
 						<div class="down_box" th:each="m ,stat: ${pageUtils.rows}">
 							<div class="down_title">

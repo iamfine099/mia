@@ -79,7 +79,7 @@ import com.bootdo.system.shiro.UsernamePasswordLoginTypeToken;
 /**
  * 首页接口
  */
-@RequestMapping("/front/cms")
+@RequestMapping("/")
 @Controller
 public class FrontCmsController extends BaseController {
 
@@ -978,6 +978,8 @@ public class FrontCmsController extends BaseController {
         }
 
         if (memberService.update(member) > 0) {
+
+            /* TODO 待确认是否会员修改了信息流需要管理员重新审批
             Map<String, Object> map = new HashMap<>();
             map.put("busId", member.getMemId());
             map.put("fType", new String[]{"M"});
@@ -989,7 +991,7 @@ public class FrontCmsController extends BaseController {
                     userDO.setStatus(0);
                 }
                 userService.update(userDO);
-            }
+            }*/
         }
         return R.ok();
     }
@@ -1113,6 +1115,8 @@ public class FrontCmsController extends BaseController {
         }
         if (StringUtils.isNotEmpty(image)) {
             article.setImage(image.substring(0, image.length() - 1));
+            article.setAttachment(image.substring(0, image.length() - 1));
+
         }
         if (articleService.saveAchievement(article) > 0) {
 
@@ -1946,6 +1950,19 @@ public class FrontCmsController extends BaseController {
             model.addAttribute("userType", "U");
         }
         model.addAttribute("experevaluate", experevaluate);
+
+        // 附件
+        List<FileDO> fileList = new ArrayList<>();
+        if (StringUtils.isNotEmpty(article.getAttachment())) {
+            String[] imageArray = article.getAttachment().split(",");
+            for (int i = 0; i < imageArray.length; i++) {
+                FileDO fileObj = sysFileService.get(Long.parseLong(imageArray[i]));
+                if (fileObj != null) {
+                    fileList.add(fileObj);
+                }
+            }
+        }
+        model.addAttribute("fileList", fileList);
 
         //评论列表
         params = new HashMap<String, Object>();

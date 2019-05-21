@@ -12,7 +12,7 @@
 				<div class="grayStrip">				
 				<div class="publicTitle">
 					<p><span th:text="${user.username}"></span>登录成功！
-					<a th:href="@{/front/cms/out}" class="person_exit">退出</a>
+					<a th:href="@{/out}" class="person_exit">退出</a>
 					</p>
 				</div>
 			</div>
@@ -20,20 +20,20 @@
 				<aside>
 					<div class="public_box">
 						<ul>
-							<li><a th:href="@{/front/cms/expertInfo}">个人信息</a></li>
-							<li><a th:href="@{/front/cms/open/articleScorelist}">文章审核</a></li>
-							<li class="listStyle"><a th:href="@{/front/cms/open/expertCommentArticleList}">已审文章</a></li>
+							<li><a th:href="@{/expertInfo}">个人信息</a></li>
+							<li><a th:href="@{/open/articleScorelist}">文章审核</a></li>
+							<li class="listStyle"><a th:href="@{/open/expertCommentArticleList}">已审文章</a></li>
 <!--
-							<li><a th:href="@{/front/cms/open/expertRecommendArticleList}">文章推荐</a></li>
+							<li><a th:href="@{/open/expertRecommendArticleList}">文章推荐</a></li>
 -->
-							<li><a th:href="@{/front/cms/open/expertCommentList(expertId=${user.busId})}">我的评论</a></li>
-							<li><a th:href="@{/front/cms/mynews}">消息通知</a></li>
+							<li><a th:href="@{/open/expertCommentList(expertId=${user.busId})}">我的评论</a></li>
+							<li><a th:href="@{/mynews}">消息通知</a></li>
 						</ul>
 					</div>
 				</aside>
 				<!--右侧信息-->
 				<article>
-				<form  method="post" id="signupForm" action="/front/cms/open/expertCommentArticleList">
+				<form  method="post" id="signupForm" action="/open/expertCommentArticleList">
 				    <div class="fabu_box">
 				    	<div class="fabu_top">
 					        <p>文章标题：<input class="fabu" type="text" name="title" id="title" th:value="${pageUtils.params.title}"/></p>
@@ -67,7 +67,7 @@
 				    <div class="article_down">
 				       	<ul class="article_list">
 				      		<li th:each="m ,stat: ${pageUtils.rows}">
-				    			<a th:href="@{/front/cms/open/articleScore/detail(id=${m.id})}" th:text="${m.title}">心脏干细胞研究论文造假&nbsp;但干细胞治疗心脏病并非没有希望</a>
+				    			<a th:href="@{/open/articleScore/detail(id=${m.id})}" th:text="${m.title}">心脏干细胞研究论文造假&nbsp;但干细胞治疗心脏病并非没有希望</a>
 				       			<span class="writer">作者：</span>
 				       			<span class="writer_name" th:text="${m.create.name}">张熙桐</span>
 				       			<span class="writer_time" th:text="${m.publishTime} == null ? null : ${#dates.format(m.publishTime, 'yyyy-MM-dd')}">2018-10-11</span>

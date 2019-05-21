@@ -140,7 +140,7 @@ function saveArticle() {
 	$.ajax({
 		cache: true,
 		type: "POST",
-		url: "/front/cms/releasePostEdit", //接口
+		url: "/releasePostEdit", //接口
 		data: formData, // 表单序列化  使表单变成一个字符串
 		contentType: false, //必须false才会避开jQuery对 formdata 的默认处理 XMLHttpRequest会对 formdata 进行正确的处理 
 		processData: false, //必须false才会自动加上正确的Content-Type
@@ -151,7 +151,7 @@ function saveArticle() {
 		success: function(data) {
 			if(data.code == 0) {
 				layer.msg("操作成功");
-				window.location.href="/front/cms/myArticle";
+				window.location.href="/myArticle";
 			} else {
 				layer.alert(data.msg);
 			}
@@ -181,7 +181,7 @@ function saveDrafts() {
 	$.ajax({
 		cache: true,
 		type: "POST",
-		url: "/front/cms/articleStoragEdit", //接口
+		url: "/articleStoragEdit", //接口
 		data: formData, // 表单序列化  使表单变成一个字符串
 		contentType: false, //必须false才会避开jQuery对 formdata 的默认处理 XMLHttpRequest会对 formdata 进行正确的处理 
 		processData: false, //必须false才会自动加上正确的Content-Type
@@ -192,7 +192,7 @@ function saveDrafts() {
 		success: function(data) {
 			if(data.code == 0) {
 				layer.msg("操作成功");
-				window.location.href="/front/cms/drafts";
+				window.location.href="/drafts";
 			} else {
 				layer.alert(data.msg);
 			}

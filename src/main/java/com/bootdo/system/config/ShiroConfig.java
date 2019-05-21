@@ -112,29 +112,29 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/code/image", "anon");
         
         //不需要登陆可访问的地址
-        filterChainDefinitionMap.put("/front/cms", "anon");
-        filterChainDefinitionMap.put("/front/cms/open/article/detail", "anon");
-        filterChainDefinitionMap.put("/front/cms/open/expert/detail", "anon");
-        filterChainDefinitionMap.put("/front/cms/register", "anon");
-        filterChainDefinitionMap.put("/front/cms/registerPost", "anon");
-        filterChainDefinitionMap.put("/front/cms/forgetPwd", "anon");
-        filterChainDefinitionMap.put("/front/cms/forgetPwdPost", "anon");
-        filterChainDefinitionMap.put("/front/cms/login", "anon");
-        filterChainDefinitionMap.put("/front/cms/open/notifyarticlelist", "anon");
-        filterChainDefinitionMap.put("/front/cms/open/newsdylist", "anon");
-        filterChainDefinitionMap.put("/front/cms/open/recommendarticlelist", "anon");
-        filterChainDefinitionMap.put("/front/cms/open/achievementList", "anon");
-        filterChainDefinitionMap.put("/front/cms/open/expertlist", "anon");
-        filterChainDefinitionMap.put("/front/cms/open/goodCommentlist", "anon");
-        filterChainDefinitionMap.put("/front/cms/open/articleScore/detail/**", "anon");
-        filterChainDefinitionMap.put("/front/cms/open/page/**", "anon");
-        filterChainDefinitionMap.put("/front/cms/open/aArticle/detail", "anon");
-        filterChainDefinitionMap.put("/front/cms/open/partyBuilding/list", "anon");
-        filterChainDefinitionMap.put("/front/cms/leaveMessage", "anon");
-        filterChainDefinitionMap.put("/front/cms/leaveMessage/add", "anon");
-        filterChainDefinitionMap.put("/front/cms/layeropen", "anon");
-        filterChainDefinitionMap.put("/front/cms/search/**", "anon");
-        filterChainDefinitionMap.put("/front/cms/sendCode", "anon");
+       // filterChainDefinitionMap.put("", "anon");
+        filterChainDefinitionMap.put("/open/article/detail", "anon");
+        filterChainDefinitionMap.put("/open/expert/detail", "anon");
+        filterChainDefinitionMap.put("/register", "anon");
+        filterChainDefinitionMap.put("/registerPost", "anon");
+        filterChainDefinitionMap.put("/forgetPwd", "anon");
+        filterChainDefinitionMap.put("/forgetPwdPost", "anon");
+        filterChainDefinitionMap.put("/login", "anon");
+        filterChainDefinitionMap.put("/open/notifyarticlelist", "anon");
+        filterChainDefinitionMap.put("/open/newsdylist", "anon");
+        filterChainDefinitionMap.put("/open/recommendarticlelist", "anon");
+        filterChainDefinitionMap.put("/open/achievementList", "anon");
+        filterChainDefinitionMap.put("/open/expertlist", "anon");
+        filterChainDefinitionMap.put("/open/goodCommentlist", "anon");
+        filterChainDefinitionMap.put("/open/articleScore/detail/**", "anon");
+        filterChainDefinitionMap.put("/open/page/**", "anon");
+        filterChainDefinitionMap.put("/open/aArticle/detail", "anon");
+        filterChainDefinitionMap.put("/open/partyBuilding/list", "anon");
+        filterChainDefinitionMap.put("/leaveMessage", "anon");
+        filterChainDefinitionMap.put("/leaveMessage/add", "anon");
+        filterChainDefinitionMap.put("/layeropen", "anon");
+        filterChainDefinitionMap.put("/search/**", "anon");
+        filterChainDefinitionMap.put("/sendCode", "anon");
 
 
         // filterChainDefinitionMap.put("/**", "myFormAuthenticationFilter");

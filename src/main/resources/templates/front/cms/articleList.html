@@ -10,10 +10,10 @@
 					<a th:href="@{/}">首页</a>
 				</div>
 				<div class="textLink">
-					<a th:href="@{'/front/cms/open/page/'+${category.id}}" th:utext="'>&nbsp;&nbsp;'+${category.name}">首页</a>
+					<a th:href="@{'/open/page/'+${category.id}}" th:utext="'>&nbsp;&nbsp;'+${category.name}">首页</a>
 				</div>
 				<div class="textLink" th:if="${categoryDO.id != null}">
-					<a th:href="@{'/front/cms/open/page/'+${categoryDO.id}}" th:utext="'>&nbsp;&nbsp;'+${categoryDO.name}">首页</a>
+					<a th:href="@{'/open/page/'+${categoryDO.id}}" th:utext="'>&nbsp;&nbsp;'+${categoryDO.name}">首页</a>
 				</div>
 			</div>
 			<div class="grayStrip clear" th:if="${category.parentId} != 0">
@@ -21,27 +21,30 @@
 					<a th:href="@{/}">首页</a>
 				</div>
 				<div class="textLink">
-					<a th:href="@{'/front/cms/open/page/'+${categoryDO.id}}" th:utext="'>&nbsp;&nbsp;'+${categoryDO.name}">首页</a>
+					<a th:href="@{'/open/page/'+${categoryDO.id}}" th:utext="'>&nbsp;&nbsp;'+${categoryDO.name}">首页</a>
 				</div>
 				<div class="textLink">
-					<a th:href="@{'/front/cms/open/page/'+${category.id}}" th:utext="'>&nbsp;&nbsp;'+${category.name}">首页</a>
+					<a th:href="@{'/open/page/'+${category.id}}" th:utext="'>&nbsp;&nbsp;'+${category.name}">首页</a>
 				</div>
 			</div>
 			<!--这是选择盒子-->
 			<div class="bodyContent">
 				<ul class="selectionBar" th:if="${category.parentId} == 0">
-					<li th:if="${categoryList.size()} > 0" th:each="val,stat:${categoryList}" th:class="${stat.index} == 0 ? 'choosed selectionBarText':'selectionBarText'" style="border-top:1px solid #dcdcdc ;"><a th:href="@{'/front/cms/open/page/'+${val.id}}" th:text="${val.name}">通知公告</a></li>
-					<li th:if="${categoryList.size()} == 0" class="selectionBarText choosed" style="border-top:1px solid #dcdcdc ;"><a th:href="@{'/front/cms/open/page/'+${category.id}}" th:text="${category.name}">通知公告</a></li>
+					<li th:if="${categoryList.size()} > 0" th:each="val,stat:${categoryList}" th:class="${stat.index} == 0 ? 'choosed selectionBarText':'selectionBarText'" style="border-top:1px solid #dcdcdc ;">
+						<a th:href="@{'/open/page/'+${val.id}}" th:text="${val.name}">通知公告</a></li>
+					<li th:if="${categoryList.size()} == 0" class="selectionBarText choosed" style="border-top:1px solid #dcdcdc ;">
+						<a th:href="@{'/open/page/'+${category.id}}" th:text="${category.name}">通知公告</a></li>
 				</ul>
 				<ul class="selectionBar" th:if="${category.parentId} != 0">
-					<li th:if="${categoryList.size()} > 0" th:each="val,stat:${categoryList}" th:class="${val.id == category.id} ? 'choosed selectionBarText':'selectionBarText'" style="border-top:1px solid #dcdcdc ;"><a th:href="@{'/front/cms/open/page/'+${val.id}}" th:text="${val.name}">通知公告</a></li>
+					<li th:if="${categoryList.size()} > 0" th:each="val,stat:${categoryList}" th:class="${val.id == category.id} ? 'choosed selectionBarText':'selectionBarText'" style="border-top:1px solid #dcdcdc ;">
+						<a th:href="@{'/open/page/'+${val.id}}" th:text="${val.name}">通知公告</a></li>
 					<!--  <li class="selectionBarText"><a href="#">行业资讯</a></li>-->
 				</ul>
-			    <form  method="post" id="signupForm" th:action="@{'/front/cms/open/page/'+${category.id}}" class="min_height">
+			    <form  method="post" id="signupForm" th:action="@{'/open/page/'+${category.id}}" class="min_height">
 			     <div class="article_down">
 				       	<ul class="article_list">
 				      		<li th:each="m ,stat: ${pageUtils.rows}">
-				    			<a th:href="${#strings.isEmpty(m.href)} ? @{/front/cms/open/aArticle/detail(id=${m.id})} : ${m.href}" th:text="${m.title}">但干细胞治疗心脏病并非没有希望</a>
+				    			<a th:href="${#strings.isEmpty(m.href)} ? @{/open/aArticle/detail(id=${m.id})} : ${m.href}" th:text="${m.title}">但干细胞治疗心脏病并非没有希望</a>
 				    			
 					    			<!-- <span class="writer">阅读量：</span>
 					       			<span class="writer_name" th:text="${m.hits}">88</span> -->
