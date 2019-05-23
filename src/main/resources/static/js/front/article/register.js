@@ -75,11 +75,11 @@ $(document).ready(function() {
     		return false;
     	}
         var formData = $('#signupForm').serialize();
-        formData.set("specialty", $("#sp_id").val());
+        //formData.set("specialty", $("#sp_id").val());
         $.ajax({
 			cache : true,
 			type : "POST",
-			url : "/front/cms/registerPost",
+			url : "/registerPost",
 			data: formData,
 			async : false,
 			error : function(request) {
@@ -112,7 +112,7 @@ function layeropen(){
 		btn: ['确定', '取消'],
 		shadeClose : false, // 点击遮罩关闭层
 		area : [ '40%', '65%' ],
-		content : '/front/cms/layeropen' ,//这里链接到打开的弹出框  layeropen
+		content : '/layeropen' ,//这里链接到打开的弹出框  layeropen
 		yes: function(index, layero){
 			var body = layer.getChildFrame('body', index);
 			var id=body.find("#speciality_id").val();

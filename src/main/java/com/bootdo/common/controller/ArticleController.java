@@ -1454,14 +1454,16 @@ public class ArticleController extends BaseController {
     @GetMapping("/articleCommentsList")
     @RequiresPermissions("common:articleComments:articleComments")
     public PageUtils articleCommentsList(@RequestParam Map<String, Object> params) {
+
         //查询列表数据
         if (!params.containsKey("specialty")) {
             params.put("specialty", "");
         }
         Query query = new Query(params);
         List<ArticleDO> articleList = articleService.articleCommentsList(query);
-        List<ArticleDO> articleListDO = new ArrayList<ArticleDO>();
+        List<ArticleDO> articleListDO = new ArrayList<>();
         for (ArticleDO articleDO : articleList) {
+
             articleDO.setRanking(articleList.indexOf(articleDO) + 1);
             articleListDO.add(articleDO);
         }

@@ -47,10 +47,12 @@
                                     </a>
                                 </h2>
                             </div>
+
                             <div class="data">
                                 <span class="" style="width: 100px;display: block; float: left;">
-                                    <i class="fa fa-map-marker" style="color: blue"></i>&nbsp;&nbsp;
-                                    <span th:text="${m.province}">山东省</span>
+                                    <i class="fa fa-map-marker" style="color: blue; float: left; margin-right: 5px"></i>&nbsp;&nbsp;
+                                    <span th:text="${m.province}" style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;
+                                            width:75px; display: inline-block;float: left;">山东省</span>
 								</span>
                                 <div class="heart-num" style=" margin-left: 20px;">
                                     <i class="fa fa-link" style="color: blue; float: left; margin-right: 10px"></i>&nbsp;
@@ -58,10 +60,12 @@
                                             width: 105px;display: inline-block;float: left;">生物、医疗器械</span>
                                 </div>
                             </div>
+
                             <div class="data">
                                 <span class="" style="width: 100px;display: block;float: left;">
-                                    <i class="fa fa-user" style="color: blue"></i>&nbsp;&nbsp;
-                                    <span th:text="${m.author}">苏轼</span>
+                                    <i class="fa fa-user" style="color: blue; float: left; margin-right: 5px"></i>&nbsp;&nbsp;
+                                    <span th:text="${m.author}" style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;
+                                            width: 75px; display: inline-block;float: left;">苏轼</span>
 								</span>
                                 <div class="heart-num" style="margin-left: 40px;">
                                     <i class="fa fa-phone-square" style="color: blue; float: left; margin-right: 10px"></i>&nbsp;
@@ -71,8 +75,9 @@
                             </div>
                             <div class="data">
                                 <span class="" style="width: 100px;display: block;float: left;">
-                                    <i class="fa fa-paper-plane" style="color: blue"></i>&nbsp;&nbsp;
-                                    <span th:text="${m.money}">100万</span>
+                                    <i class="fa fa-paper-plane" style="color: blue; float: left; margin-right: 5px"></i>&nbsp;&nbsp;
+                                    <span th:text="${m.money}" style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;
+                                            width: 70px; display: inline-block;float: left;">100万</span>
 								</span>
                                 <div class="heart-num" style="margin-left: 40px;">
                                     <i class="fa fa-calendar" style="color: blue; float: left; margin-right: 10px"></i>&nbsp;

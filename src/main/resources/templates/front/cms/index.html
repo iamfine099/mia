@@ -114,7 +114,7 @@
             <div style="width: 1200px; font-size: 18px">
                 <div style="float: left; font-weight: bold"><span>成果展示</span></div>
                 <div style="float: right;font-size: 15px;">
-					<!--<span>
+					<span>
 						<a href="/" style="color: black">全部</a>
 					</span>
                     <span th:each="achievementType : ${achievementTypes}">
@@ -122,10 +122,8 @@
                            th:text="' | ' + ${achievementType.name}" style=" color: black">
 						</a>
 					</span>
-                    &nbsp;&nbsp;&nbsp;&nbsp;-->
-                    <span>
-						<a href="/open/expertlist" style="color: black">更多</a>
-					</span>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+
                 </div>
             </div>
         </div>
@@ -251,7 +249,7 @@
             <div style="width: 1200px; font-size: 18px">
                 <div style="float: left; font-weight: bold"><span>专家展示</span></div>
                 <div style="font-size: 15px; float: right">
-					<span>
+					<!--<span>
 						<a href="/" style="color:black">全部</a>
 					</span>
                     <span th:each="specialtyType : ${specialtyTypes}">
@@ -259,7 +257,10 @@
                            th:text="' | ' + ${specialtyType.name}" style="color: black">
 						</a>
 					</span>
-                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;-->
+                    <span>
+						<a href="/open/expertlist" style="color: black">更多</a>
+					</span>
                 </div>
             </div>
         </div>

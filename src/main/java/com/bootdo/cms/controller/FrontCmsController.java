@@ -822,6 +822,7 @@ public class FrontCmsController extends BaseController {
     @RequestMapping("/registerPost")
     @ResponseBody
     public R frontRegisterPost(@RequestParam Map<String, Object> params, HttpSession session) {
+        params.put("specialty", params.get("sp_id"));
         return memberService.registerPost(params, session);
     }
 

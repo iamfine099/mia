@@ -560,7 +560,6 @@
         <where>  
 		  <include refid="commons_where"/>
 		  <if test="expertId != null and expertId != ''"> and ee.expert_id = #{expertId} </if>
-		  and ee.score is not null
 		</where>
         order by ee.score_date desc
 		<if test="offset != null and limit != null">
