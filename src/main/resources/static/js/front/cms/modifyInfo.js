@@ -30,7 +30,7 @@ $().ready(function () {
             return false;
         }
         //名字
-        var name = $("#name").val();
+        var name = $("#memName").val();
         if (name == '') {
             layer.alert('请输入真实名字');
             return false;
@@ -43,12 +43,7 @@ $().ready(function () {
         }
 
         var formData = new FormData($("#signupFormR")[0]);
-        formData.set("memName", name);
-        formData.set("phone", phone);
-        formData.set("memId", memId);
-        formData.set("email", email);
-        formData.set("company", company);
-        formData.set("specialty", sp_id);
+        //formData.append("specialty", sp_id);
 
         $.ajax({
             cache: true,

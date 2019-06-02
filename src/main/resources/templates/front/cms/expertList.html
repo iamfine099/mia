@@ -57,7 +57,7 @@
                     </div>
                 </div>
             </div>
-            <div class="expertList_photoWall" style="width: 1150px; margin-left: 20px">
+            <div class="expertList_photoWall" style="width: 1180px; margin-left: 20px">
                 <div class="clear_box">
                     <ul>
                         <li class="expertPhoto left" th:each="m ,stat: ${pageUtils.rows}" style="height: 300px">
@@ -78,7 +78,9 @@
                     </ul>
                 </div>
                 <!--分页-->
-                <div class="GCpageNum" th:include="front/include::split_page"></div>
+                <div class="GCpageNum" th:include="front/include::split_page" style="width: 1180px;">
+
+                </div>
             </div>
             <input type="hidden" name="specialtys" id="specialtys">
             <input type="hidden" name="needSearch" id="needSearch">

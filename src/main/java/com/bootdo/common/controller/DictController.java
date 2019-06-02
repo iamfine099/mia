@@ -27,6 +27,7 @@ import java.util.Map;
 @Controller
 @RequestMapping("/common/dict")
 public class DictController extends BaseController {
+
 	@Autowired
 	private DictService dictService;
 
@@ -40,7 +41,10 @@ public class DictController extends BaseController {
 	@GetMapping("/list")
 	@RequiresPermissions("common:dict:dict")
 	public PageUtils list(@RequestParam Map<String, Object> params) {
+
 		// 查询列表数据
+		params.put("sort","type,sort");
+		params.put("order","asc");
 		Query query = new Query(params);
 		List<DictDO> dictList = dictService.list(query);
 		int total = dictService.count(query);

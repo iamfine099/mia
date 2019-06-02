@@ -1,3 +1,5 @@
+server:
+  port: 80
 bootdo:
   #uploadPath: E:/mia/uploaded_files/
   #uploadPath: /home/data/uploaded_files/

@@ -53,30 +53,24 @@
             <form id="signupForm">
                 <h3 class="text-center">用户登录</h3>
                 <p class="m-t-md text-center">欢迎登录山东省医药卫生科技成果展示平台</p>
-                <input type="text" name="username" class="form-control uname"
-                       value="admin"/>
-                <input type="password" name="password"
-                       class="form-control pword m-b" value="111111"/>
-              
-               <div class='codeBox'>
-	               <input type="text" id="yz" class="form-control" placeholder="请输入验证码" required="required" name="yz">
-					<img src="/code/image" onClick="getcode()" id="codeImg" class='codeImg'/>
-               </div>
-				
-			
-                <a id="login" class="btn btn-login btn-block">登录</a>
-                
+                <input type="text" name="username" class="form-control uname"/>
+                <input type="password" name="password" class="form-control pword m-b"/>
+                <div class='codeBox'>
+                    <input type="text" id="yz" class="form-control" placeholder="请输入验证码" required="required" name="yz">
+                    <img src="/code/image" onClick="getcode()" id="codeImg" class='codeImg'/>
                 </div>
-
+                <a id="login" class="btn btn-login btn-block">登录</a>
             </form>
         </div>
     </div>
-    <!-- <div class="signup-footer">
-        <div class="pull-left">&copy; 2017 All Rights Reserved. BootDo
-        </div>
-    </div> -->
 </div>
-<script th:inline="javascript"> var ctx = [[@{/}]] ; </script>
+<!-- <div class="signup-footer">
+    <div class="pull-left">&copy; 2017 All Rights Reserved. BootDo
+    </div>
+</div> -->
+</div>
+<script th:inline="javascript"> var ctx = [[@{
+    /}]] ; </script>
 <!-- 全局js -->
 <script src="/js/jquery.min.js?v=2.1.4" th:src="@{/js/jquery.min.js?v=2.1.4}"></script>
 <script src="/js/bootstrap.min.js?v=3.3.6" th:src="@{/js/bootstrap.min.js?v=3.3.6}"></script>
@@ -86,14 +80,17 @@
 
 <!-- jQuery Validation plugin javascript-->
 <script src="/js/ajax-util.js"></script>
-<script src="/js/plugins/validate/jquery.validate.min.js" th:src="@{/js/plugins/validate/jquery.validate.min.js}"></script>
+<script src="/js/plugins/validate/jquery.validate.min.js"
+        th:src="@{/js/plugins/validate/jquery.validate.min.js}"></script>
 <script src="/js/plugins/validate/messages_zh.min.js" th:src="@{/js/plugins/validate/messages_zh.min.js}"></script>
 <script src="/js/plugins/layer/layer.min.js" th:src="@{/js/plugins/layer/layer.min.js}"></script>
 <script type="text/javascript">
     $(document).ready(function () {
-        $("#login").on('click',function(){$("#signupForm").submit();});
+        $("#login").on('click', function () {
+            $("#signupForm").submit();
+        });
         validateRule();
-        
+
     });
 
     $.validator.setDefaults({
@@ -101,22 +98,24 @@
             login();
         }
     });
-    function getcode(){
-    	$("#codeImg").attr("src","/code/image?"+new Date().getTime());
+
+    function getcode() {
+        $("#codeImg").attr("src", "/code/image?" + new Date().getTime());
     }
+
     function login() {
         $.ajax({
             type: "POST",
-            url: ctx+"login",
+            url: ctx + "login",
             data: $('#signupForm').serialize(),
             success: function (r) {
-                 if (r.code == 0) {
+                if (r.code == 0) {
                     var index = layer.load(1, {
-                        shade: [0.1,'#fff'] //0.1透明度的白色背景
+                        shade: [0.1, '#fff'] //0.1透明度的白色背景
                     });
                     parent.location.href = '/index';
                 } else {
-                	getcode();
+                    getcode();
                     layer.msg(r.msg);
                 }
             },
@@ -144,7 +143,7 @@
             }
         })
     }
-  
+
 </script>
 </body>
 </html>

@@ -1,47 +1,15 @@
 package com.bootdo.cms.controller;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
-import com.bootdo.common.domain.AchievementDO;
-import com.bootdo.common.domain.DictDO;
-import com.bootdo.common.utils.DictUtils;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.IncorrectCredentialsException;
-import org.apache.shiro.authc.LockedAccountException;
-import org.apache.shiro.subject.Subject;
-import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
-
 import com.bootdo.cms.domain.CmsLinkDO;
 import com.bootdo.cms.service.CmsLinkService;
 import com.bootdo.common.annotation.Log;
 import com.bootdo.common.config.EmailConfig;
 import com.bootdo.common.controller.BaseController;
+import com.bootdo.common.domain.AchievementDO;
 import com.bootdo.common.domain.ArticleDO;
 import com.bootdo.common.domain.ArticleDataDO;
 import com.bootdo.common.domain.CategoryDO;
+import com.bootdo.common.domain.DictDO;
 import com.bootdo.common.domain.FileDO;
 import com.bootdo.common.domain.UserMessageDO;
 import com.bootdo.common.service.ArticleDataService;
@@ -49,6 +17,7 @@ import com.bootdo.common.service.ArticleService;
 import com.bootdo.common.service.CategoryService;
 import com.bootdo.common.service.FileService;
 import com.bootdo.common.service.UserMessageService;
+import com.bootdo.common.utils.DictUtils;
 import com.bootdo.common.utils.MD5Utils;
 import com.bootdo.common.utils.PageUtils;
 import com.bootdo.common.utils.Query;
@@ -74,6 +43,35 @@ import com.bootdo.system.domain.UserDO;
 import com.bootdo.system.service.UserService;
 import com.bootdo.system.shiro.LoginUser;
 import com.bootdo.system.shiro.UsernamePasswordLoginTypeToken;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.LockedAccountException;
+import org.apache.shiro.subject.Subject;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 
 /**
@@ -850,10 +848,13 @@ public class FrontCmsController extends BaseController {
             subject.login(loginToken);
             return R.ok();
         } catch (IncorrectCredentialsException e) {
+
             return R.error("用户或密码错误");
         } catch (LockedAccountException e) {
+
             return R.error("等待后台的审核");
         } catch (AuthenticationException e) {
+
             return R.error("用户或密码错误");
         }
     }
@@ -921,6 +922,7 @@ public class FrontCmsController extends BaseController {
         //修改用户表信息
         LoginUser loginUser = ShiroUtils.getUser();
         model.addAttribute("user", ShiroUtils.getUser().getUser());
+
         MemberDO member = memberService.get(Integer.parseInt(loginUser.getUser().getBusId()));
         model.addAttribute("member", member);
 
@@ -978,6 +980,7 @@ public class FrontCmsController extends BaseController {
             }
         }
 
+        member.setSpecialty(request.getParameter("sp_id"));
         if (memberService.update(member) > 0) {
 
             /* TODO 待确认是否会员修改了信息流需要管理员重新审批
@@ -2177,6 +2180,11 @@ public class FrontCmsController extends BaseController {
     @ResponseBody
     public R sendCode(String email) {
         try {
+            /*JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
+            mailSender.setHost("smtp.163.com");
+            mailSender.setUsername("sd_yxts@163.com");
+            mailSender.setPassword("yxts2018");*/
+
             RandomValidateCodeUtils randomValidateCode = new RandomValidateCodeUtils();
             String randomString = randomValidateCode.sendCode();
             SimpleMailMessage message = new SimpleMailMessage();

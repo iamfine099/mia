@@ -1,5 +1,7 @@
+server:
+  port: 801
 bootdo:
-  uploadPath: /var/uploaded_files/
+  uploadPath: D:/var/achievement_display_files/
 logging:
   level:
     root: error
@@ -8,11 +10,11 @@ spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driverClassName: com.mysql.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/bootdo?useUnicode=true&characterEncoding=utf8
+    url: jdbc:mysql://127.0.0.1:3306/achievement_display?useUnicode=true&characterEncoding=utf8
     username: root
-    password: root
+    password: 99879987
     initialSize: 1
-    minIdle: 3
+    minIdle: 3com.mysql.jdbc.Driver
     maxActive: 20
     # 配置获取连接等待超时的时间
     maxWait: 60000
@@ -48,3 +50,15 @@ spring:
         max-active: 100
         # 连接池最大阻塞等待时间（使用负值表示没有限制）
         max-wait: -1
+  mail:
+    host: smtp.163.com
+    username: sd_yxts@163.com
+    password: yxts2018
+    properties:
+      mail:
+      smtp:
+        auth: true
+        timeout: 25000
+        starttls:
+          enable: true
+          required: true

@@ -1641,7 +1641,7 @@ footer{
 }
 .cardphoto{
 	width:118px;
-	height:133px;
+	height:165px;
 	margin:69px auto 47px;
 	overflow:hidden;
 }
@@ -1680,7 +1680,7 @@ footer{
 	margin:0 0 35px 0;
 }
 .recommendBox{
-	width: 918px;
+	width: 900px;
 	border: 1px gainsboro solid;
 	position: relative;
 	padding:10px 0 10px 20px ;

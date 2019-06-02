@@ -36,14 +36,34 @@ function validateRule() {
 	var icon = "<i class='fa fa-times-circle'></i> ";
 	$("#signupForm").validate({
 		rules : {
-			name : {
-				required : true
-			}
+            name : {
+                required : true,
+                maxlength:20
+            },
+            sort : {
+                digits:true
+            },
+            description : {
+                maxlength:45
+            },
+            parentId : {
+                digits:true
+            }
 		},
 		messages : {
 			name : {
-				required : icon + "请输入名字"
-			}
+				required : icon + "请输入名字",
+				maxlength : icon + "最多输入45个字符"
+			},
+            name : {
+                digits : icon + "只能输入数字"
+            },
+            description : {
+                maxlength : icon + "最多输入45个字符"
+            },
+            parentId : {
+                digits : icon + "只能输入数字"
+            }
 		}
 	})
 }

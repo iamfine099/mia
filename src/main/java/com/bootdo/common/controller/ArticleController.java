@@ -409,9 +409,13 @@ public class ArticleController extends BaseController {
             if (StringUtils.isNotEmpty(article.getImage())) {
                 this.deleteFile(Long.parseLong(article.getImage()));
             }
-            String[] imageArray = article.getAttachment().split(",");
-            for (int j = 0; j < imageArray.length; j++) {
-                this.deleteFile(Long.parseLong(imageArray[j]));
+            String attachment = article.getAttachment();
+            if(attachment != null) {
+
+                String[] imageArray = attachment.split(",");
+                for (int j = 0; j < imageArray.length; j++) {
+                    this.deleteFile(Long.parseLong(imageArray[j]));
+                }
             }
         }
         articleService.batchRemove(ids);
@@ -1413,10 +1417,13 @@ public class ArticleController extends BaseController {
             if (StringUtils.isNotEmpty(oldArticle.getImage())) {
                 this.deleteFile(Long.parseLong(oldArticle.getImage()));
             }
-            String[] imageArray = oldArticle.getAttachment().split(",");
-            for (int i = 0; i < imageArray.length; i++) {
-                this.deleteFile(Long.parseLong(imageArray[i]));
+            if (StringUtils.isNotEmpty(oldArticle.getAttachment())) {
+                String[] imageArray = oldArticle.getAttachment().split(",");
+                for (int i = 0; i < imageArray.length; i++) {
+                    this.deleteFile(Long.parseLong(imageArray[i]));
+                }
             }
+
             return R.ok();
         }
         return R.error();
@@ -1434,9 +1441,11 @@ public class ArticleController extends BaseController {
             if (StringUtils.isNotEmpty(article.getImage())) {
                 this.deleteFile(Long.parseLong(article.getImage()));
             }
-            String[] imageArray = article.getAttachment().split(",");
-            for (int j = 0; j < imageArray.length; j++) {
-                this.deleteFile(Long.parseLong(imageArray[j]));
+            if(StringUtils.isNotBlank(article.getAttachment())) {
+                String[] imageArray = article.getAttachment().split(",");
+                for (int j = 0; j < imageArray.length; j++) {
+                    this.deleteFile(Long.parseLong(imageArray[j]));
+                }
             }
         }
         articleService.batchRemove(ids);

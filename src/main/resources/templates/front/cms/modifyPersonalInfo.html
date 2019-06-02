@@ -29,7 +29,16 @@
 
             <div class="messageBoardInfo">
                 <div class="personalInfoName left">真实姓名：</div>
-                <div><input id="name" name='name' th:value="${member.memName}" class="messageBoardInput"/></div>
+                <div><input id="memName" name='memName' th:value="${member.memName}" class="messageBoardInput"/></div>
+            </div>
+            <div class="messageBoardInfo">
+                <div class="personalInfoName left">性别：</div>
+                <div>
+                    <select id="sex" name="sex" style="    width: 387px; height: 35px; margin: 0 20px 0 0;  padding: 0 0 0 10px;">
+                        <option value="1">男</option>
+                        <option value="2">女</option>
+                    </select>
+                </div>
             </div>
             <div class="messageBoardInfo">
                 <div class="personalInfoName left">手机号：</div>

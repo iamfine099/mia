@@ -95,7 +95,7 @@ var load = function () {
                                 + s_remove_h
                                 + '" href="#" title="删除"  mce_href="#" onclick="remove(\''
                                 + item.menuId
-                                + '\')"><i class="fa fa-remove"></i></a> ';
+                                + '\', this)"><i class="fa fa-remove"></i></a> ';
                             return e + d + p;
                         }
                     }]
@@ -117,25 +117,30 @@ function add(pId) {
     });
 }
 
-function remove(id) {
+function remove(id, node) {
+
     layer.confirm('确定要删除选中的记录？', {
         btn: ['确定', '取消']
     }, function () {
-        $.ajax({
-            url: prefix + "/remove",
-            type: "post",
-            data: {
-                'id': id
-            },
-            success: function (data) {
-                if (data.code == 0) {
-                    layer.msg("删除成功");
-                    reLoad();
-                } else {
-                    layer.msg(data.msg);
+        if($(node.parentNode.parentNode.childNodes[1]).find(".glyphicon").length == 0) {
+            $.ajax({
+                url: prefix + "/remove",
+                type: "post",
+                data: {
+                    'id': id
+                },
+                success: function (data) {
+                    if (data.code == 0) {
+                        layer.msg("删除成功");
+                        reLoad();
+                    } else {
+                        layer.msg(data.msg);
+                    }
                 }
-            }
-        });
+            });
+        } else {
+            layer.alert("无法删除, 请先删除子节点!");
+        }
     })
 }
 

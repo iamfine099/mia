@@ -4,13 +4,29 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.bootdo</groupId>
-    <artifactId>bootdo</artifactId>
-    <version>1.6.9</version>
+    <artifactId>achievement-display-platform</artifactId>
+    <version>1.0</version>
     <packaging>jar</packaging>
 
     <name>mia</name>
     <description>Demo project for Spring Boot</description>
-
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <properties>
+                <running.env>dev</running.env>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault><!-- 这里表示默认环境 -->
+            </activation>
+        </profile>
+        <profile>
+            <id>prd</id>
+            <properties>
+                <running.env>prd</running.env>
+            </properties>
+        </profile>
+    </profiles>
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
@@ -137,8 +153,8 @@
             <artifactId>ehcache</artifactId>
         </dependency>
         <!--<dependency>-->
-            <!--<groupId>org.springframework.boot</groupId>-->
-            <!--<artifactId>spring-boot-starter-data-redis</artifactId>-->
+        <!--<groupId>org.springframework.boot</groupId>-->
+        <!--<artifactId>spring-boot-starter-data-redis</artifactId>-->
         <!--</dependency>-->
         <!-- quartz -->
         <dependency>
@@ -162,9 +178,9 @@
             <artifactId>spring-context-support</artifactId>
         </dependency>
         <!--<dependency>-->
-            <!--<groupId>org.springframework.boot</groupId>-->
-            <!--<artifactId>spring-boot-devtools</artifactId>-->
-            <!--<optional>true</optional>-->
+        <!--<groupId>org.springframework.boot</groupId>-->
+        <!--<artifactId>spring-boot-devtools</artifactId>-->
+        <!--<optional>true</optional>-->
         <!--</dependency>-->
         <!--activiti-->
         <dependency>
@@ -214,8 +230,8 @@
             <version>1.9.2</version>
         </dependency>
 
-		<!-- poi office -->
-		<dependency>
+        <!-- poi office -->
+        <dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi</artifactId>
 			<version>3.16</version>
@@ -230,8 +246,8 @@
 			<artifactId>poi-ooxml-schemas</artifactId>
 			<version>3.16</version>
 		</dependency>
-		<!-- easypoi -->
-		 <dependency>
+        <!-- easypoi -->
+        <dependency>
             <groupId>cn.afterturn</groupId>
             <artifactId>easypoi-base</artifactId>
             <version>3.0.3</version>
@@ -265,7 +281,7 @@
 		</dependency>
 		<dependency>
 		<!-- 二维码 -->
-	    <groupId>com.google.zxing</groupId>
+            <groupId>com.google.zxing</groupId>
 			<artifactId>core</artifactId>
 			<version>3.1.0</version>
 		</dependency>
@@ -289,35 +305,35 @@
 		    <artifactId>xstream</artifactId>
 		    <version>1.4.10</version>
 		</dependency>
-		<!-- 支持发送邮件 -->
-		<dependency>
+        <!-- 支持发送邮件 -->
+        <dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-mail</artifactId>
 		</dependency>
-		<!-- freemarker -->
-		<!-- <dependency>
-			<groupId>org.freemarker</groupId>
-			<artifactId>freemarker</artifactId>
-			<version>2.3.19</version>
-		</dependency> -->
-		  <!-- 微信集成需要的7个jar包 -->
+        <!-- freemarker -->
+        <!-- <dependency>
+            <groupId>org.freemarker</groupId>
+            <artifactId>freemarker</artifactId>
+            <version>2.3.19</version>
+        </dependency> -->
+        <!-- 微信集成需要的7个jar包 -->
         <!--war包部署需要-->
         <!--<dependency>-->
-            <!--<groupId>org.springframework.boot</groupId>-->
-            <!--<artifactId>spring-boot-starter-web</artifactId>-->
-            <!--&lt;!&ndash; 移除嵌入式tomcat插件 &ndash;&gt;-->
-            <!--<exclusions>-->
-                <!--<exclusion>-->
-                    <!--<groupId>org.springframework.boot</groupId>-->
-                    <!--<artifactId>spring-boot-starter-tomcat</artifactId>-->
-                <!--</exclusion>-->
-            <!--</exclusions>-->
+        <!--<groupId>org.springframework.boot</groupId>-->
+        <!--<artifactId>spring-boot-starter-web</artifactId>-->
+        <!--&lt;!&ndash; 移除嵌入式tomcat插件 &ndash;&gt;-->
+        <!--<exclusions>-->
+        <!--<exclusion>-->
+        <!--<groupId>org.springframework.boot</groupId>-->
+        <!--<artifactId>spring-boot-starter-tomcat</artifactId>-->
+        <!--</exclusion>-->
+        <!--</exclusions>-->
         <!--</dependency>-->
         <!--<dependency>-->
-            <!--<groupId>javax.servlet</groupId>-->
-            <!--<artifactId>javax.servlet-api</artifactId>-->
-            <!--<version>3.1.0</version>-->
-            <!--<scope>provided</scope>-->
+        <!--<groupId>javax.servlet</groupId>-->
+        <!--<artifactId>javax.servlet-api</artifactId>-->
+        <!--<version>3.1.0</version>-->
+        <!--<scope>provided</scope>-->
         <!--</dependency>-->
     </dependencies>
     <build>

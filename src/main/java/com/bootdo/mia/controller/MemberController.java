@@ -146,6 +146,7 @@ public class MemberController extends BaseController {
     @RequestMapping("/update")
     @RequiresPermissions("mia:member:edit")
     public R update(MultipartFile file, HttpServletRequest request, MemberDO member) {
+
         MemberDO oldMember = memberService.get(member.getMemId());
         if (file != null) {
             FileDO fileDo = this.uploadFile(file, request);

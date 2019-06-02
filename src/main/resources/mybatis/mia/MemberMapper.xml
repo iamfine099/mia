@@ -36,9 +36,11 @@
 
 	<select id="list" resultType="com.bootdo.mia.domain.MemberDO">
 		select
+		    sf.url as head_url,
 			<include refid="columns" />
 		from t_member m
  		left join sys_user u on u.user_id = m.audit_by
+ 		left join sys_file sf on sf.id = m.head_img
         <where>  
 		  <include refid="commons_where"/>
 		</where>
@@ -135,8 +137,10 @@
 	<update id="memberUpdateCheck">
 		update t_member 
 		<set>
-			`audit_date` = now(),`status` = #{status},
-				`audit_by` = #{auditBy},`audit_content` = #{auditContent}
+			`audit_date` = now(),
+			`status` = #{status},
+			`audit_by` = #{auditBy},
+			`audit_content` = #{auditContent}
 		</set>
 		where mem_id in 
 		<foreach item="id" collection="ids.split(',')" open="(" separator="," close=")">

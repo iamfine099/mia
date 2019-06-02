@@ -67,6 +67,10 @@ public class MemberServiceImpl implements MemberService {
 	
 	@Override
 	public int update(MemberDO member){
+
+		LoginUser loginUser = ShiroUtils.getUser();
+		member.setAuditBy(Integer.parseInt(loginUser.getUser().getUserId().toString()));
+		member.setAuditDate(new Date());
 		return memberDao.update(member);
 	}
 	
@@ -135,8 +139,7 @@ public class MemberServiceImpl implements MemberService {
 	 * @param fileName
 	 * @param file
 	 * @return
-	 * @throws IOException 
-	 * @throws InvalidFormatException 
+	 * @throws Exception
 	 */
 	public void importExcel(String fileName, MultipartFile file) throws Exception {
 		
@@ -152,8 +155,16 @@ public class MemberServiceImpl implements MemberService {
 			}
 	}
 
+	/**
+	 * 会员注册
+	 *
+	 * @param params
+	 * @param session
+	 * @return
+	 */
 	@Override
 	public R registerPost(Map<String, Object> params, HttpSession session) {
+
 		//判断用户是否存在
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("username", params.get("phone"));
@@ -172,16 +183,18 @@ public class MemberServiceImpl implements MemberService {
 				member.setEmail(params.get("email").toString());
 				//member.setSpecialty(params.get("specialty").toString());
 				member.setSpecialty(params.get("sp_id").toString());
-				member.setStatus("1");
+				member.setStatus("1"); //状态：0正常 1禁用
 				member.setCreateDate(new Date());
 				member.setLastTime(new Date());
 				member.setCompany(params.get("job").toString());
+				member.setSex(params.get("sex").toString());
+
 				if(memberDao.save(member) > 0){
 					UserDO user = new UserDO();
 					user.setUsername(params.get("phone").toString());
 					user.setName(params.get("uName").toString());
 					user.setPassword(MD5Utils.encrypt(params.get("phone").toString().trim(),params.get("pwd").toString()));
-					user.setStatus(1);
+					user.setStatus(0); // 状态 0:禁用 1:正常
 					user.setGmtCreate(member.getCreateDate());
 					user.setfType("M");
 					user.setBusId(member.getMemId().toString());
@@ -199,6 +212,7 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public int memberUpdateCheck(MemberDO member) {
+
 		LoginUser loginUser = ShiroUtils.getUser();
 		if("1".equals(member.getAuditStatus())){
 			//通过

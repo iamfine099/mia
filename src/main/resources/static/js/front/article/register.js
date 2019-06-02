@@ -14,7 +14,6 @@ $(document).ready(function() {
     		layer.alert("请输入格式正确的手机号");
     		return false;
     	}
-		
 		//验证真实姓名
 		var trueName=$("#trueName").val();
 		if(trueName==""){
@@ -24,7 +23,7 @@ $(document).ready(function() {
 		//验证工作地址
 		var workplace=$("#workplace").val();
 		if(workplace==""){
-			layer.alert("请输入工作地址");
+			layer.alert("请输入工作单位");
 			return false;
 		}
 		

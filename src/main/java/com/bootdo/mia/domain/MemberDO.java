@@ -64,7 +64,7 @@ public class MemberDO implements Serializable {
 	private String auditStatus;
 	//多个字符串
 	private String ids;
-
+	private String headUrl;
 	/**
 	 * 设置：会员标识
 	 */
@@ -326,5 +326,13 @@ public class MemberDO implements Serializable {
 			list.add(map.get(spec));
 		}
 		return StringUtils.join(list, ",");
+	}
+
+	public String getHeadUrl() {
+		return headUrl;
+	}
+
+	public void setHeadUrl(String headUrl) {
+		this.headUrl = headUrl;
 	}
 }

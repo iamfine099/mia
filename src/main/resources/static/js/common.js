@@ -9,7 +9,7 @@ function getDictLabelByValue(objList, value){
 		return "";
 	}
 	var label = "";
-	var values = value.split(",");
+	var values = String(value).split(",");
 	if(objList != null && objList.length>0 ){
 
         values.forEach(function(value,i){

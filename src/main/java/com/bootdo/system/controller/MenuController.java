@@ -64,7 +64,10 @@ public class MenuController extends BaseController {
 		if (pId == 0) {
 			model.addAttribute("pName", "根目录");
 		} else {
-			model.addAttribute("pName", menuService.get(pId).getName());
+			MenuDO menuDO = menuService.get(pId);
+			if(menuDO != null) {
+				model.addAttribute("pName", menuDO.getName());
+			}
 		}
 		model.addAttribute("menu", mdo);
 		return prefix+"/edit";
