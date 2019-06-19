@@ -103,7 +103,7 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">专长：</label>
                             <div class="col-sm-8">
-                                <input type="hidden" id='sp_id' th:value="${expert.specialty}"/>
+                                <input type="hidden" id='sp_id' name='sp_id' th:value="${expert.specialty}"/>
                                 <input type="text" name="specialty" id="specialty" placeholder="请选择您的专长"
                                        class="form-control" th:value="${expert.specialtyName}" readonly/>
                             </div>

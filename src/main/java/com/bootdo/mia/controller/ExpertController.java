@@ -143,6 +143,8 @@ public class ExpertController extends BaseController {
     @RequiresPermissions("mia:expert:add")
     public R save(MultipartFile file, HttpServletRequest request, ExpertDO expert) {
 
+        expert.setSpecialty(request.getParameter("sp_id"));
+
         Map validValues = DictUtils.getDictList("specialty").stream().filter(a -> a.getParentId() != null).
                 collect(Collectors.toMap(DictDO::getValue, DictDO::getValue));
         String[] specialtys = expert.getSpecialty().split(",");
@@ -189,6 +191,9 @@ public class ExpertController extends BaseController {
     @RequestMapping("/update")
     @RequiresPermissions("mia:expert:edit")
     public R update(MultipartFile file, HttpServletRequest request, ExpertDO expert) {
+
+        expert.setSpecialty(request.getParameter("sp_id"));
+
         ExpertDO oldexpert = expertService.get(expert.getExpertId());
 		/*Map<String, Object> param = new HashMap<String, Object>();
 		param.put("username", expert.getPhone());

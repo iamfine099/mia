@@ -166,7 +166,7 @@ function layeropen() {
 
             if (id != '') {
                 $('#specialty').val(text);
-                $('#specialty_id').val(value);
+                $('#sp_id').val(value);
             }
             layer.close(index); //如果设定了yes回调，需进行手工关闭
         },

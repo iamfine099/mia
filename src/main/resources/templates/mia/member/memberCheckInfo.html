@@ -13,10 +13,8 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">审核状态：</label>
                             <div class="col-sm-8">
-                                <label class="radio-inline"
-                                       th:each="dict:${T(com.bootdo.common.utils.DictUtils).getDictList('if_checked')}">
-                                    <input type="radio" th:value="${dict.value}" th:text="${dict.name}"
-                                           name="auditStatus"
+                                <label class="radio-inline" th:each="dict:${T(com.bootdo.common.utils.DictUtils).getDictList('if_checked')}">
+                                    <input type="radio" th:value="${dict.value}" th:text="${dict.name}" name="auditStatus"
                                            th:checked="${#numbers.formatDecimal(0, 1, 0)==#numbers.formatDecimal(dict.value, 1, 0)}">
                                 </label>
                             </div>
@@ -24,8 +22,7 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">审核内容：</label>
                             <div class="col-sm-8">
-                                <textarea cols="2" id="auditContent" name="auditContent"
-                                          class="form-control"></textarea>
+                                <textarea cols="2" id="auditContent" name="auditContent"  class="form-control"></textarea>
                             </div>
                         </div>
                         <div class="form-group">

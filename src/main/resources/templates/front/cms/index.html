@@ -153,7 +153,7 @@
                     <div class="content_r tab-pane fade in active" style="width: 675px; background: #efefef;
 						line-height: 24px;font-size: 14px; padding: 7px 0 5px; padding-left: 30px" id="new">
                         <ul class="list_14"
-                            style="list-style: inherit; font-size: 16px; line-height: 35px; padding-top: 18px">
+                            style="list-style: inherit; font-size: 16px; line-height: 38px; padding-top: 18px">
                             <li th:each="recommendarticle : ${newestAchievementList}" style="width: 99%">
                                 <a th:href="@{/open/articleScore/detail(id=${recommendarticle.id})}"
                                    th:text="${recommendarticle.title}" style="color: black"></a>
@@ -168,7 +168,7 @@
                     <div class="content_r tab-pane fade" style="width: 675px; background: #efefef; line-height: 24px;
 						font-size: 14px; padding: 7px 0 5px; padding-left: 30px" id="tuijian">
                         <ul class="list_14"
-                            style="list-style: inherit; font-size: 16px; line-height: 35px; padding-top: 18px">
+                            style="list-style: inherit; font-size: 16px; line-height: 38px; padding-top: 18px">
                             <li th:each="recommendarticle : ${recommendAchievementList}" style="width: 99%">
                                 <a th:href="@{/open/aArticle/detail(id=${recommendarticle.id})}"
                                    th:text="${recommendarticle.title}" style="color: black"></a>
@@ -183,7 +183,7 @@
                     <div class="content_r tab-pane fade" style="width: 675px; background: #efefef; line-height: 24px;font-size: 14px;
                         padding: 7px 0 5px; padding-left: 30px" id="deploy">
                         <ul class="list_14"
-                            style="list-style: inherit; font-size: 16px; line-height: 35px; padding-top: 18px">
+                            style="list-style: inherit; font-size: 16px; line-height: 38px; padding-top: 18px">
                             <li th:each="recommendarticle : ${deployAchievementList}" style="width: 99%">
                                 <a th:href="@{/open/aArticle/detail(id=${recommendarticle.id})}"
                                    th:text="${recommendarticle.title}" style="color: black"></a>

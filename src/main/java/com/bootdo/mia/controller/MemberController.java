@@ -93,7 +93,7 @@ public class MemberController extends BaseController {
 
     /***
      * 重置密码
-     * @param user
+     * @param memId
      * @return
      */
     @GetMapping("/resetpwd/{memId}")
@@ -160,6 +160,7 @@ public class MemberController extends BaseController {
                 member.setHeadImg(oldMember.getHeadImg());
             }
         }
+        member.setSpecialty(request.getParameter("sp_id"));
         if (memberService.update(member) > 0) {
             Map<String, Object> map = new HashMap<String, Object>();
             map.put("busId", member.getMemId());
@@ -180,7 +181,7 @@ public class MemberController extends BaseController {
 
     /***
      * 修改密码
-     * @param user
+     * @param member
      * @return
      */
     @ResponseBody

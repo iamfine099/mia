@@ -12,7 +12,8 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">栏目：</label>
                             <div class="col-sm-8">
-                                <input id="categoryId" name="categoryId" class="hidden" th:value="${article.categoryId}">
+                                <input id="categoryId" name="categoryId" class="hidden"
+                                       th:value="${article.categoryId}">
                                 <input id="categoryName" name="categoryName" class="form-control" type="text"
                                        style="cursor: pointer;" onclick="openCategory()" readonly="readonly"
                                        placeholder="所属栏目" th:value="${article.categoryName}">
@@ -101,7 +102,8 @@
                         <div class="form-group" style="display: none">
                             <label class="col-sm-3 control-label">位置：</label>
                             <div class="col-sm-8">
-                                <label class="radio-inline" th:each="dict:${T(com.bootdo.common.utils.DictUtils).getDictList('advert_position')}">
+                                <label class="radio-inline"
+                                       th:each="dict:${T(com.bootdo.common.utils.DictUtils).getDictList('advert_position')}">
                                     <input type="radio" th:value="${dict.value}" th:text="${dict.name}" name="type"
                                            th:checked="${#numbers.formatDecimal(article.type, 1, 0)==#numbers.formatDecimal(dict.value, 1, 0)}">
                                 </label>

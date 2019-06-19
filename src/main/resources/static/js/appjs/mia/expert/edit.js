@@ -59,7 +59,7 @@ function update() {
 	var achievement_sn = $("#achievement_sn").summernote('code');
 	$("#achievement").val(achievement_sn);
 	var formData = new FormData($("#signupForm")[0]);
-    formData.set("specialty", $("#sp_id").val());
+    //formData.set("specialty", $("#sp_id").val());
 	$.ajax({
 		cache : true,
 		type : "POST",

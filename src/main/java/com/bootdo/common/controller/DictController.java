@@ -43,7 +43,7 @@ public class DictController extends BaseController {
 	public PageUtils list(@RequestParam Map<String, Object> params) {
 
 		// 查询列表数据
-		params.put("sort","type,sort");
+		params.put("sortField","type,sort");
 		params.put("order","asc");
 		Query query = new Query(params);
 		List<DictDO> dictList = dictService.list(query);

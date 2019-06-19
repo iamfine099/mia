@@ -18,6 +18,7 @@ $().ready(function() {
 					'<td><button type="button" style="margin-right:5px;" class="layui-btn layui-btn-xs fImg'+thisIndex+'" >修改</button><button type="button" class="layui-btn layui-btn-xs" onclick="deleteTr(this)">删除</button></td>',
 					'</tr>'
 				].join(''));
+        tr.hide();
 		$('#demoList').append($(tr));
 		layui.use('upload', function() {
 			var	upload = layui.upload;
@@ -25,6 +26,7 @@ $().ready(function() {
 				elem: '.fImg' + thisIndex,
 				choose: function(obj) {
 					obj.preview(function(index, file, result) {
+                        tr.show();
 						$('#textPre' + thisIndex).html(file.name);
 					});
 				},

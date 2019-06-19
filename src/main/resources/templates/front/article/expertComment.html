@@ -42,7 +42,7 @@
 							<div class="link">
 								<p>原文章连接：<a th:href="@{/open/articleScore/detail(id=${m.articleId})}" th:text="${m.article.title}">【世界传统医药日】赵静：结合医学研究让中医“走出去”更加具象</a></p>
 							    <p>评论时间：<span id="time" th:text="${#dates.format(m.createDate, 'yyyy-MM-dd')}">2015-12-3</span></p>
-							    <button th:if="${m.status ne '1'}" th:onclick="'javascript:remove('+${m.cId}+')'" type="button" class="withdraw_btn">撤回</button>
+							    <button th:if="${m.status ne '1'}" th:onclick="'javascript:removeRecord('+${m.cId}+')'" type="button" class="withdraw_btn">撤回</button>
 							</div>
 						</div>
 						<!--分页-->

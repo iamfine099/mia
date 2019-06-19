@@ -202,8 +202,8 @@ public class FrontCmsController extends BaseController {
         //param.put("delFlag", "1");
         param.put("status", "1");
         param.put("isRecommend", "1");
-        param.put("offset", 0);
-        param.put("limit", 8);
+        //param.put("offset", 0);
+        //param.put("limit", 8);
         if (StringUtils.isNotBlank(achievement)) {
             param.put("type", achievement);
         }
@@ -211,6 +211,16 @@ public class FrontCmsController extends BaseController {
         List<ArticleDO> newestAchievementList = recommendarticleList.stream().filter(a -> a.getClassify() != null && a.getClassify().contains("1")).collect(Collectors.toList());
         List<ArticleDO> recommendAchievementList = recommendarticleList.stream().filter(a -> a.getClassify() != null && a.getClassify().contains("2")).collect(Collectors.toList());
         List<ArticleDO> deployAchievementList = recommendarticleList.stream().filter(a -> a.getClassify() != null && a.getClassify().contains("3")).collect(Collectors.toList());
+
+        if(newestAchievementList != null && newestAchievementList.size() > 8) {
+            newestAchievementList = newestAchievementList.subList(0,8);
+        }
+        if(recommendAchievementList != null && recommendAchievementList.size() > 8) {
+            recommendAchievementList = recommendAchievementList.subList(0,8);
+        }
+        if(deployAchievementList != null && deployAchievementList.size() > 8) {
+            deployAchievementList = deployAchievementList.subList(0,8);
+        }
         model.addAttribute("recommendarticleList", recommendarticleList);
         model.addAttribute("newestAchievementList", newestAchievementList);
         model.addAttribute("recommendAchievementList", recommendAchievementList);

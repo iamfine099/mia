@@ -14,7 +14,7 @@ spring:
     username: root
     password: 99879987
     initialSize: 1
-    minIdle: 3com.mysql.jdbc.Driver
+    minIdle: 3
     maxActive: 20
     # 配置获取连接等待超时的时间
     maxWait: 60000

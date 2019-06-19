@@ -1,4 +1,4 @@
-function remove(id) {
+function removeRecord(id) {
 	$.ajax({
 		cache : true,
 		type : "POST",

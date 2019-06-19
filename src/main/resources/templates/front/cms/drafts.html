@@ -69,9 +69,9 @@
                         <span class="recommend_writer" id="releaseTime" th:text="${m.createTime} == null ? null : ${#dates.format(m.createTime, 'yyyy-MM-dd')}">
                             2018-10-11
                         </span>
-                        <span class="recommend_writer" id="releaseTime" th:text="${T(com.bootdo.common.utils.DictUtils).getDictLabel(m.status,'if_checked','')}"></span>
+                        <span class="recommend_writer" id="releaseStatus" th:text="${T(com.bootdo.common.utils.DictUtils).getDictLabel(m.status,'if_checked','')}"></span>
                         <span class="recommend_time">
-                            <button class="drafts_btn" id="delDrafts" th:onclick="'javascript:remove('+${m.id}+')'" type="button">
+                            <button class="drafts_btn" id="delDrafts" th:onclick="'javascript:removeRecord('+${m.id}+')'" type="button">
                                 删除
                             </button>
                             <a th:href="@{/draftsEdit(id=${m.id})}">
