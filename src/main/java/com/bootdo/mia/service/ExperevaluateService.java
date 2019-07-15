@@ -66,4 +66,7 @@ public interface ExperevaluateService {
 	Integer recommendNum(Integer articleId);
 
 	Integer likeNum(Integer articleId);
+
+	int deleteByArticleId(Integer articleId);
+
 }

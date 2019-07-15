@@ -148,4 +148,10 @@ public class ExperevaluateServiceImpl implements ExperevaluateService {
 	public Integer likeNum(Integer articleId) {
 		return experevaluateDao.likeNum(articleId);
 	}
+
+	@Override
+	public int deleteByArticleId(Integer articleId){
+
+		return experevaluateDao.deleteByArticleId(articleId);
+	}
 }

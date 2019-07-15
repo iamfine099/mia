@@ -1321,7 +1321,9 @@ footer{
 
 #release article{
 	margin: 0 0 0 282px;
+    /*
 	width:900px;
+    */
 }
 #release article .article_title{
 	width:900px;
@@ -1549,16 +1551,16 @@ footer{
 	height: 258px;
 	text-align: center;
 }
-.expertPhoto img{
+.expertPhoto img{}
 	width:100%;
-}
+
 .expertPhotoBox{
 	width:131px;
 	height:131px;
 	margin:20px 28px 0 28px;
 	overflow: hidden;
 }
-.expertPhoto:nth-of-type(5){
+.expertPhoto:nth-of-type(6){
 	margin:0 -30px 0 0;
 }
 .expertPhoto:nth-of-type(10){
@@ -2492,7 +2494,7 @@ footer{
 	float:right;
 	width:900px;
 	min-height:200px;
-	margin:20px 0px 0px 0px;
+	margin:20px 20px 0px 0px;
 }
 .article_list>li{
 	width:900px;
@@ -3375,4 +3377,11 @@ ul {
 	.ys-letteul li {
 		padding: 0 7px
 	}
+}
+
+
+.advertTd {
+	width: 20%;
+	word-wrap:break-word;
+	word-break:break-all
 }

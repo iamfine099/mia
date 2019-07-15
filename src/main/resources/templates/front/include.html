@@ -7,13 +7,10 @@
 	<link rel="shortcut icon" href="favicon.ico">
 	<link href="/css/font-awesome.css?v=4.4.0" th:href="@{/css/font-awesome.css?v=4.4.0}" rel="stylesheet">
 	<link rel="shortcut icon" href="favicon.ico">
-	<link href="css/bootstrap.min.css?v=3.3.6"
-		  th:href="@{/css/bootstrap.min.css?v=3.3.6}" rel="stylesheet">
-	<link href="/css/font-awesome.css?v=4.4.0"
-		  th:href="@{/css/font-awesome.css?v=4.4.0}" rel="stylesheet">
+	<link href="css/bootstrap.min.css?v=3.3.6" th:href="@{/css/bootstrap.min.css?v=3.3.6}" rel="stylesheet">
+	<link href="/css/font-awesome.css?v=4.4.0" th:href="@{/css/font-awesome.css?v=4.4.0}" rel="stylesheet">
 	<!--summernote css -->
-	<link href="/css/plugins/summernote/summernote-0.8.8.css"
-		  rel="stylesheet">
+	<link href="/css/plugins/summernote/summernote-0.8.8.css" rel="stylesheet">
 	<!--富文本编译器 css -->
 	<link href="/css/plugins/summernote/summernote-0.8.8.css" rel="stylesheet">
 	<link href="/css/animate.css" th:href="@{/css/animate.css}" rel="stylesheet">
@@ -21,6 +18,9 @@
 	<link href="/css/front/all.css" th:href="@{/css/front/all.css}" rel="stylesheet">
 	<link href="/css/front/public.css" th:href="@{/css/front/public.css}" rel="stylesheet">
 	<link href="/css/front/swiper.min.css" th:href="@{/css/front/swiper.min.css}" rel="stylesheet">
+
+
+	<link href="/css/bootstrap-datepicker.css" rel="stylesheet"/>
 
 	<!-- <link rel="stylesheet" type="text/css"
 	href="/css/front/static/amazeui.flat.css" />
@@ -115,7 +115,7 @@
 			<div class="select_box" id="select_boxs">
 				<select class='select_item' name="select" >
 					<option value="" selected = "selected">=政府部门导航=</option>
-					<option th:each="cmsLink1 : ${cmsLinkList1}"  th:value="${cmsLink1.fUrl}" th:text="${cmsLink1 .fName}"></option>
+					<option th:each="cmsLink1 : ${cmsLinkList1}"  th:value="${cmsLink1.fUrl}" th:text="${cmsLink1.fName}"></option>
 				</select>
 				<select class='select_item' name="select" >
 					<option value="" selected = "selected">=院属兄弟单位=</option>

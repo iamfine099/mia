@@ -925,9 +925,13 @@ public class ArticleController extends BaseController {
     public R articleReviewScoreUpdate(ArticleDO article) {
         //判断是否选择专家
         if (!StringUtils.isNotEmpty(article.getExpertIds())) {
-            return R.error("请选择导师");
+            return R.error("请选择专家");
         }
         articleService.update(article);
+
+        // 删除专家
+        experevaluateService.deleteByArticleId(article.getId());
+
         //循环添加专家评价信息
         String[] expertIdArray = article.getExpertIds().split(",");
         ExperevaluateDO experevaluate = null;
@@ -936,15 +940,17 @@ public class ArticleController extends BaseController {
             Map<String, Object> params = new HashMap<String, Object>();
             params.put("articleId", article.getId());
             params.put("expertId", expertIdArray[i]);
-            int count = experevaluateService.count(params);
+            /*int count = experevaluateService.count(params);
 
             if (count > 0) {
+
                 return R.error("该专家已存在!");
-            } else {
+            } else {*/
+
                 experevaluate.setArticleId(article.getId());
                 experevaluate.setExpertId(Integer.parseInt(expertIdArray[i]));
                 experevaluateService.save(experevaluate);
-            }
+           // }
         }
         return R.ok();
     }
@@ -979,7 +985,7 @@ public class ArticleController extends BaseController {
 		}*/
         //判断是否选择专家
         if (!StringUtils.isNotEmpty(article.getExpertIds())) {
-            return R.error("请选择导师");
+            return R.error("请选择专家");
         }
         articleService.articleReviewBatchCheck(article);
         //循环添加专家评价信息

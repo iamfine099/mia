@@ -1,17 +1,6 @@
 /*
  *
  *   H+ - 后台主题UI框架
- *   version 4.0
- *   修改记录
- *	 .checkbox-inline input[type=checkbox] 去掉margin-top:-4px
- *	 .checkbox-inline 添加font-size: 14px;默认是13px
- *   .onoffswitch-inner:before,    ;   /* height: 16px; 两处
- *
- *	.file-control {
- *  	color: inherit;
- * 	 font-size: 14px;
- *	add nopadding class
- *
  *
  *
 */
@@ -7258,7 +7247,7 @@ body.skin-3 {
 }
 
 ::-webkit-scrollbar {
-    width: 6px;
+    width: 12px;
     background-color: #F5F5F5;
 }
 
@@ -7631,4 +7620,10 @@ body.skin-3 {
 	float:left;
 	font-size:14px;
 	margin:0 0 5px;
+}
+
+.advertTd {
+    width: 20%;
+    word-wrap:break-word;
+    word-break:break-all
 }

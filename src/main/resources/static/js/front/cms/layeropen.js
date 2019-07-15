@@ -1,7 +1,8 @@
+
+
 $().ready(function () {
+
     getAllCollegeTree();
-
-
 });
 
 /**
@@ -9,6 +10,7 @@ $().ready(function () {
  * @returns
  */
 function getAllCollegeTree() {
+
     $('#jstree').jstree({
         "plugins": ["checkbox"],
         'core': {

@@ -70,7 +70,11 @@
 
 	<select id="get" resultType="com.bootdo.common.domain.ArticleDO">
 		select
-			<include refid="columns" />,(select GROUP_CONCAT( a.expert_name) from t_expert a where a.expert_id in(select b.expert_id from t_expert_evaluate b where b.article_id =#{value})) "expertNames"
+			<include refid="columns" />,
+		(select GROUP_CONCAT( a.expert_name) from t_expert a where a.expert_id in(select b.expert_id
+			from t_expert_evaluate b where b.article_id =#{value})) "expertNames",
+		(select GROUP_CONCAT( a.expert_id) from t_expert a where a.expert_id in(select b.expert_id
+			from t_expert_evaluate b where b.article_id =#{value})) as expertIds
  		from t_article a
  		left join t_article_data ad on ad.id = a.id
  		left join sys_user c on c.user_id = a.create_by

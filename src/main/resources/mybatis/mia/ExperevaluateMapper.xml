@@ -76,7 +76,11 @@
 			#{likeDate}
 		)
 	</insert>
-	 
+
+	<delete id="deleteByArticleId" parameterType="java.lang.Integer">
+
+		delete from t_expert_evaluate where article_id = #{articleId}
+	</delete>
 	<update id="update" parameterType="com.bootdo.mia.domain.ExperevaluateDO">
 		update t_expert_evaluate 
 		<set>

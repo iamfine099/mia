@@ -53,7 +53,7 @@ function selectexpert(){
 			var expertIds = "";
 			var expertNames = "";
 			if(objs.length == 0){
-				layer.msg("请选择导师");
+				layer.msg("请选择专家");
 			}else{
 				for(var i=0; i<objs.length; i++){
 					expertIds += objs[i].expertId+",";

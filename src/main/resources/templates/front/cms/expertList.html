@@ -59,28 +59,25 @@
             </div>
             <div class="expertList_photoWall" style="width: 1180px; margin-left: 20px">
                 <div class="clear_box">
-                    <ul>
-                        <li class="expertPhoto left" th:each="m ,stat: ${pageUtils.rows}" style="height: 300px">
+                    <ul style="margin-left: 40px;">
+                        <li class="expertPhoto left" th:each="m ,stat: ${pageUtils.rows}"
+                            style="height: 300px; ">
                             <a th:href="@{/open/expert/detail(expertId=${m.expertId})}">
-                                <div class="expertPhotoBox" style="height: 210px">
+                                <div class="expertPhotoBox" style="width:150px; height: 210px">
                                     <img th:src="@{${m.url!=null}?@{${m.url}}:@{/img/morentouxiang.png}}"
                                          style="width: 150px;height: 210px">
                                 </div>
-                                <div style=" background:#c9c9c9 ;text-align: center;width: 131px;height: 55px;
-											vertical-align: middle; margin: 10px 20px 1px 28px;">
+                                <div style=" background:#c9c9c9 ;text-align: center;width: 150px;height: 55px;
+											vertical-align: middle; margin: 10px 20px 1px 0;">
                                     <p th:text="${m.expertName}" style="padding-top: 10px;margin-bottom: 3px">专家A</p>
                                     <p th:text="${m.company}">蒙古医院</p>
                                 </div>
-                                <!--<span class="expertName" th:text="${m.expertName}"></span>
-                                <span class="expertIntro" th:text="${m.company}"></span>-->
                             </a>
                         </li>
                     </ul>
                 </div>
                 <!--分页-->
-                <div class="GCpageNum" th:include="front/include::split_page" style="width: 1180px;">
-
-                </div>
+                <div class="GCpageNum" th:include="front/include::split_page" style="width: 1180px;"></div>
             </div>
             <input type="hidden" name="specialtys" id="specialtys">
             <input type="hidden" name="needSearch" id="needSearch">

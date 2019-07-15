@@ -61,13 +61,15 @@ function load() {
 									field : 'title', 
 									title : '标题' 
 								},
-																{
+								{
 									field : 'copyfrom', 
-									title : '来源' 
+									title : '来源',
+									class : 'advertTd'
 								},
 																{
 									field : 'description', 
-									title : '摘要' 
+									title : '摘要' ,
+                                    class : 'advertTd'
 								},
 																{
 									field : 'type', 

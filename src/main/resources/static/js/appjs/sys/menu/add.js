@@ -53,7 +53,11 @@ function validateRule() {
 			},
 			type : {
 				required : true
-			}
+			},
+            orderNum : {
+                number:true,
+                max:1000
+            }
 		},
 		messages : {
 			name : {
@@ -61,7 +65,11 @@ function validateRule() {
 			},
 			type : {
 				required : icon + "请选择菜单类型"
-			}
+			},
+            orderNum : {
+                number: icon + "必须为数字",
+                max: icon + "最大值为1000"
+            }
 		}
 	})
 }

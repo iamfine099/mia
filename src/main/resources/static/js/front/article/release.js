@@ -104,6 +104,12 @@ $(function () {
         saveDrafts();
     });
 
+    $("#acc input").datepicker(
+        {format:"yyyy-mm-dd",
+         language: 'zh-CN',
+         autoclose:true
+        }
+     )
 });
 
 function deleteTr(item) {

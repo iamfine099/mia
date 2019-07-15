@@ -41,4 +41,7 @@ public interface ExperevaluateDao {
 	Integer recommendNum(Integer articleId);
 
 	Integer likeNum(Integer articleId);
+
+	int deleteByArticleId(Integer articleId);
+
 }

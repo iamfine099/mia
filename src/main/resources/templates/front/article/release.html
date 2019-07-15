@@ -65,7 +65,12 @@
 
 				<div class="form-group">
 					<label class="control-label">省份：</label>
-					<input id="province" name="province" class="form-control" maxlength="6" type="text" placeholder="省份 如:山东省">
+					<!--<input id="province" name="province" class="form-control" maxlength="6" type="text" placeholder="省份 如:山东省">-->
+					<select class="form-control" name="type" id="province">
+						<option value="">---请选择---</option>
+						<option th:each="dict:${T(com.bootdo.common.utils.DictUtils).getDictList('province')}"
+								th:value="${dict.value}" th:text="${dict.name}"></option>
+					</select>
 				</div>
 				<div class="form-group">
 					<label class="control-label">简介：</label>
@@ -85,7 +90,9 @@
 				</div>
 				<div class="form-group">
 					<label class="control-label">时间：</label>
-					<input id="date" name="date" class="form-control" maxlength="10" type="text" placeholder="请填写时间 如:2019-05-06">
+					<div id="acc">
+						<input id="date" name="date" class="form-control" maxlength="10" type="text" placeholder="请填写时间 如:2019-05-06">
+					</div>
 				</div>
 				<!-- 屏蔽之前代码
 					<div class="form-group">
@@ -149,5 +156,8 @@
 <!--这是尾部-->
 <div th:include="front/include :: footer"></div>
 <script type="text/javascript" src="/js/front/article/release.js"></script>
+
+<script src="/js/bootstrap-datepicker.min.js"></script>
+<script src="/js/bootstrap-datepicker.zh-CN.min.js"></script>
 </body>
 </html>

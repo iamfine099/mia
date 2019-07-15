@@ -278,6 +278,7 @@ public class FrontCmsController extends BaseController {
         List<ArticleDO> policiesList = articleService.list(param);
         model.addAttribute("policiesList", policiesList);
         model.addAttribute("policiesCategoryId", policiesCategoryId);
+        model.addAttribute("policiesCategoryMoreUrl", "/open/page/" +policiesCategoryId);
 
         // 视频模块
         param = new HashMap<>();
@@ -2292,7 +2293,27 @@ public class FrontCmsController extends BaseController {
      * @date 2018年7月26日 下午9:07:23
      */
     @RequestMapping("/open/page/{categoryId}")
-    String about(@PathVariable("categoryId") int categoryId, Model model, @RequestParam Map<String, Object> params) {
+    String about(@PathVariable("categoryId") Integer categoryId, Model model, @RequestParam Map<String, Object> params) {
+
+        Map<String, Object> params1 = new HashMap<String, Object>();
+        params1.put("offset", 0);
+        params1.put("limit", 10);
+        params1.put("fStatus", 1);
+        params1.put("fRel", "1");
+        List<CmsLinkDO> cmsLinkList = cmsLinkService.list(params1);
+        model.addAttribute("cmsLinkList1", cmsLinkList);
+        params1.put("fRel", "2");
+        cmsLinkList = cmsLinkService.list(params1);
+        model.addAttribute("cmsLinkList2", cmsLinkList);
+        params1.put("fRel", "3");
+        cmsLinkList = cmsLinkService.list(params1);
+        model.addAttribute("cmsLinkList3", cmsLinkList);
+        params1.put("fRel", "4");
+        cmsLinkList = cmsLinkService.list(params1);
+        model.addAttribute("cmsLinkList4", cmsLinkList);
+
+
+
         CategoryDO category = categoryService.get(categoryId);// 获取分类信息
         CategoryDO categoryDO = new CategoryDO(); //子类或者父类
         if ("list".equals(category.getModule())) {// 列表展示文章
@@ -2431,6 +2452,7 @@ public class FrontCmsController extends BaseController {
 
             return "front/cms/achievementList";
         }
+
         return "front/cms/articleList";
     }
 
