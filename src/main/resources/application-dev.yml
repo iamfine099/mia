@@ -13,9 +13,9 @@ spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driverClassName: com.mysql.jdbc.Driver
-    url: jdbc:mysql://39.107.246.239:9876/test1?useUnicode=true&characterEncoding=utf8
+    url: jdbc:mysql://cdb-obowpxdu.bj.tencentcdb.com:10085/achievement_display?useUnicode=true&characterEncoding=utf8
     username: root
-    password: 1q2w3e4r.
+    password: sdmi1234
     initialSize: 1
     minIdle: 3
     maxActive: 20
