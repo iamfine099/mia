@@ -59,7 +59,7 @@ public class BaseController {
 		String fileName = FileUtil.renameToUUID(fileOldName);
 		FileDO sysFile = new FileDO(FileType.fileType(fileName), "/files/" + fileName, new Date(),fileOldName);
 		try {
-			FileUtil.uploadFile(file.getBytes(), bootdoConfig.getUploadPath(), fileName);
+			FileUtil.uploadFile(file, bootdoConfig.getUploadPath(), fileName);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;

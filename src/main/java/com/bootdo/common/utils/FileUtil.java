@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.multipart.MultipartFile;
 
 public class FileUtil extends org.apache.commons.io.FileUtils{
 	private static Logger logger = LoggerFactory.getLogger(FileUtil.class);
@@ -25,6 +26,16 @@ public class FileUtil extends org.apache.commons.io.FileUtils{
 		out.write(file);
 		out.flush();
 		out.close();
+	}
+
+	public static void uploadFile(MultipartFile file, String filePath, String fileName) throws Exception {
+
+		File targetFile = new File(filePath);
+		if (!targetFile.exists()) {
+			targetFile.mkdirs();
+		}
+		File dest = new File(filePath + fileName);
+		file.transferTo(dest);
 	}
 
 	public static boolean deleteFile(String fileName) {
